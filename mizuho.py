@@ -221,7 +221,7 @@ async def on_message(message):
         print("受信: {}".format(message.content))
         prevTime = time.time()
         lastMessage = message
-        if random.randint(1, len(persons) - 1) == len(persons) - 1:
+        if random.randint(1, len(persons) - 1) == len(persons) - 1 or data["myname"] in message.content:
             receive(message.content, message.author.name)
             result = speakFreely(message.content, message.author.name)
             print("みずほ: {}".format(result))
