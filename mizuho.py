@@ -179,7 +179,7 @@ import asyncio
 
 
 # 自分のBotのアクセストークンに置き換えてください
-TOKEN = "トークン"
+TOKEN = 'ODU0NjcxODAxMDgyNzA3OTY5.YMnVJA.gNqoKbDVPniiGMHNbhIWIyo6drk'
 
 # 接続に必要なオブジェクトを生成
 client = discord.Client()
@@ -246,7 +246,7 @@ async def cron():
             if random.randint(1, len(persons) *2) == len(persons) * 2:
                 result = speakFreely(lastMessage.content, lastMessage.author.name)
                 print("みずほ: {}".format(result))
-                await tsuzuki()
+                tsuzuki()
         i += 1
         prevTime = time.time()
 
