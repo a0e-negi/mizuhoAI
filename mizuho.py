@@ -40,25 +40,24 @@ heart = len(data["sentence"]) - 20
 heartLastSpeaker = None
 
 def looking(x):
-    global heart
+    global heart, heartLastSpeaker
     try:
-        i = 0
+        i = heart
         for sen in data["sentence"][heart:-1]:
             into = x
-            flag = 0
-            while flag == 0:
+            while True:
                 pattern = re.compile(r"{}$".format(into))
-                if 1 >= len(into): 
-                    flag = 1
+                if 1 == len(into): 
+                    break
                 if bool(pattern.search(sen[0])):
-                    if i+1 != len(data["sentence"]) and data["sentence"][1] != data["myname"]:
+                    if i+1 != len(data["sentence"]) and data["sentence"][i+1][1] != data["myname"]:
                         heart = i+1
                         heartLastSpeaker = data["sentence"][i+1][1]
                         return data["sentence"][i+1][0]
                     else:
-                        ii += 1
+                        ii = 0
                         while True:
-                            if i+1 != len(data["sentence"]) and data["sentence"][1] != data["myname"]:
+                            if i+ii+1 != len(data["sentence"]) and data["sentence"][i+ii+1][1] != data["myname"]:
                                 heart = i+ii+1
                                 heartLastSpeaker = data["sentence"][i+ii+1][1]
                                 return data["sentence"][i+ii+1][0]
@@ -69,31 +68,30 @@ def looking(x):
             i += 1
     except:
         pass
-        
+
     try:
-        i = 0
+        i = heart - 20
         for sen in data["sentence"][heart-20:-1]:
             into = x
-            flag = 0
-            while flag == 0:
+            while True:
                 pattern = re.compile(r"{}$".format(into))
-                if 1 >= len(into): 
-                    flag = 1
+                if 1 == len(into): 
+                    break
                 if bool(pattern.search(sen[0])):
-                    if i+1 != len(data["sentence"]) and data["sentence"][1] != data["myname"]:
+                    if i+1 != len(data["sentence"]) and data["sentence"][i+1][1] != data["myname"]:
                         heart = i+1
                         heartLastSpeaker = data["sentence"][i+1][1]
                         return data["sentence"][i+1][0]
                     else:
-                        ii += 1
+                        ii = 0
                         while True:
-                            if i+1 != len(data["sentence"]) and data["sentence"][1] != data["myname"]:
+                            if i+ii+1 != len(data["sentence"]) and data["sentence"][i+ii+1][1] != data["myname"]:
                                 heart = i+ii+1
                                 heartLastSpeaker = data["sentence"][i+ii+1][1]
                                 return data["sentence"][i+ii+1][0]
                             ii += 1
                 into = into[1:]
-            if i >= 20:
+            if i >= 40:
                 continue
             i += 1
     except:
@@ -103,27 +101,24 @@ def looking(x):
         i = 0
         for sen in data["sentence"]:
             into = x
-            flag = 0
-            while flag == 0:
+            while True:
                 pattern = re.compile(r"{}$".format(into))
-                if 1 >= len(into): 
-                    flag = 1
+                if 1 == len(into): 
+                    break
                 if bool(pattern.search(sen[0])):
-                    if i+1 != len(data["sentence"]) and data["sentence"][1] != data["myname"]:
+                    if i+1 != len(data["sentence"]) and data["sentence"][i+1][1] != data["myname"]:
                         heart = i+1
                         heartLastSpeaker = data["sentence"][i+1][1]
                         return data["sentence"][i+1][0]
                     else:
-                        ii += 1
+                        ii = 0
                         while True:
-                            if i+1 != len(data["sentence"]) and data["sentence"][1] != data["myname"]:
+                            if i+ii+1 != len(data["sentence"]) and data["sentence"][i+ii+1][1] != data["myname"]:
                                 heart = i+ii+1
                                 heartLastSpeaker = data["sentence"][i+ii+1][1]
                                 return data["sentence"][i+ii+1][0]
                             ii += 1
                 into = into[1:]
-            if i >= 20:
-                continue
             i += 1
     except:
         pass
@@ -131,11 +126,15 @@ def looking(x):
     return data["sentence"][-1][0]
 
 def tsuzuki():
+    global heart
     i = 1
-    while True:
-        if data["sentence"][heart+i][1] == heartLastSpeaker:
-            return data["sentence"][heart+i][0]
-        i += 1
+    try:
+        while True:
+            if data["sentence"][heart+i][1] == heartLastSpeaker:
+                return data["sentence"][heart+i][0]
+            i += 1
+    except:
+        pass
 
 def addSentence(x, u):
     data["sentence"].append([x, u])
@@ -149,6 +148,7 @@ def speakFreely(x, u):
     result = looking(x).replace(data["myname"], u)
     addSentence(result, data["myname"])
     print("現在の心: {}".format(heart))
+    print(heartLastSpeaker)
     return result
 
 def receive(x, u):
@@ -179,7 +179,7 @@ import asyncio
 
 
 # 自分のBotのアクセストークンに置き換えてください
-TOKEN = 'ODU0NjcxODAxMDgyNzA3OTY5.YMnVJA.gtVzpfW6VLXjlrkGMIsJMAr2cKE'
+TOKEN = "トークン"
 
 # 接続に必要なオブジェクトを生成
 client = discord.Client()
