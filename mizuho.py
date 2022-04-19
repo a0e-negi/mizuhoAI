@@ -175,7 +175,7 @@ def tsuzuki(add=True):
                 i = 0
                 ii = 0
                 for u in data["users"]:
-                    if u[0] in result:
+                    if u[0] == data["sentence"][heart][1]:
                         brainUser.append(u[0])
                         ii += 1
                     if ii >= kazu:
@@ -279,7 +279,7 @@ def speakFreely(x, user, add=True):
     i = 0
     ii = 0
     for u in data["users"]:
-        if u[0] in x:
+        if u[0] == user:
             AU.append(u[0])
             ii += 1
         if len(AU) >= 3:
@@ -296,7 +296,7 @@ def speakFreely(x, user, add=True):
     i = 0
     ii = 0
     for u in data["users"]:
-        if u[0] in result:
+        if u[0] == data["sentence"][heart][1]:
             brainUser.append(u[0])
             ii += 1
         if ii >= kazu:
