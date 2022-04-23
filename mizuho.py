@@ -225,7 +225,7 @@ def tsuzuki(add=True):
         while True:
             if iii >= 100:
                 return None
-            if (data["sentence"][heart][1] == heartLastSpeaker or heartLastSpeaker == None) and heart != len(data["sentence"]) and not bool(re.search(settings["mynames"], data["sentence"][heart][0])):
+            if heart != len(data["sentence"]) and not bool(re.search(settings["mynames"], data["sentence"][heart][0])):
                 result = data["sentence"][heart][0]
                 lastSentence = result
                 result = result.replace(data["sentence"][heart][1], settings["myname"])
