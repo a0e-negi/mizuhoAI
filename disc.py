@@ -13,10 +13,9 @@ else:
 persons = [mizuho.settings["myname"]]
 channel = None
 lastMessage = None
-prevTime = time.time()
 messages = []
 
-# インストールした discord.py を読み込む
+
 from discord.ext import tasks
 import discord
 import threading
@@ -27,7 +26,8 @@ import asyncio
 TOKEN = mizuho.settings["discToken"]
 
 # 接続に必要なオブジェクトを生成
-client = discord.Client()
+intents = discord.Intents.all()
+client = discord.Client(intents=intents)
 
 mode = 1
 
@@ -49,9 +49,6 @@ async def speak(result):
                 print("チャンネルを移動しました: DM")
     else:
         await channel.send(result)
-        if mizuho.isNextAble():
-            time.sleep(2)
-            await extraMessage()
     
 
 # 起動時に動作する処理
@@ -65,7 +62,7 @@ async def on_ready():
 @client.event
 async def on_message(message):
     global channel, persons, prevTime, lastMessage, messages
-        
+
     if message.channel == channel or bool(re.search(mizuho.settings["mynames"], message.content)) or isinstance(message.channel, discord.DMChannel):
         if message.channel != channel:
             try:
@@ -87,9 +84,11 @@ async def on_message(message):
         if message.content == "mizuho!mode 0":
             await message.channel.send("沈黙モードに切り替える")
             setMode(0)
+            return
         if message.content == "mizuho!mode 1":
             await message.channel.send("通常モードに切り替える")
             setMode(1)
+            return
         
         print("受信: {}".format(message.content))
         prevTime = time.time()
@@ -102,13 +101,6 @@ async def on_message(message):
             mizuho.receive(message.content, message.author.name)
         
 
-async def extraMessage():
-    if mode == 1:
-        print("追加メッセージ送信")
-        result = mizuho.tsuzuki()
-        print("みずほ: {}".format(result))
-        if result != None:
-            await speak(result)
 
 i = 0
 @tasks.loop(seconds=6)
@@ -123,21 +115,6 @@ async def cron():
             if result == None: return
             print("{}: {}".format(mizuho.settings["myname"], result))
             await speak(result)
-
-        nowTime = time.time()
-        if nowTime >= prevTime + 8:
-            print("沈黙を検知")
-            if i >= 3:
-                persons = [mizuho.settings["myname"]]
-                i = 0
-            if channel != None and lastMessage != None:
-                if random.randint(1, len(persons)+3) == len(persons)+3 and mode == 1:
-                    result = mizuho.tsuzuki()
-                    print("みずほ: {}".format(result))
-                    if result != None:
-                        await speak(result)
-            i += 1
-            prevTime = time.time()
     except:
         pass
 

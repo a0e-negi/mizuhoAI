@@ -207,88 +207,6 @@ def looking(x, reply=True):
         
     return None
 
-def isNextAble():
-    if data["sentence"][heart+1][1] == heartLastSpeaker and heart+1 != len(data["sentence"])  and not bool(re.search(settings["mynames"], data["sentence"][heart+1][0])) and lastSentence != data["sentence"][heart+1][0] and lastSentenceInput != data["sentence"][heart+1][0]:
-        return True
-    else:
-        return False
-
-
-def tsuzuki(add=True):
-    global heart, actualUser, kazu, wordMemory, tokenizer, lastSentence
-    
-    heart += 1
-    if heart >= len(data["sentence"]):
-        heart = len(data["sentence"]) - 50
-    iii = 0
-    try:
-        while True:
-            if iii >= 100:
-                return None
-            if heart != len(data["sentence"]) and not bool(re.search(settings["mynames"], data["sentence"][heart][0])):
-                result = data["sentence"][heart][0]
-                lastSentence = result
-                result = result.replace(data["sentence"][heart][1], settings["myname"])
-                
-                brainUser = []
-                i = 0
-                ii = 0
-                for u in data["users"]:
-                    if u[0] == data["sentence"][heart][1]:
-                        brainUser.append(u[0])
-                        ii += 1
-                    if ii >= kazu:
-                        break
-                    i += 1
-                kazu = ii
-                brainUser.append(data["sentence"][heart][1])
-                
-                
-                i = 1
-                if kazu > 0:
-                    i = 0
-                    while True:
-                        if i >= kazu:
-                            break
-                        result = result.replace(brainUser[i], actualUser[i])
-                        i += 1
-
-
-                try:
-                    if replaceWords:
-                        i = 0
-                        while True:
-                            if len(wordMemory) == len(data["sentence"][heart][2]):
-                                if i == len(data["sentence"][heart][2]):
-                                    break
-                                result = result.replace(data["sentence"][heart][2][i], wordMemory[i])
-                                i += 1
-                            if len(wordMemory) < len(data["sentence"][heart][2]):
-                                if i == len(wordMemory):
-                                    break
-                                result = result.replace(data["sentence"][heart][2][i], wordMemory[i])
-                                i += 1
-                            if len(wordMemory) > len(data["sentence"][heart][2]):
-                                if i == len(data["sentence"][heart][2]):
-                                    break
-                                result = result.replace(data["sentence"][heart][2][i], wordMemory[i])
-                                i += 1
-                except:
-                    import traceback
-                    traceback.print_exc()
-
-                if add: addSentence(result, settings["myname"])
-
-
-                return result
-            heart += 1
-            iii += 1
-            if heart >= len(data["sentence"]):
-                heart = len(data["sentence"]) - 50
-    except:
-        import traceback
-        traceback.print_exc()
-
 def wordSyori(x):
     global tokenizer, wordMemory
     if len(wordMemory) >= 6:
@@ -303,8 +221,8 @@ def addSentence(x, u, noword=False):
 
 def save():
     global direc, data
-    if len(data["sentence"]) >= 130000:
-        while len(data["sentence"]) >= 130000:
+    if len(data["sentence"]) >= 1000000:
+        while len(data["sentence"]) >= 1000000:
             data["sentence"].pop()
     with open(direc+"/data.json", "w", encoding="utf8") as f:
         json.dump(data, f, ensure_ascii=False, indent=4, sort_keys=True, separators=(',', ': '))
