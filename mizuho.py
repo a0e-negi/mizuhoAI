@@ -35,22 +35,23 @@ import time
 import Levenshtein
 
 
-data = None
-settings = None
-direc = None
-actualUser = []
-kazu = 0
-wordMemory = ["None"]*5
-heart = None
-replaceWords = True
-lastSentence = None
-lastSentenceInput = None
-heartLastSpeaker = None
-getBored = 0
-maeheart = 0
-interface = 0
+data = None #別途読み込むデータ
+settings = None #設定
+direc = None #辞書のディレクトリ
+actualUser = [] #今話してる人
+brainUser = [] #過去に似た話をしてたユーザー
+wordMemory = ["None"]*5 #重要な単語
+heart = None #今の気持ち(ログの座標で表される)
+replaceWords = True #単語を置き換えるか
+lastSentence = None #最後のbotの言葉
+lastSentenceInput = None #最後に聞いた言葉
+heartLastSpeaker = None #過去に似た話をしてたユーザー
+getBored = 0 #忘れるための値、特定の値以上になると忘れる
+maeheart = 0 #一つ前の気持ち
+interface = 0 #クライアントの種類
 
 def initialize(direcectory, interface_):
+    #初期化
     global data, settings, direc, heart, interface
     direc = direcectory
     interface = interface_
@@ -71,6 +72,7 @@ def initialize(direcectory, interface_):
         json.dump(data, f, ensure_ascii=False, indent=4, sort_keys=True, separators=(',', ': '))
 
 def load():
+    #データを読み込む
     global data, direc
     with open(direc+"/data.json", "r", encoding="utf8") as f:
         data = json.load(f)
@@ -79,12 +81,14 @@ def load():
 
 
 def looking(x, reply=True):
+    #過去の発言をもとに考える
     global heart, heartLastSpeaker, replaceWords, lastSentence, lastSentenceInput
     try:
+        #今の気持ちから考える
         into = x
         while True:
 
-            if 0 == len(into): 
+            if 0 == len(into):
                 break
             pattern = re.compile(r"{}$".format(into))
             i = heart
@@ -119,10 +123,11 @@ def looking(x, reply=True):
             into = into[1:]
 
 
+        #今の気持ちから少し離れる
         into = x
         while True:
 
-            if 0 == len(into): 
+            if 0 == len(into):
                 break
             pattern = re.compile(r"{}$".format(into))
             i = heart
@@ -159,11 +164,11 @@ def looking(x, reply=True):
 
 
 
-
+        #より深く考える
         into = x
         while True:
 
-            if 0 == len(into): 
+            if 0 == len(into):
                 break
             pattern = re.compile(r"{}$".format(into))
             i = 0
@@ -204,7 +209,7 @@ def looking(x, reply=True):
     except:
         import traceback
         traceback.print_exc()
-        
+
     return None
 
 def wordSyori(x):
@@ -213,6 +218,7 @@ def wordSyori(x):
         wordMemory = [wordMemory[-1], wordMemory[-2], wordMemory[-3], wordMemory[-4], wordMemory[-5]]
 
 def addSentence(x, u, noword=False):
+    #言葉を脳に記録する
     global data
     data["sentence"].append([x, u, wordMemory])
     save()
@@ -231,7 +237,8 @@ def save():
 
 
 def speakFreely(x, user, add=True):
-    global heart, actualUser, kazu, wordMemory, tokenizer, lastSentence, lastSentenceInput, getBored, maeheart
+    #自由に話す
+    global heart, actualUser, brainUser, wordMemory, tokenizer, lastSentence, lastSentenceInput, getBored, maeheart
 
     #既存の文化に飽きさせる
     if -20 <= heart - maeheart and heart - maeheart <= 20:
@@ -254,69 +261,39 @@ def speakFreely(x, user, add=True):
     if result == None:
         return None
     result = result.replace(data["sentence"][heart][1], settings["myname"])
-    
-    AU = []
-    i = 0
-    ii = 0
-    for u in data["users"]:
-        if u[0] == user:
-            AU.append(u[0])
-            ii += 1
-        if len(AU) >= 3:
-            break
-        i += 1
-    kazu = ii
-    if AU != []:
-        actualUser = AU
-        actualUser.append(user)
+
+    #現在のユーザーと過去に似た話をしてたユーザーを変数に記録
+    actualUser.append(user)
+    brainUser.append(data["sentence"][heart-1][1])
+    #古いユーザーの記録を消す
+    if len(brainUser) >= 5:
+        brainUser = brainUser[-5:-1]
+        actualUser = actualUser[-5:-1]
+
+    print("brainUser: {}".format(brainUser))
     print("actualUser: {}".format(actualUser))
 
 
-    brainUser = []
-    i = 0
-    ii = 0
-    for u in data["users"]:
-        if u[0] == data["sentence"][heart][1]:
-            brainUser.append(u[0])
-            ii += 1
-        if ii >= kazu:
-            break
-        i += 1
-    kazu = ii
-    brainUser.append(data["sentence"][heart][1])
-    brainUser = brainUser[kazu-1:-1]
-
+    #重要な単語を最大5個置き換える
     try:
         if replaceWords:
             i = 0
             while True:
-                if len(wordMemory) == len(data["sentence"][heart][2]):
-                    if i == len(data["sentence"][heart][2]):
-                        break
-                    result = result.replace(data["sentence"][heart][2][i], wordMemory[i])
-                    i += 1
-                if len(wordMemory) < len(data["sentence"][heart][2]):
-                    if i == len(wordMemory):
-                        break
-                    result = result.replace(data["sentence"][heart][2][i], wordMemory[i])
-                    i += 1
-                if len(wordMemory) > len(data["sentence"][heart][2]):
-                    if i == len(data["sentence"][heart][2]):
-                        break
-                    result = result.replace(data["sentence"][heart][2][i], wordMemory[i])
-                    i += 1
+                if i == len(data["sentence"][heart][2]):
+                    break
+                result = result.replace(data["sentence"][heart][2][i], wordMemory[i])
+                i += 1
     except:
         import traceback
         traceback.print_exc()
 
 
-    if kazu > 0:
-        i = 0
-        while True:
-            if i >= kazu:
-                break
-            result = result.replace(brainUser[i], actualUser[i])
-            i += 1
+    i = 0
+    while True:
+        if len(brainUser) >= i:
+            break
+        result = result.replace(brainUser[i], actualUser[i])
+        i += 1
 
 
 

@@ -2,7 +2,6 @@ import mizuho
 import time
 import random
 import re
-
 import sys
 if sys.argv[1]:
     mizuho.initialize(sys.argv[1], "discord")
@@ -14,6 +13,7 @@ persons = [mizuho.settings["myname"]]
 channel = None
 lastMessage = None
 messages = []
+prevTime = time.time()
 
 
 from discord.ext import tasks
@@ -49,7 +49,7 @@ async def speak(result):
                 print("チャンネルを移動しました: DM")
     else:
         await channel.send(result)
-    
+
 
 # 起動時に動作する処理
 @client.event
@@ -80,7 +80,7 @@ async def on_message(message):
         if message.content == None:
             return
 
-        
+
         if message.content == "mizuho!mode 0":
             await message.channel.send("沈黙モードに切り替える")
             setMode(0)
@@ -89,17 +89,14 @@ async def on_message(message):
             await message.channel.send("通常モードに切り替える")
             setMode(1)
             return
-        
+
         print("受信: {}".format(message.content))
-        prevTime = time.time()
         lastMessage = message
-        if random.randint(1, len(persons) - 1) == (len(persons) - 1) or bool(re.search(mizuho.settings["mynames"], message.content)):
-            mizuho.receive(message.content, message.author.name)
-            if mode == 1:
-                messages.append(message)
-        else:
-            mizuho.receive(message.content, message.author.name)
-        
+        prevTime = time.time()
+        mizuho.receive(message.content, message.author.name)
+        if mode == 1:
+            messages.append(message)
+
 
 
 i = 0
@@ -107,7 +104,7 @@ i = 0
 async def cron():
     try:
         global persons, prevTime, lastMessage, i, messages
-        
+
         if len(messages) != 0:
             message = [messages[-1].content, messages[-1].author.name]
             messages = []
@@ -115,8 +112,18 @@ async def cron():
             if result == None: return
             print("{}: {}".format(mizuho.settings["myname"], result))
             await speak(result)
+        nowTime = time.time()
+        if (nowTime - prevTime) >= 20 and random.randint(0, 100) >= 90:
+            mizuho.receive("!command shut up", lastMessage.author.name)
+            result = mizuho.speakFreely("!command shut up", lastMessage.author.name)
+            if result == None: return
+            print("{}: {}".format(mizuho.settings["myname"], result))
+            prevTime = time.time()
+            await speak(result)
+
     except:
-        pass
+        import traceback
+        traceback.print_exc()
 
 
 # Botの起動とDiscordサーバーへの接続
