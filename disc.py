@@ -43,6 +43,7 @@ async def speak(result):
         if com[1] == "discMove":
             if client.get_channel(int(com[2])) != None:
                 channel = client.get_channel(int(com[2]))
+                persons = [mizuho.settings["myname"]]
             try:
                 print("チャンネルを移動しました: {}".format(channel.name))
             except:
