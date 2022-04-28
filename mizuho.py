@@ -212,6 +212,59 @@ def looking(x, reply=True):
 
     return None
 
+
+
+
+def isNextAble():
+    if data["sentence"][heart+1][1] == heartLastSpeaker and heart != len(data["sentence"]) and not bool(re.search(settings["mynames"], data["sentence"][heart+1][0])) and lastSentence != data["sentence"][heart+1][0] and lastSentenceInput != data["sentence"][heart+1][0]:
+        return True
+    else:
+        return False
+
+def tsuzuki(add=True):
+    global heart, actualUser, wordMemory, tokenizer, lastSentence
+    
+    heart += 1
+    if heart >= len(data["sentence"]):
+        heart = 0
+    try:
+        while True:
+            if heart != len(data["sentence"]) and not bool(re.search(settings["mynames"], data["sentence"][heart][0])) and lastSentence != data["sentence"][heart][0] and lastSentenceInput != data["sentence"][heart][0]:
+                result = data["sentence"][heart][0]
+                lastSentence = result
+                result = result.replace(data["sentence"][heart][1], settings["myname"])
+
+                #重要な単語を最大5個置き換える
+                try:
+                    if replaceWords:
+                        i = 0
+                        while True:
+                            if i == len(data["sentence"][heart][2]):
+                                break
+                            result = result.replace(data["sentence"][heart][2][i], wordMemory[i])
+                            i += 1
+                except:
+                    import traceback
+                    traceback.print_exc()
+
+
+                i = 0
+                while True:
+                    if len(brainUser) >= i:
+                        break
+                    result = result.replace(brainUser[i], actualUser[i])
+                    i += 1
+
+                return result
+            heart += 1
+            if heart >= len(data["sentence"]):
+                heart = 0
+    except:
+        import traceback
+        traceback.print_exc()
+
+
+
 def wordSyori(x):
     global tokenizer, wordMemory
     if len(wordMemory) >= 6:

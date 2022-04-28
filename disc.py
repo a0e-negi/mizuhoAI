@@ -50,6 +50,9 @@ async def speak(result):
                 print("チャンネルを移動しました: DM")
     else:
         await channel.send(result)
+        if mizuho.isNextAble():
+            time.sleep(5)
+            await extraMessage()
 
 
 # 起動時に動作する処理
@@ -101,28 +104,42 @@ async def on_message(message):
 
 
 
+async def extraMessage():
+    if mode == 1:
+        print("追加メッセージ送信")
+        result = mizuho.tsuzuki()
+        print("みずほ: {}".format(result))
+        if result != None:
+            await speak(result)
+
+
 i = 0
 @tasks.loop(seconds=6)
 async def cron():
     try:
         global persons, prevTime, lastMessage, i, messages
-
+        
         if len(messages) != 0:
-            message = [messages[-1].content, messages[-1].author.name]
+            result = mizuho.speakFreely(messages[-1].content, messages[-1].author.name)
+            if result == None: return
+            print("{}: {}".format(mizuho.settings["myname"], result))
+            await speak(result)
             messages = []
-            result = mizuho.speakFreely(message[0], message[1])
-            if result == None: return
-            print("{}: {}".format(mizuho.settings["myname"], result))
-            await speak(result)
-        nowTime = time.time()
-        if (nowTime - prevTime) >= 20 and random.randint(0, 100) >= 75:
-            mizuho.receive("!command shut up", lastMessage.author.name)
-            result = mizuho.speakFreely(lastMessage.content, lastMessage.author.name)
-            if result == None: return
-            print("{}: {}".format(mizuho.settings["myname"], result))
-            prevTime = time.time()
-            await speak(result)
 
+        nowTime = time.time()
+        if nowTime >= prevTime + 20:
+            print("沈黙を検知")
+            if i >= 3:
+                persons = [mizuho.settings["myname"]]
+                i = 0
+            if channel != None and lastMessage != None:
+                if random.randint(1, len(persons)) == len(persons) and mode == 1:
+                    result = mizuho.tsuzuki()
+                    print("みずほ: {}".format(result))
+                    if result != None:
+                        await speak(result)
+            i += 1
+            prevTime = time.time()
     except:
         import traceback
         traceback.print_exc()
