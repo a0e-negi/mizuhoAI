@@ -116,7 +116,7 @@ async def cron():
         nowTime = time.time()
         if (nowTime - prevTime) >= 20 and random.randint(0, 100) >= 75:
             mizuho.receive("!command shut up", lastMessage.author.name)
-            result = mizuho.speakFreely("!command shut up", lastMessage.author.name)
+            result = mizuho.speakFreely(lastMessage.content, lastMessage.author.name)
             if result == None: return
             print("{}: {}".format(mizuho.settings["myname"], result))
             prevTime = time.time()
