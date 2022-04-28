@@ -229,7 +229,7 @@ def tsuzuki(add=True):
         heart = 0
     try:
         while True:
-            if heart != len(data["sentence"]) and not bool(re.search(settings["mynames"], data["sentence"][heart][0])) and lastSentence != data["sentence"][heart][0] and lastSentenceInput != data["sentence"][heart][0]:
+            if data["sentence"][heart+1][1] == heartLastSpeaker and heart != len(data["sentence"]) and not bool(re.search(settings["mynames"], data["sentence"][heart][0])) and lastSentence != data["sentence"][heart][0] and lastSentenceInput != data["sentence"][heart][0]:
                 result = data["sentence"][heart][0]
                 lastSentence = result
                 result = result.replace(data["sentence"][heart][1], settings["myname"])

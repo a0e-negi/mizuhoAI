@@ -98,10 +98,13 @@ async def on_message(message):
         print("受信: {}".format(message.content))
         lastMessage = message
         prevTime = time.time()
-        mizuho.receive(message.content, message.author.name)
-        if mode == 1:
-            messages.append(message)
-
+        lastMessage = message
+        if random.randint(1, len(persons) - 1) == (len(persons) - 1) or bool(re.search(mizuho.settings["mynames"], message.content)):
+            mizuho.receive(message.content, message.author.name)
+            if mode == 1:
+                messages.append(message)
+        else:
+            mizuho.receive(message.content, message.author.name)
 
 
 async def extraMessage():
@@ -133,7 +136,7 @@ async def cron():
                 persons = [mizuho.settings["myname"]]
                 i = 0
             if channel != None and lastMessage != None:
-                if random.randint(1, len(persons)) == len(persons) and mode == 1:
+                if random.randint(1, len(persons)+2) == len(persons)+2 and mode == 1:
                     result = mizuho.tsuzuki()
                     print("みずほ: {}".format(result))
                     if result != None:
