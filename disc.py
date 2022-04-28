@@ -70,6 +70,7 @@ async def on_message(message):
             except:
                 print("チャンネルを移動しました: {}のDM".format(message.author.name))
             channel = message.channel
+            persons = [mizuho.settings["myname"]]
             mizuho.receive("!command discMove {}".format(message.channel.id), message.author.name)
         if message.author == client.user:
             return
