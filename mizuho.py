@@ -1,29 +1,21 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+from functools import lru_cache
 
-from difflib import SequenceMatcher
+@lru_cache(maxsize=4096)
+def ld(s, t):
+    if not s: return len(t)
+    if not t: return len(s)
+    if s[0] == t[0]: return ld(s[1:], t[1:])
+    l1 = ld(s, t[1:])
+    l2 = ld(s[1:], t)
+    l3 = ld(s[1:], t[1:])
+    return 1 + min(l1, l2, l3)
 
+def lds(s, t):
+    return ld(s, t) / max(len(s), len(t))
 
-def common_seq(lhs, rhs):
-    r"""
-    >>> print("\n".join(common_seq("ABChhh", "XYZkkk")))
-    <BLANKLINE>
-    >>> print("\n".join(common_seq("ABChhh", "ABCkkk")))
-    ABC
-    >>> print("\n".join(common_seq("zzABChhh", "ABCkkk")))
-    ABC
-    >>> print("\n".join(common_seq("ABChhh", "yyABCkkk")))
-    ABC
-    >>> print("\n".join(common_seq("zzABChhh", "yyABCkkk")))
-    ABC
-    >>> print("\n".join(common_seq("uvwxABChhh", "yzABCkkk")))
-    ABC
-    >>> print("\n".join(common_seq("uvwABChhh", "xyzABCkkk")))
-    ABC
-    """
-    sm = SequenceMatcher(a=lhs, b=rhs)
-    return [lhs[slice(m.a, m.a + m.size)]
-            for m in sm.get_matching_blocks() if m.size]
+def lss(s, t):
+    return -lds(s, t) + 1
+
 
 
 
@@ -32,7 +24,8 @@ import re
 import json
 import random
 import time
-import Levenshtein
+
+
 
 
 data = None #別途読み込むデータ
@@ -97,7 +90,7 @@ def looking(x, reply=True):
                     replaceWords = False
                 else:
                     replaceWords = True
-                if bool(pattern.search(sen[0])) or (((len(x) + len(sen[0])) / 2) * 0.5) >= Levenshtein.distance(x, sen[0]):
+                if bool(pattern.search(sen[0])) or lss(x, sen[0]) <= 0.3:
                     if reply:
                         if i != len(data["sentence"])  and not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
                             heart = i+1
@@ -136,7 +129,7 @@ def looking(x, reply=True):
                     replaceWords = False
                 else:
                     replaceWords = True
-                if bool(pattern.search(sen[0])) or (((len(x) + len(sen[0])) / 2) * 0.5) >= Levenshtein.distance(x, sen[0]):
+                if bool(pattern.search(sen[0])) or lss(x, sen[0]) <= 0.3:
                     if reply:
                         if i != len(data["sentence"])  and not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
                             heart = i+1
@@ -173,7 +166,7 @@ def looking(x, reply=True):
             pattern = re.compile(r"{}$".format(into))
             i = 0
             for sen in data["sentence"]:
-                if bool(pattern.search(sen[0])) or (((len(x) + len(sen[0])) / 2) * 0.5) >= Levenshtein.distance(x, sen[0]):
+                if bool(pattern.search(sen[0])) or lss(x, sen[0]) <= 0.3:
                     if reply:
                         if 4 > len(into):
                             replaceWords = False
@@ -216,7 +209,12 @@ def looking(x, reply=True):
 
 
 def isNextAble():
-    if data["sentence"][heart+1][1] == heartLastSpeaker and heart != len(data["sentence"]) and not bool(re.search(settings["mynames"], data["sentence"][heart+1][0])) and lastSentence != data["sentence"][heart+1][0] and lastSentenceInput != data["sentence"][heart+1][0]:
+    global heart
+    print("="*10)
+    print("heart: {}".format(heart+1))
+    print("data[\"sentence\"][heart+1][1]: {}".format(data["sentence"][heart+1][1]))
+    print("heartLastSpeaker: {}".format(heartLastSpeaker))
+    if data["sentence"][heart+1][1] == heartLastSpeaker and heart+1 != len(data["sentence"]) and not bool(re.search(settings["mynames"], data["sentence"][heart+1][0])) and lastSentence != data["sentence"][heart+1][0] and lastSentenceInput != data["sentence"][heart+1][0]:
         return True
     else:
         return False
@@ -229,7 +227,7 @@ def tsuzuki(add=True):
         heart = 0
     try:
         while True:
-            if data["sentence"][heart+1][1] == heartLastSpeaker and heart != len(data["sentence"]) and not bool(re.search(settings["mynames"], data["sentence"][heart][0])) and lastSentence != data["sentence"][heart][0] and lastSentenceInput != data["sentence"][heart][0]:
+            if data["sentence"][heart][1] == heartLastSpeaker and heart != len(data["sentence"]) and not bool(re.search(settings["mynames"], data["sentence"][heart][0])) and lastSentence != data["sentence"][heart][0] and lastSentenceInput != data["sentence"][heart][0]:
                 result = data["sentence"][heart][0]
                 lastSentence = result
                 result = result.replace(data["sentence"][heart][1], settings["myname"])
@@ -254,6 +252,8 @@ def tsuzuki(add=True):
                         break
                     result = result.replace(brainUser[i], actualUser[i])
                     i += 1
+
+                if add: addSentence(result, settings["myname"])
 
                 return result
             heart += 1
@@ -296,7 +296,6 @@ def speakFreely(x, user, add=True):
     #既存の文化に飽きさせる
     if -20 <= heart - maeheart and heart - maeheart <= 20:
         getBored += 1
-        print("飽きかけてる: {}".format(heart - maeheart))
     if getBored > 0:
         getBored -= 2
     if getBored < 0:
