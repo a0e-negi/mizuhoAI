@@ -87,11 +87,12 @@ def looking(x, reply=True):
     #過去の発言をもとに考える
     global heart, heartLastSpeaker, replaceWords, lastSentence, lastSentenceInput
     try:
+        kaisu = 0
         #今の気持ちから考える
         into = x
         while True:
 
-            if 0 == len(into):
+            if 0 == len(into) or kaisu >= 1500:
                 break
             pattern = re.compile(r"{}$".format(into))
             i = heart
@@ -124,13 +125,14 @@ def looking(x, reply=True):
                 if i == len(data["sentence"]) - 1:
                     break
             into = into[1:]
+            kaisu += 1
 
 
         #今の気持ちから少し離れる
         into = x
         while True:
 
-            if 0 == len(into):
+            if 0 == len(into) or kaisu >= 1500:
                 break
             pattern = re.compile(r"{}$".format(into))
             i = heart
@@ -163,6 +165,7 @@ def looking(x, reply=True):
                 if i == len(data["sentence"]) - 1:
                     break
             into = into[1:]
+            kaisu += 1
 
 
 
@@ -171,7 +174,7 @@ def looking(x, reply=True):
         into = x
         while True:
 
-            if 0 == len(into):
+            if 0 == len(into) or kaisu >= 1500:
                 break
             pattern = re.compile(r"{}$".format(into))
             i = 0
@@ -206,6 +209,7 @@ def looking(x, reply=True):
                 if i == len(data["sentence"]) - 1:
                     break
             into = into[1:]
+            kaisu += 1
 
 
 
@@ -218,7 +222,7 @@ def looking(x, reply=True):
         into = x
         while True:
 
-            if 0 == len(into):
+            if 0 == len(into) or kaisu >= 1500:
                 break
             pattern = re.compile(r"{}$".format(into))
             i = heart
@@ -251,13 +255,14 @@ def looking(x, reply=True):
                 if i == len(data["sentence"]) - 1:
                     break
             into = into[1:]
+            kaisu += 1
 
 
         #今の気持ちから少し離れる
         into = x
         while True:
 
-            if 0 == len(into):
+            if 0 == len(into) or kaisu >= 1500:
                 break
             pattern = re.compile(r"{}$".format(into))
             i = heart
@@ -290,6 +295,7 @@ def looking(x, reply=True):
                 if i == len(data["sentence"]) - 1:
                     break
             into = into[1:]
+            kaisu += 1
 
 
 
@@ -298,7 +304,7 @@ def looking(x, reply=True):
         into = x
         while True:
 
-            if 0 == len(into):
+            if 0 == len(into) or kaisu >= 1500:
                 break
             pattern = re.compile(r"{}$".format(into))
             i = 0
@@ -333,6 +339,7 @@ def looking(x, reply=True):
                 if i == len(data["sentence"]) - 1:
                     break
             into = into[1:]
+            kaisu += 1
 
 
 
