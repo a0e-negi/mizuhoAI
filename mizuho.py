@@ -100,7 +100,7 @@ def looking(x, reply=True):
                     replaceWords = False
                 else:
                     replaceWords = True
-                if bool(pattern.search(sen[0])) or calc_leven_dist(x, sen[0]) >= ((len(x)+len(sen[0])) / 2) * 0.3:
+                if bool(pattern.search(sen[0])) or calc_leven_dist(x, sen[0]) <= ((len(x)+len(sen[0])) / 2) * 0.35:
                     if reply:
                         if i != len(data["sentence"]) and data["sentence"][i+1][1] != settings["myname"] and not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
                             heart = i+1
@@ -139,7 +139,7 @@ def looking(x, reply=True):
                     replaceWords = False
                 else:
                     replaceWords = True
-                if bool(pattern.search(sen[0])) or calc_leven_dist(x, sen[0]) >= ((len(x)+len(sen[0])) / 2) * 0.3:
+                if bool(pattern.search(sen[0])) or calc_leven_dist(x, sen[0]) <= ((len(x)+len(sen[0])) / 2) * 0.35:
                     if reply:
                         if i != len(data["sentence"]) and data["sentence"][i+1][1] != settings["myname"] and not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
                             heart = i+1
@@ -176,7 +176,7 @@ def looking(x, reply=True):
             pattern = re.compile(r"{}$".format(into))
             i = 0
             for sen in data["sentence"]:
-                if bool(pattern.search(sen[0])) or calc_leven_dist(x, sen[0]) >= ((len(x)+len(sen[0])) / 2) * 0.3:
+                if bool(pattern.search(sen[0])) or calc_leven_dist(x, sen[0]) <= ((len(x)+len(sen[0])) / 2) * 0.35:
                     if reply:
                         if 4 > len(into):
                             replaceWords = False
@@ -227,7 +227,7 @@ def looking(x, reply=True):
                     replaceWords = False
                 else:
                     replaceWords = True
-                if bool(pattern.search(sen[0])) or calc_leven_dist(x, sen[0]) >= ((len(x)+len(sen[0])) / 2) * 0.3:
+                if bool(pattern.search(sen[0])) or calc_leven_dist(x, sen[0]) <= ((len(x)+len(sen[0])) / 2) * 0.35:
                     if reply:
                         if i != len(data["sentence"]) and not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
                             heart = i+1
@@ -266,7 +266,7 @@ def looking(x, reply=True):
                     replaceWords = False
                 else:
                     replaceWords = True
-                if bool(pattern.search(sen[0])) or calc_leven_dist(x, sen[0]) >= ((len(x)+len(sen[0])) / 2) * 0.3:
+                if bool(pattern.search(sen[0])) or calc_leven_dist(x, sen[0]) <= ((len(x)+len(sen[0])) / 2) * 0.35:
                     if reply:
                         if i != len(data["sentence"]) and not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
                             heart = i+1
@@ -303,7 +303,7 @@ def looking(x, reply=True):
             pattern = re.compile(r"{}$".format(into))
             i = 0
             for sen in data["sentence"]:
-                if bool(pattern.search(sen[0])) or calc_leven_dist(x, sen[0]) >= ((len(x)+len(sen[0])) / 2) * 0.3:
+                if bool(pattern.search(sen[0])) or calc_leven_dist(x, sen[0]) <= ((len(x)+len(sen[0])) / 2) * 0.35:
                     if reply:
                         if 4 > len(into):
                             replaceWords = False
