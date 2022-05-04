@@ -92,7 +92,7 @@ def looking(x, reply=True):
         into = x
         while True:
 
-            if 0 == len(into) or kaisu >= 600:
+            if 0 == len(into) or kaisu >= 1500:
                 break
             pattern = re.compile(r"{}$".format(into))
             i = heart
@@ -118,12 +118,14 @@ def looking(x, reply=True):
                                     heartLastSpeaker = data["sentence"][i+ii+1][1]
                                     return data["sentence"][i+ii+1][0]
                                 ii += 1
+                                kaisu += 1
                     else:
                         heart = i
                         return
                 i += 1
                 if i == len(data["sentence"]) - 1:
                     break
+                kaisu += 1
             into = into[1:]
             kaisu += 1
 
@@ -132,7 +134,7 @@ def looking(x, reply=True):
         into = x
         while True:
 
-            if 0 == len(into) or kaisu >= 600:
+            if 0 == len(into) or kaisu >= 1500:
                 break
             pattern = re.compile(r"{}$".format(into))
             i = heart
@@ -158,12 +160,14 @@ def looking(x, reply=True):
                                     heartLastSpeaker = data["sentence"][i+ii+1][1]
                                     return data["sentence"][i+ii+1][0]
                                 ii += 1
+                                kaisu += 1
                     else:
                         heart = i
                         return
                 i += 1
                 if i == len(data["sentence"]) - 1:
                     break
+                kaisu += 1
             into = into[1:]
             kaisu += 1
 
@@ -174,7 +178,7 @@ def looking(x, reply=True):
         into = x
         while True:
 
-            if 0 == len(into) or kaisu >= 600:
+            if 0 == len(into) or kaisu >= 1500:
                 break
             pattern = re.compile(r"{}$".format(into))
             i = 0
@@ -202,12 +206,14 @@ def looking(x, reply=True):
                                 ii += 1
                                 if i+ii == len(data["sentence"]) - 1:
                                     break
+                                kaisu += 1
                     else:
                         heart = i
                         return
                 i += 1
                 if i == len(data["sentence"]) - 1:
                     break
+                kaisu += 1
             into = into[1:]
             kaisu += 1
 
@@ -222,7 +228,7 @@ def looking(x, reply=True):
         into = x
         while True:
 
-            if 0 == len(into) or kaisu >= 600:
+            if 0 == len(into) or kaisu >= 1500:
                 break
             pattern = re.compile(r"{}$".format(into))
             i = heart
@@ -248,12 +254,14 @@ def looking(x, reply=True):
                                     heartLastSpeaker = data["sentence"][i+ii+1][1]
                                     return data["sentence"][i+ii+1][0]
                                 ii += 1
+                                kaisu += 1
                     else:
                         heart = i
                         return
                 i += 1
                 if i == len(data["sentence"]) - 1:
                     break
+                kaisu += 1
             into = into[1:]
             kaisu += 1
 
@@ -262,7 +270,7 @@ def looking(x, reply=True):
         into = x
         while True:
 
-            if 0 == len(into) or kaisu >= 600:
+            if 0 == len(into) or kaisu >= 1500:
                 break
             pattern = re.compile(r"{}$".format(into))
             i = heart
@@ -288,12 +296,14 @@ def looking(x, reply=True):
                                     heartLastSpeaker = data["sentence"][i+ii+1][1]
                                     return data["sentence"][i+ii+1][0]
                                 ii += 1
+                                kaisu += 1
                     else:
                         heart = i
                         return
                 i += 1
                 if i == len(data["sentence"]) - 1:
                     break
+                kaisu += 1
             into = into[1:]
             kaisu += 1
 
@@ -304,7 +314,7 @@ def looking(x, reply=True):
         into = x
         while True:
 
-            if 0 == len(into) or kaisu >= 600:
+            if 0 == len(into) or kaisu >= 1500:
                 break
             pattern = re.compile(r"{}$".format(into))
             i = 0
@@ -332,12 +342,14 @@ def looking(x, reply=True):
                                 ii += 1
                                 if i+ii == len(data["sentence"]) - 1:
                                     break
+                                kaisu += 1
                     else:
                         heart = i
                         return
                 i += 1
                 if i == len(data["sentence"]) - 1:
                     break
+                kaisu += 1
             into = into[1:]
             kaisu += 1
 
@@ -426,8 +438,8 @@ def addSentence(x, u, noword=False):
 
 def save():
     global direc, data
-    if len(data["sentence"]) >= 1000000:
-        while len(data["sentence"]) >= 1000000:
+    if len(data["sentence"]) >= 1500000:
+        while len(data["sentence"]) >= 1500000:
             data["sentence"].pop()
     with open(direc+"/data.json", "w", encoding="utf8") as f:
         json.dump(data, f, ensure_ascii=False, indent=4, sort_keys=True, separators=(',', ': '))
