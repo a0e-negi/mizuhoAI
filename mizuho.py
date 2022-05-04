@@ -92,7 +92,7 @@ def looking(x, reply=True):
         into = x
         while True:
 
-            if 0 == len(into) or kaisu >= 5000:
+            if 0 == len(into) or kaisu >= 1750:
                 break
             pattern = re.compile(r"{}$".format(into))
             i = heart
@@ -132,7 +132,7 @@ def looking(x, reply=True):
         into = x
         while True:
 
-            if 0 == len(into) or kaisu >= 5000:
+            if 0 == len(into) or kaisu >= 1750:
                 break
             pattern = re.compile(r"{}$".format(into))
             i = heart
@@ -174,7 +174,7 @@ def looking(x, reply=True):
         into = x
         while True:
 
-            if 0 == len(into) or kaisu >= 5000:
+            if 0 == len(into) or kaisu >= 1750:
                 break
             pattern = re.compile(r"{}$".format(into))
             i = 0
@@ -222,7 +222,7 @@ def looking(x, reply=True):
         into = x
         while True:
 
-            if 0 == len(into) or kaisu >= 5000:
+            if 0 == len(into) or kaisu >= 1750:
                 break
             pattern = re.compile(r"{}$".format(into))
             i = heart
@@ -262,7 +262,7 @@ def looking(x, reply=True):
         into = x
         while True:
 
-            if 0 == len(into) or kaisu >= 5000:
+            if 0 == len(into) or kaisu >= 1750:
                 break
             pattern = re.compile(r"{}$".format(into))
             i = heart
@@ -304,7 +304,7 @@ def looking(x, reply=True):
         into = x
         while True:
 
-            if 0 == len(into) or kaisu >= 5000:
+            if 0 == len(into) or kaisu >= 1750:
                 break
             pattern = re.compile(r"{}$".format(into))
             i = 0
