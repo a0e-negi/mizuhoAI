@@ -51,7 +51,7 @@ async def speak(result):
     else:
         await channel.send(result)
         if mizuho.isNextAble():
-            time.sleep(5)
+            time.sleep(2)
             await extraMessage()
 
 
@@ -66,7 +66,7 @@ async def on_ready():
 @client.event
 async def on_message(message):
     global channel, persons, prevTime, lastMessage, messages
-
+    
     if message.channel == channel or bool(re.search(mizuho.settings["mynames"], message.content)) or isinstance(message.channel, discord.DMChannel):
         if message.channel != channel:
             try:

@@ -1,34 +1,3 @@
-def calc_leven_dist(s1, s2):
-        dp_table = []
-        distance = [0] * 3
-        #文字列操作に対するコスト
-        REPLACE_COST = 1
-        INSERT_COST = 1
-        DELETE_COST = 1
-
-        #DPテーブルの初期化
-        for i in range(len(s1) + 1):
-            dp_table.append([0] * (len(s2) + 1))
-            dp_table[i][0] = i
-        for j in range(len(s2) + 1):
-            dp_table[0][j] = j
-
-        #DPテーブルを埋めていく(最後の値が文字列間の距離)
-        for i in range(1, len(s1) + 1):
-            for j in range(1, len(s2) + 1):
-                distance[0] = dp_table[i-1][j] + INSERT_COST
-                distance[1] = dp_table[i][j-1] + DELETE_COST
-                distance[2] = dp_table[i-1][j-1] if s1[i-1] == s2[j-1] else dp_table[i-1][j-1] + REPLACE_COST
-                dp_table[i][j] = min(distance)
-
-
-        return dp_table[i][j]
-
-
-
-
-
-
 
 import re
 import json
@@ -50,8 +19,10 @@ lastSentence = None #最後のbotの言葉
 lastSentenceInput = None #最後に聞いた言葉
 heartLastSpeaker = None #過去に似た話をしてたユーザー
 getBored = 0 #忘れるための値、特定の値以上になると忘れる
+getBored2 = 0 #忘れるための値2、特定の値以上になると忘れる
 maeheart = 0 #一つ前の気持ち
 interface = 0 #クライアントの種類
+lastUser = None #最後に話しかけたユーザー
 
 def initialize(direcectory, interface_):
     #初期化
@@ -87,23 +58,24 @@ def looking(x, reply=True):
     #過去の発言をもとに考える
     global heart, heartLastSpeaker, replaceWords, lastSentence, lastSentenceInput
     try:
-        kaisu = 0
         #今の気持ちから考える
         into = x
         while True:
 
-            if 0 == len(into) or kaisu >= 1500:
+            if len(x)*0.1 >= len(into):
                 break
-            pattern = re.compile(r"{}$".format(into))
+            pattern = re.compile(r"^{}$".format(re.escape(into)))
             i = heart
             for sen in data["sentence"][heart:heart+25]:
-                if 4 > len(into):
+                if i == len(data["sentence"]) - 1:
+                    break
+                if 2 > len(into):
                     replaceWords = False
                 else:
                     replaceWords = True
-                if bool(pattern.search(sen[0])) or calc_leven_dist(x, sen[0]) <= ((len(x)+len(sen[0])) / 2) * 0.35:
+                if bool(pattern.search(sen[0])):
                     if reply:
-                        if i != len(data["sentence"]) and data["sentence"][i+1][1] != settings["myname"] and not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
+                        if data["sentence"][i+1][1] != lastUser and i != len(data["sentence"]) and not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
                             heart = i+1
                             heartLastSpeaker = data["sentence"][i+1][1]
                             return data["sentence"][i+1][0]
@@ -113,39 +85,36 @@ def looking(x, reply=True):
                                 if ii >= 10:
                                     break
                                 replaceWords = False
-                                if i+ii != len(data["sentence"]) and data["sentence"][i+ii+1][1] != settings["myname"] and not bool(re.search(settings["mynames"], data["sentence"][i+ii+1][0])) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+ii+1][0]:
+                                if data["sentence"][i+ii][1] != lastUser and i+ii != len(data["sentence"]) and data["sentence"][i+ii+1][1] != settings["myname"] and not bool(re.search(settings["mynames"], data["sentence"][i+ii+1][0])) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+ii+1][0]:
                                     heart = i+ii+1
                                     heartLastSpeaker = data["sentence"][i+ii+1][1]
                                     return data["sentence"][i+ii+1][0]
                                 ii += 1
-                                kaisu += 1
                     else:
                         heart = i
                         return
                 i += 1
-                if i == len(data["sentence"]) - 1:
-                    break
-                kaisu += 1
             into = into[1:]
-            kaisu += 1
 
 
         #今の気持ちから少し離れる
         into = x
         while True:
 
-            if 0 == len(into) or kaisu >= 1500:
+            if len(x)*0.1 >= len(into):
                 break
-            pattern = re.compile(r"{}$".format(into))
+            pattern = re.compile(r"^{}$".format(re.escape(into)))
             i = heart
-            for sen in data["sentence"][heart-25:heart+25]:
-                if 4 > len(into):
+            for sen in data["sentence"][heart-50:heart+50]:
+                if i == len(data["sentence"]) - 1:
+                    break
+                if 2 > len(into):
                     replaceWords = False
                 else:
                     replaceWords = True
-                if bool(pattern.search(sen[0])) or calc_leven_dist(x, sen[0]) <= ((len(x)+len(sen[0])) / 2) * 0.35:
+                if bool(pattern.search(sen[0])):
                     if reply:
-                        if i != len(data["sentence"]) and data["sentence"][i+1][1] != settings["myname"] and not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
+                        if data["sentence"][i+1][1] != lastUser and i != len(data["sentence"]) and not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
                             heart = i+1
                             heartLastSpeaker = data["sentence"][i+1][1]
                             return data["sentence"][i+1][0]
@@ -155,21 +124,16 @@ def looking(x, reply=True):
                                 if ii >= 10:
                                     break
                                 replaceWords = False
-                                if i+ii != len(data["sentence"]) and data["sentence"][i+ii+1][1] != settings["myname"] and not bool(re.search(settings["mynames"], data["sentence"][i+ii+1][0])) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+ii+1][0]:
+                                if data["sentence"][i+ii][1] != lastUser and i+ii != len(data["sentence"]) and data["sentence"][i+ii+1][1] != settings["myname"] and not bool(re.search(settings["mynames"], data["sentence"][i+ii+1][0])) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+ii+1][0]:
                                     heart = i+ii+1
                                     heartLastSpeaker = data["sentence"][i+ii+1][1]
                                     return data["sentence"][i+ii+1][0]
                                 ii += 1
-                                kaisu += 1
                     else:
                         heart = i
                         return
                 i += 1
-                if i == len(data["sentence"]) - 1:
-                    break
-                kaisu += 1
             into = into[1:]
-            kaisu += 1
 
 
 
@@ -177,19 +141,21 @@ def looking(x, reply=True):
         #より深く考える
         into = x
         while True:
-
-            if 0 == len(into) or kaisu >= 1500:
-                break
-            pattern = re.compile(r"{}$".format(into))
+            if 0 == len(into):
+                pattern = re.compile(r"(.*?)")
+            else:
+                pattern = re.compile(r"^{}$".format(re.escape(into)))
             i = 0
-            for sen in data["sentence"]:
-                if bool(pattern.search(sen[0])) or calc_leven_dist(x, sen[0]) <= ((len(x)+len(sen[0])) / 2) * 0.35:
+            for sen in data["sentence"][heart-35000:heart+15000]:
+                if i == len(data["sentence"]) - 1:
+                    break
+                if bool(pattern.search(sen[0])):
                     if reply:
                         if 4 > len(into):
                             replaceWords = False
                         else:
                             replaceWords = True
-                        if i != len(data["sentence"]) and data["sentence"][i+1][1] != settings["myname"] and not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
+                        if data["sentence"][i+1][1] != lastUser and i != len(data["sentence"]) and not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
                             heart = i+1
                             heartLastSpeaker = data["sentence"][i+1][1]
                             return data["sentence"][i+1][0]
@@ -199,160 +165,18 @@ def looking(x, reply=True):
                                 if ii >= 10:
                                     break
                                 replaceWords = False
-                                if i+ii != len(data["sentence"]) and data["sentence"][i+ii+1][1] != settings["myname"] and not bool(re.search(settings["mynames"], data["sentence"][i+ii+1][0])) and lastSentence != data["sentence"][i+ii+1][0] and lastSentenceInput != data["sentence"][i+ii+1][0]:
+                                if data["sentence"][i+ii][1] != lastUser and i+ii != len(data["sentence"]) and data["sentence"][i+ii+1][1] != settings["myname"] and not bool(re.search(settings["mynames"], data["sentence"][i+ii+1][0])) and lastSentence != data["sentence"][i+ii+1][0] and lastSentenceInput != data["sentence"][i+ii+1][0]:
                                     heart = i+ii+1
                                     heartLastSpeaker = data["sentence"][i+ii+1][1]
                                     return data["sentence"][i+ii+1][0]
                                 ii += 1
                                 if i+ii == len(data["sentence"]) - 1:
                                     break
-                                kaisu += 1
                     else:
                         heart = i
                         return
                 i += 1
-                if i == len(data["sentence"]) - 1:
-                    break
-                kaisu += 1
             into = into[1:]
-            kaisu += 1
-
-
-
-
-
-
-
-        #自分のメッセージもいれる
-        #今の気持ちから考える
-        into = x
-        while True:
-
-            if 0 == len(into) or kaisu >= 1500:
-                break
-            pattern = re.compile(r"{}$".format(into))
-            i = heart
-            for sen in data["sentence"][heart:heart+25]:
-                if 4 > len(into):
-                    replaceWords = False
-                else:
-                    replaceWords = True
-                if bool(pattern.search(sen[0])) or calc_leven_dist(x, sen[0]) <= ((len(x)+len(sen[0])) / 2) * 0.35:
-                    if reply:
-                        if i != len(data["sentence"]) and not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
-                            heart = i+1
-                            heartLastSpeaker = data["sentence"][i+1][1]
-                            return data["sentence"][i+1][0]
-                        else:
-                            ii = 0
-                            while True:
-                                if ii >= 10:
-                                    break
-                                replaceWords = False
-                                if i+ii != len(data["sentence"]) and not bool(re.search(settings["mynames"], data["sentence"][i+ii+1][0])) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+ii+1][0]:
-                                    heart = i+ii+1
-                                    heartLastSpeaker = data["sentence"][i+ii+1][1]
-                                    return data["sentence"][i+ii+1][0]
-                                ii += 1
-                                kaisu += 1
-                    else:
-                        heart = i
-                        return
-                i += 1
-                if i == len(data["sentence"]) - 1:
-                    break
-                kaisu += 1
-            into = into[1:]
-            kaisu += 1
-
-
-        #今の気持ちから少し離れる
-        into = x
-        while True:
-
-            if 0 == len(into) or kaisu >= 1500:
-                break
-            pattern = re.compile(r"{}$".format(into))
-            i = heart
-            for sen in data["sentence"][heart-25:heart+25]:
-                if 4 > len(into):
-                    replaceWords = False
-                else:
-                    replaceWords = True
-                if bool(pattern.search(sen[0])) or calc_leven_dist(x, sen[0]) <= ((len(x)+len(sen[0])) / 2) * 0.35:
-                    if reply:
-                        if i != len(data["sentence"]) and not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
-                            heart = i+1
-                            heartLastSpeaker = data["sentence"][i+1][1]
-                            return data["sentence"][i+1][0]
-                        else:
-                            ii = 0
-                            while True:
-                                if ii >= 10:
-                                    break
-                                replaceWords = False
-                                if i+ii != len(data["sentence"]) and not bool(re.search(settings["mynames"], data["sentence"][i+ii+1][0])) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+ii+1][0]:
-                                    heart = i+ii+1
-                                    heartLastSpeaker = data["sentence"][i+ii+1][1]
-                                    return data["sentence"][i+ii+1][0]
-                                ii += 1
-                                kaisu += 1
-                    else:
-                        heart = i
-                        return
-                i += 1
-                if i == len(data["sentence"]) - 1:
-                    break
-                kaisu += 1
-            into = into[1:]
-            kaisu += 1
-
-
-
-
-        #より深く考える
-        into = x
-        while True:
-
-            if 0 == len(into) or kaisu >= 1500:
-                break
-            pattern = re.compile(r"{}$".format(into))
-            i = 0
-            for sen in data["sentence"]:
-                if bool(pattern.search(sen[0])) or calc_leven_dist(x, sen[0]) <= ((len(x)+len(sen[0])) / 2) * 0.35:
-                    if reply:
-                        if 4 > len(into):
-                            replaceWords = False
-                        else:
-                            replaceWords = True
-                        if i != len(data["sentence"]) and not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
-                            heart = i+1
-                            heartLastSpeaker = data["sentence"][i+1][1]
-                            return data["sentence"][i+1][0]
-                        else:
-                            ii = 0
-                            while True:
-                                if ii >= 10:
-                                    break
-                                replaceWords = False
-                                if i+ii != len(data["sentence"]) and not bool(re.search(settings["mynames"], data["sentence"][i+ii+1][0])) and lastSentence != data["sentence"][i+ii+1][0] and lastSentenceInput != data["sentence"][i+ii+1][0]:
-                                    heart = i+ii+1
-                                    heartLastSpeaker = data["sentence"][i+ii+1][1]
-                                    return data["sentence"][i+ii+1][0]
-                                ii += 1
-                                if i+ii == len(data["sentence"]) - 1:
-                                    break
-                                kaisu += 1
-                    else:
-                        heart = i
-                        return
-                i += 1
-                if i == len(data["sentence"]) - 1:
-                    break
-                kaisu += 1
-            into = into[1:]
-            kaisu += 1
-
 
 
 
@@ -384,6 +208,7 @@ def tsuzuki(add=True):
         while True:
             if a >= 100:
                 return None
+            #if data["sentence"][heart][1] == heartLastSpeaker and heart != len(data["sentence"]) and not bool(re.search(settings["mynames"], data["sentence"][heart][0])) and lastSentence != data["sentence"][heart][0] and lastSentenceInput != data["sentence"][heart][0]:
             if data["sentence"][heart][1] == heartLastSpeaker and heart != len(data["sentence"]) and not bool(re.search(settings["mynames"], data["sentence"][heart][0])) and lastSentence != data["sentence"][heart][0] and lastSentenceInput != data["sentence"][heart][0]:
                 result = data["sentence"][heart][0]
                 lastSentence = result
@@ -438,8 +263,8 @@ def addSentence(x, u, noword=False):
 
 def save():
     global direc, data
-    if len(data["sentence"]) >= 1500000:
-        while len(data["sentence"]) >= 1500000:
+    if len(data["sentence"]) >= 1000000:
+        while len(data["sentence"]) >= 1000000:
             data["sentence"].pop()
     with open(direc+"/data.json", "w", encoding="utf8") as f:
         json.dump(data, f, ensure_ascii=False, indent=4, sort_keys=True, separators=(',', ': '))
@@ -449,21 +274,44 @@ def save():
 
 def speakFreely(x, user, add=True):
     #自由に話す
-    global heart, actualUser, brainUser, wordMemory, tokenizer, lastSentence, lastSentenceInput, getBored, maeheart
+    global heart, actualUser, brainUser, wordMemory, tokenizer, lastSentence, lastSentenceInput, getBored, getBored2, maeheart
 
     #既存の文化に飽きさせる
-    if -20 <= heart - maeheart and heart - maeheart <= 20:
+    if -10 <= heart - maeheart and heart - maeheart <= 10:
         getBored += 1
-    if getBored > 0:
-        getBored -= 2
+    else:
+        getBored -= 0.5
     if getBored < 0:
         getBored = 0
     print("飽き度: {}".format(getBored))
 
-    if getBored >= 12 and random.random() >= 0.3:
+    if getBored >= 8:
         getBored = 0
         heart = random.randint(0, len(data["sentence"]) - 50)
-        print("飽きたので別の話 heart: {}".format(heart))
+        print("飽きた heart: {}".format(heart))
+
+
+
+    #既存の文化に飽きさせる2
+    if -16 <= heart - maeheart and heart - maeheart <= 16:
+        getBored2 += 1
+    else:
+        getBored2 -= 0.5
+    if getBored2 < 0:
+        getBored2 = 0
+    print("飽き度2: {}".format(getBored2))
+
+    if getBored2 >= 3:
+        getBored2 = 0
+        heart = random.randint(0, len(data["sentence"]) - 50)
+        if 0 > heart-4: looking(data["sentence"][heart-4][0])
+        if 0 > heart-3: looking(data["sentence"][heart-3][0])
+        if 0 > heart-2: looking(data["sentence"][heart-2][0])
+        if 0 > heart-1: looking(data["sentence"][heart-1][0])
+        looking(data["sentence"][heart][0])
+        print("飽きた2 heart: {}".format(heart))
+
+
 
     #考える
     result = looking(x)
@@ -482,6 +330,7 @@ def speakFreely(x, user, add=True):
 
     print("brainUser: {}".format(brainUser))
     print("actualUser: {}".format(actualUser))
+    print("lastUser: {}".format(lastUser))
 
 
     #重要な単語を最大5個置き換える
@@ -517,6 +366,7 @@ def receive(x, u, add=True):
     global lastSentenceInput
     if x == None or u == None: return
     lastSentenceInput = x
+    lastUser = u
     if add: addSentence(x, u)
     looking(x, reply=False)
     if [u] not in data["users"]:
