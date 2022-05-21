@@ -75,7 +75,7 @@ def looking(x, reply=True):
                     replaceWords = True
                 if bool(pattern.search(sen[0])):
                     if reply:
-                        if data["sentence"][i+1][1] != lastUser and i != len(data["sentence"]) and not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
+                        if settings["myname"] != data["sentence"][i+1][1] and data["sentence"][i+1][1] != lastUser and i != len(data["sentence"]) and not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
                             heart = i+1
                             heartLastSpeaker = data["sentence"][i+1][1]
                             return data["sentence"][i+1][0]
@@ -85,10 +85,10 @@ def looking(x, reply=True):
                                 if ii >= 10:
                                     break
                                 replaceWords = False
-                                if data["sentence"][i+ii][1] != lastUser and i+ii != len(data["sentence"]) and data["sentence"][i+ii+1][1] != settings["myname"] and not bool(re.search(settings["mynames"], data["sentence"][i+ii+1][0])) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+ii+1][0]:
-                                    heart = i+ii+1
-                                    heartLastSpeaker = data["sentence"][i+ii+1][1]
-                                    return data["sentence"][i+ii+1][0]
+                                if settings["myname"] != data["sentence"][i+ii][1] and data["sentence"][i+ii][1] != lastUser and i+ii != len(data["sentence"]) and data["sentence"][i+ii][1] != settings["myname"] and not bool(re.search(settings["mynames"], data["sentence"][i+ii][0])) and lastSentence != data["sentence"][i+ii][0] and lastSentenceInput != data["sentence"][i+ii][0]:
+                                    heart = i+ii
+                                    heartLastSpeaker = data["sentence"][i+ii][1]
+                                    return data["sentence"][i+ii][0]
                                 ii += 1
                     else:
                         heart = i
@@ -114,7 +114,7 @@ def looking(x, reply=True):
                     replaceWords = True
                 if bool(pattern.search(sen[0])):
                     if reply:
-                        if data["sentence"][i+1][1] != lastUser and i != len(data["sentence"]) and not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
+                        if settings["myname"] != data["sentence"][i+1][1] and data["sentence"][i+1][1] != lastUser and i != len(data["sentence"]) and not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
                             heart = i+1
                             heartLastSpeaker = data["sentence"][i+1][1]
                             return data["sentence"][i+1][0]
@@ -124,10 +124,10 @@ def looking(x, reply=True):
                                 if ii >= 10:
                                     break
                                 replaceWords = False
-                                if data["sentence"][i+ii][1] != lastUser and i+ii != len(data["sentence"]) and data["sentence"][i+ii+1][1] != settings["myname"] and not bool(re.search(settings["mynames"], data["sentence"][i+ii+1][0])) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+ii+1][0]:
-                                    heart = i+ii+1
-                                    heartLastSpeaker = data["sentence"][i+ii+1][1]
-                                    return data["sentence"][i+ii+1][0]
+                                if settings["myname"] != data["sentence"][i+ii][1] and data["sentence"][i+ii][1] != lastUser and i+ii != len(data["sentence"]) and data["sentence"][i+ii][1] != settings["myname"] and not bool(re.search(settings["mynames"], data["sentence"][i+ii][0])) and lastSentence != data["sentence"][i+ii][0] and lastSentenceInput != data["sentence"][i+ii][0]:
+                                    heart = i+ii
+                                    heartLastSpeaker = data["sentence"][i+ii][1]
+                                    return data["sentence"][i+ii][0]
                                 ii += 1
                     else:
                         heart = i
@@ -155,7 +155,7 @@ def looking(x, reply=True):
                             replaceWords = False
                         else:
                             replaceWords = True
-                        if data["sentence"][i+1][1] != lastUser and i != len(data["sentence"]) and not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
+                        if settings["myname"] != data["sentence"][i+1][1] and data["sentence"][i+1][1] != lastUser and i != len(data["sentence"]) and not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
                             heart = i+1
                             heartLastSpeaker = data["sentence"][i+1][1]
                             return data["sentence"][i+1][0]
@@ -165,10 +165,10 @@ def looking(x, reply=True):
                                 if ii >= 10:
                                     break
                                 replaceWords = False
-                                if data["sentence"][i+ii][1] != lastUser and i+ii != len(data["sentence"]) and data["sentence"][i+ii+1][1] != settings["myname"] and not bool(re.search(settings["mynames"], data["sentence"][i+ii+1][0])) and lastSentence != data["sentence"][i+ii+1][0] and lastSentenceInput != data["sentence"][i+ii+1][0]:
-                                    heart = i+ii+1
-                                    heartLastSpeaker = data["sentence"][i+ii+1][1]
-                                    return data["sentence"][i+ii+1][0]
+                                if settings["myname"] != data["sentence"][i+ii][1] and data["sentence"][i+ii][1] != lastUser and i+ii != len(data["sentence"]) and data["sentence"][i+ii][1] != settings["myname"] and not bool(re.search(settings["mynames"], data["sentence"][i+ii][0])) and lastSentence != data["sentence"][i+ii][0] and lastSentenceInput != data["sentence"][i+ii][0]:
+                                    heart = i+ii
+                                    heartLastSpeaker = data["sentence"][i+ii][1]
+                                    return data["sentence"][i+ii][0]
                                 ii += 1
                                 if i+ii == len(data["sentence"]) - 1:
                                     break
@@ -209,7 +209,7 @@ def tsuzuki(add=True):
             if a >= 100:
                 return None
             #if data["sentence"][heart][1] == heartLastSpeaker and heart != len(data["sentence"]) and not bool(re.search(settings["mynames"], data["sentence"][heart][0])) and lastSentence != data["sentence"][heart][0] and lastSentenceInput != data["sentence"][heart][0]:
-            if data["sentence"][heart][1] == heartLastSpeaker and heart != len(data["sentence"]) and not bool(re.search(settings["mynames"], data["sentence"][heart][0])) and lastSentence != data["sentence"][heart][0] and lastSentenceInput != data["sentence"][heart][0]:
+            if settings["myname"] != data["sentence"][heart][1] and data["sentence"][heart][1] == heartLastSpeaker and heart != len(data["sentence"]) and not bool(re.search(settings["mynames"], data["sentence"][heart][0])) and lastSentence != data["sentence"][heart][0] and lastSentenceInput != data["sentence"][heart][0]:
                 result = data["sentence"][heart][0]
                 lastSentence = result
                 result = result.replace(data["sentence"][heart][1], settings["myname"])
@@ -301,14 +301,15 @@ def speakFreely(x, user, add=True):
         getBored2 = 0
     print("飽き度2: {}".format(getBored2))
 
-    if getBored2 >= 3:
+    if getBored2 >= 2:
         getBored2 = 0
+        heart_ = heart
         heart = random.randint(0, len(data["sentence"]) - 50)
-        if 0 > heart-4: looking(data["sentence"][heart-4][0])
-        if 0 > heart-3: looking(data["sentence"][heart-3][0])
-        if 0 > heart-2: looking(data["sentence"][heart-2][0])
-        if 0 > heart-1: looking(data["sentence"][heart-1][0])
-        looking(data["sentence"][heart][0])
+        if 0 > heart_-4: looking(data["sentence"][heart_-4][0])
+        if 0 > heart_-3: looking(data["sentence"][heart_-3][0])
+        if 0 > heart_-2: looking(data["sentence"][heart_-2][0])
+        if 0 > heart_-1: looking(data["sentence"][heart_-1][0])
+        looking(data["sentence"][heart_][0])
         print("飽きた2 heart: {}".format(heart))
 
 
