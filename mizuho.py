@@ -61,13 +61,12 @@ def looking(x, reply=True):
         #今の気持ちから考える
         into = x
         while True:
-
             if len(x)*0.1 >= len(into):
                 break
-            pattern = re.compile(r"^{}$".format(re.escape(into)))
+            pattern = re.compile(r".*{}$".format(re.escape(into)))
             i = heart
             for sen in data["sentence"][heart:heart+25]:
-                if i == len(data["sentence"]) - 1:
+                if i >= len(data["sentence"]) - 1:
                     break
                 if 2 > len(into):
                     replaceWords = False
@@ -103,10 +102,10 @@ def looking(x, reply=True):
 
             if len(x)*0.1 >= len(into):
                 break
-            pattern = re.compile(r"^{}$".format(re.escape(into)))
+            pattern = re.compile(r".*{}$".format(re.escape(into)))
             i = heart
             for sen in data["sentence"][heart-50:heart+50]:
-                if i == len(data["sentence"]) - 1:
+                if i >= len(data["sentence"]) - 1:
                     break
                 if 2 > len(into):
                     replaceWords = False
@@ -141,13 +140,12 @@ def looking(x, reply=True):
         #より深く考える
         into = x
         while True:
-            if 0 == len(into):
-                pattern = re.compile(r"(.*?)")
-            else:
-                pattern = re.compile(r"^{}$".format(re.escape(into)))
+            if len(x)*0.1 >= len(into):
+                break
+            pattern = re.compile(r".*{}$".format(re.escape(into)))
             i = 0
             for sen in data["sentence"][heart-35000:heart+15000]:
-                if i == len(data["sentence"]) - 1:
+                if i >= len(data["sentence"]) - 1:
                     break
                 if bool(pattern.search(sen[0])):
                     if reply:
