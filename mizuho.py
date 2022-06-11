@@ -79,13 +79,6 @@ def looking(x, reply=True):
                             heart = i+1
                             heartLastSpeaker = data["sentence"][i+1][1]
                             return data["sentence"][i+1][0]
-                        else:
-                            if ii > 15:
-                                heart = i
-                                ii = 0
-                                return
-                            else:
-                                ii += 1
                     else:
                         heart = i
                         return
@@ -115,13 +108,6 @@ def looking(x, reply=True):
                             heart = i+1
                             heartLastSpeaker = data["sentence"][i+1][1]
                             return data["sentence"][i+1][0]
-                        else:
-                            if ii > 15:
-                                heart = i
-                                ii = 0
-                                return
-                            else:
-                                ii += 1
                     else:
                         heart = i
                         return
@@ -148,13 +134,6 @@ def looking(x, reply=True):
                             heart = i+1
                             heartLastSpeaker = data["sentence"][i+1][1]
                             return data["sentence"][i+1][0]
-                        else:
-                            if ii > 15:
-                                heart = i
-                                ii = 0
-                                return
-                            else:
-                                ii += 1
                     else:
                         heart = i
                         return
