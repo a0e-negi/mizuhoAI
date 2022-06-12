@@ -49,7 +49,6 @@ async def speak(result):
             except:
                 print("チャンネルを移動しました: DM")
     else:
-        lastMessage = result
         await channel.send(result)
         if mizuho.isNextAble():
             time.sleep(2)
@@ -68,7 +67,7 @@ async def on_ready():
 async def on_message(message):
     global channel, persons, prevTime, lastMessage, messages
     
-    if message.channel == channel or bool(re.search(mizuho.settings["mynames"], message.content)) or bool(re.search(mizuho.settings["mynames"], message.embeds[0].to_dict()["description"])) or isinstance(message.channel, discord.DMChannel):
+    if message.channel == channel or bool(re.search(mizuho.settings["mynames"], message.content)) or isinstance(message.channel, discord.DMChannel):
         if message.channel != channel:
             try:
                 print("チャンネルを移動しました: {}".format(message.channel.name))
@@ -81,54 +80,31 @@ async def on_message(message):
             return
         if message.author.name not in persons:
             persons.append(message.author.name)
-        if message.embeds:
-            embed = message.embeds[0].to_dict()
-            
-            if embed["author"] == client.user or lastMessage == embed["description"]:
-                return
-            if embed["description"] == None:
-                return
-            if embed["description"] == "mizuho!mode 0":
-                await message.channel.send("沈黙モードに切り替える")
-                setMode(0)
-                return
-            if embed["description"] == "mizuho!mode 1":
-                await message.channel.send("通常モードに切り替える")
-                setMode(1)
-                return
+        if message.content == "":
+            return
+        if message.content == None:
+            return
 
-            print("受信: {}".format(embed["description"]))
-            prevTime = time.time()
-            lastMessage = embed["description"]
-            if random.randint(1, len(persons) - 1) == (len(persons) - 1) or bool(re.search(mizuho.settings["mynames"], embed["description"])):
-                mizuho.receive(embed["description"], embed["author"]["name"])
-                result = mizuho.speakFreely(embed["description"], embed["author"]["name"])
-                print("{}: {}".format(mizuho.settings["myname"], result))
-                await speak(result)
-            else:
-                mizuho.receive(embed["description"], embed["author"]["name"])
 
+        if message.content == "mizuho!mode 0":
+            await message.channel.send("沈黙モードに切り替える")
+            setMode(0)
+            return
+        if message.content == "mizuho!mode 1":
+            await message.channel.send("通常モードに切り替える")
+            setMode(1)
+            return
+
+        print("受信: {}".format(message.content))
+        lastMessage = message
+        prevTime = time.time()
+        lastMessage = message
+        if random.randint(1, len(persons) - 1) == (len(persons) - 1) or bool(re.search(mizuho.settings["mynames"], message.content)):
+            mizuho.receive(message.content, message.author.name)
+            if mode == 1:
+                messages.append(message)
         else:
-            if message.content == None:
-                return
-            if message.content == "mizuho!mode 0":
-                await message.channel.send("沈黙モードに切り替える")
-                setMode(0)
-                return
-            if message.content == "mizuho!mode 1":
-                await message.channel.send("通常モードに切り替える")
-                setMode(1)
-                return
-
-            print("受信: {}".format(message.content))
-            prevTime = time.time()
-            lastMessage = message.content
-            if random.randint(1, len(persons) - 1) == (len(persons) - 1) or bool(re.search(mizuho.settings["mynames"], message.content)):
-                mizuho.receive(message.content, message.author.name)
-                if mode == 1:
-                    messages.append(message)
-            else:
-                mizuho.receive(message.content, message.author.name)
+            mizuho.receive(message.content, message.author.name)
 
 
 async def extraMessage():
@@ -141,12 +117,14 @@ async def extraMessage():
 
 
 i = 0
+ii = 0
 @tasks.loop(seconds=6)
 async def cron():
     try:
-        global persons, prevTime, lastMessage, i, messages
+        global persons, prevTime, lastMessage, i, ii, messages
         
         if len(messages) != 0:
+            ii = 0
             result = mizuho.speakFreely(messages[-1].content, messages[-1].author.name)
             if result == None:
                 messages = []
@@ -158,9 +136,13 @@ async def cron():
         nowTime = time.time()
         if nowTime >= prevTime + 20:
             print("沈黙を検知")
+            if ii >= 3:
+                print("睡眠中")
+                return
             if i >= 3:
                 persons = [mizuho.settings["myname"]]
                 i = 0
+                ii += 1
             if channel != None and lastMessage != None:
                 if random.randint(1, len(persons)) == len(persons) and mode == 1:
                     result = mizuho.tsuzuki()
