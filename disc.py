@@ -145,10 +145,17 @@ async def cron():
                 ii += 1
             if channel != None and lastMessage != None:
                 if random.randint(1, len(persons)) == len(persons) and mode == 1:
-                    result = mizuho.tsuzuki()
-                    print("{}: {}".format(mizuho.settings["myname"], result))
-                    if result != None:
-                        await speak(result)
+                    if len(persons) == 1:
+                        if random.randint(1, 4) == 4 and mode == 1:
+                            result = mizuho.tsuzuki()
+                            print("{}: {}".format(mizuho.settings["myname"], result))
+                            if result != None:
+                                await speak(result)
+                    else:
+                        result = mizuho.tsuzuki()
+                        print("{}: {}".format(mizuho.settings["myname"], result))
+                        if result != None:
+                            await speak(result)
             i += 1
             prevTime = time.time()
     except:
