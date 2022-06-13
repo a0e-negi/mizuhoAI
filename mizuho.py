@@ -44,6 +44,8 @@ def initialize(direcectory, interface_):
     heart = len(data["sentence"]) - 50
     with open(direc+"/data_backup.json", "w", encoding="utf8") as f:
         json.dump(data, f, ensure_ascii=False, indent=4, sort_keys=True, separators=(',', ': '))
+    
+    
 
 def load():
     #データを読み込む
@@ -61,7 +63,7 @@ def looking(x, reply=True):
         #今の気持ちから考える
         into = x
         while True:
-            if len(x)*0.1 >= len(into):
+            if len(into) == 0:
                 break
             pattern = re.compile(r".*{}$".format(re.escape(into)))
             i = heart
@@ -75,7 +77,7 @@ def looking(x, reply=True):
                     replaceWords = True
                 if bool(pattern.search(sen[0])):
                     if reply:
-                        if data["sentence"][i+1][1] != settings["myname"] and i != len(data["sentence"]) and not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
+                        if data["sentence"][i+1][1] != settings["myname"] and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
                             heart = i+1
                             heartLastSpeaker = data["sentence"][i+1][1]
                             return data["sentence"][i+1][0]
@@ -90,7 +92,7 @@ def looking(x, reply=True):
         into = x
         while True:
 
-            if len(x)*0.1 >= len(into):
+            if len(into) == 0:
                 break
             pattern = re.compile(r".*{}$".format(re.escape(into)))
             i = heart
@@ -104,7 +106,7 @@ def looking(x, reply=True):
                     replaceWords = True
                 if bool(pattern.search(sen[0])):
                     if reply:
-                        if data["sentence"][i+1][1] != settings["myname"] and i != len(data["sentence"]) and not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
+                        if data["sentence"][i+1][1] != settings["myname"] and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
                             heart = i+1
                             heartLastSpeaker = data["sentence"][i+1][1]
                             return data["sentence"][i+1][0]
@@ -120,7 +122,7 @@ def looking(x, reply=True):
         #より深く考える
         into = x
         while True:
-            if len(x)*0.1 >= len(into):
+            if len(into) == 0:
                 break
             pattern = re.compile(r".*{}$".format(re.escape(into)))
             i = 0
@@ -130,7 +132,7 @@ def looking(x, reply=True):
                     break
                 if bool(pattern.search(sen[0])):
                     if reply:
-                        if data["sentence"][i+1][1] != settings["myname"] and i != len(data["sentence"]) and not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
+                        if data["sentence"][i+1][1] != settings["myname"] and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
                             heart = i+1
                             heartLastSpeaker = data["sentence"][i+1][1]
                             return data["sentence"][i+1][0]
@@ -171,7 +173,7 @@ def tsuzuki(add=True):
             if a >= 100:
                 return None
             #if data["sentence"][heart][1] == heartLastSpeaker and heart != len(data["sentence"]) and not bool(re.search(settings["mynames"], data["sentence"][heart][0])) and lastSentence != data["sentence"][heart][0] and lastSentenceInput != data["sentence"][heart][0]:
-            if data["sentence"][heart][1] == heartLastSpeaker and heart != len(data["sentence"]) and not bool(re.search(settings["mynames"], data["sentence"][heart][0])) and lastSentence != data["sentence"][heart][0] and lastSentenceInput != data["sentence"][heart][0]:
+            if data["sentence"][heart][1] == heartLastSpeaker and heart != len(data["sentence"]) and lastSentence != data["sentence"][heart][0] and lastSentenceInput != data["sentence"][heart][0]:
                 result = data["sentence"][heart][0]
                 lastSentence = result
                 result = result.replace(data["sentence"][heart][1], settings["myname"])
@@ -192,7 +194,7 @@ def tsuzuki(add=True):
 
                 i = 0
                 while True:
-                    if len(brainUser) >= i:
+                    if len(brainUser) <= i:
                         break
                     result = result.replace(brainUser[i], actualUser[i])
                     i += 1
@@ -288,8 +290,8 @@ def speakFreely(x, user, add=True):
     brainUser.append(data["sentence"][heart-1][1])
     #古いユーザーの記録を消す
     if len(brainUser) >= 5:
-        brainUser = brainUser[-5:-1]
-        actualUser = actualUser[-5:-1]
+        brainUser = brainUser[-6:-1]
+        actualUser = actualUser[-6:-1]
 
     print("brainUser: {}".format(brainUser))
     print("actualUser: {}".format(actualUser))
@@ -312,7 +314,7 @@ def speakFreely(x, user, add=True):
 
     i = 0
     while True:
-        if len(brainUser) >= i:
+        if len(brainUser) <= i:
             break
         result = result.replace(brainUser[i], actualUser[i])
         i += 1

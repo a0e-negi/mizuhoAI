@@ -111,7 +111,7 @@ async def extraMessage():
     if mode == 1:
         print("追加メッセージ送信")
         result = mizuho.tsuzuki()
-        print("みずほ: {}".format(result))
+        print("{}: {}".format(mizuho.settings["myname"], result))
         if result != None:
             await speak(result)
 
@@ -124,6 +124,7 @@ async def cron():
         global persons, prevTime, lastMessage, i, ii, messages
         
         if len(messages) != 0:
+            print(persons)
             ii = 0
             result = mizuho.speakFreely(messages[-1].content, messages[-1].author.name)
             if result == None:
@@ -135,9 +136,11 @@ async def cron():
 
         nowTime = time.time()
         if nowTime >= prevTime + 20:
+            print(persons)
             print("沈黙を検知")
             if ii >= 3:
                 print("睡眠中")
+                prevTime = time.time()
                 return
             if i >= 3:
                 persons = [mizuho.settings["myname"]]
