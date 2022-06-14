@@ -12,7 +12,7 @@ else:
 persons = [mizuho.settings["myname"]]
 channel = None
 lastMessage = None
-messages = []
+lastUser = None
 prevTime = time.time()
 
 
@@ -50,9 +50,6 @@ async def speak(result):
                 print("チャンネルを移動しました: DM")
     else:
         await channel.send(result)
-        if mizuho.isNextAble():
-            time.sleep(2)
-            await extraMessage()
 
 
 # 起動時に動作する処理
@@ -65,7 +62,7 @@ async def on_ready():
 # メッセージ受信時に動作する処理
 @client.event
 async def on_message(message):
-    global channel, persons, prevTime, lastMessage, messages
+    global channel, persons, prevTime, lastMessage, lastUser
     
     if message.channel == channel or bool(re.search(mizuho.settings["mynames"], message.content)) or isinstance(message.channel, discord.DMChannel):
         if message.channel != channel:
@@ -97,15 +94,11 @@ async def on_message(message):
 
         print("受信: {}".format(message.content))
         lastMessage = message
+        lastUser = message.author.name
         prevTime = time.time()
         lastMessage = message
-        if random.randint(1, len(persons) - 1) == (len(persons) - 1) or bool(re.search(mizuho.settings["mynames"], message.content)):
-            mizuho.receive(message.content, message.author.name)
-            if mode == 1:
-                messages.append(message)
-        else:
-            mizuho.receive(message.content, message.author.name)
-
+        mizuho.receive(message.content, message.author.name)
+        
 
 async def extraMessage():
     if mode == 1:
@@ -121,18 +114,7 @@ ii = 0
 @tasks.loop(seconds=6)
 async def cron():
     try:
-        global persons, prevTime, lastMessage, i, ii, messages
-        
-        if len(messages) != 0:
-            print(persons)
-            ii = 0
-            result = mizuho.speakFreely(messages[-1].content, messages[-1].author.name)
-            if result == None:
-                messages = []
-                return
-            print("{}: {}".format(mizuho.settings["myname"], result))
-            await speak(result)
-            messages = []
+        global persons, prevTime, lastMessage, i, ii
 
         nowTime = time.time()
         if nowTime >= prevTime + 20:
