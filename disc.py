@@ -42,10 +42,12 @@ def getResponseSentence(model, sentencies):
     h = F.relu(model.H(x_k))
     att.append(h.data[0])
     w = F.relu(model.W(h))
-    w2 = F.relu(model.W2(w))
-    w3 = F.relu(model.W3(w2))
-    w4 = F.relu(model.W4(w3))
-    wid = np.argmax(F.softmax(model.W5(w4)).data[0])
+    w2 = F.relu(model.W2(h))
+    w3 = F.relu(model.W3(h))
+    w4 = F.relu(model.W4(h))
+    wid = np.argmax(F.softmax(model.W5(
+        Variable(np.array([chainer.functions.concat([w.data[0], w2.data[0], w3.data[0], w4.data[0]], axis=0).data], dtype=np.float32))
+    )).data[0])
     res = id2wd[wid]
     loop = 0
     while (wid != bvocab['<eos>']) and (loop <= 30):
@@ -61,10 +63,12 @@ def getResponseSentence(model, sentencies):
         
         h = F.relu(model.H2(Variable(np.array([chainer.functions.concat([x_k.data[0], c[0]], axis=0).data], dtype=np.float32))))
         w = F.relu(model.W(h))
-        w2 = F.relu(model.W2(w))
-        w3 = F.relu(model.W3(w2))
-        w4 = F.relu(model.W4(w3))
-        wid = np.argmax(F.softmax(model.W5(w4)).data[0])
+        w2 = F.relu(model.W2(h))
+        w3 = F.relu(model.W3(h))
+        w4 = F.relu(model.W4(h))
+        wid = np.argmax(F.softmax(model.W5(
+            Variable(np.array([chainer.functions.concat([w.data[0], w2.data[0], w3.data[0], w4.data[0]], axis=0).data], dtype=np.float32))
+        )).data[0])
         if wid in id2wd:
             res += id2wd[wid] 
         loop += 1
@@ -76,7 +80,7 @@ def getResponseSentence(model, sentencies):
 
 alines, blines, avocab, av, bvocab, bv, id2wd, extra = np.load("data.npy", allow_pickle=True)
 
-demb = 500
+demb = 100
 model = Model.ConversationModel(av, bv, avocab, bvocab, demb)
 serializers.load_npz(db, model)
 optimizer = optimizers.Adam()
