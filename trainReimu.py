@@ -14,8 +14,10 @@ demb = 300
 model = Model.ConversationModel(av, bv, avocab, bvocab, demb)
 optimizer = optimizers.Adam()
 optimizer.setup(model)
-#serializers.load_npz('reimu.model', model)
-
+try:
+    serializers.load_npz('reimu.model', model)
+except:
+    pass
 
 into = []
 with open("input_style.txt", "r", encoding="utf-8") as f:
