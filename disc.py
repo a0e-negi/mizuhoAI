@@ -46,7 +46,7 @@ def getResponseSentence(model, sentencies):
     w3 = F.relu(model.W3(h))
     w4 = F.relu(model.W4(h))
     wid = np.argmax(F.softmax(model.W5(
-        Variable(np.array([chainer.functions.concat([w.data[0], w2.data[0], w3.data[0], w4.data[0]], axis=0).data], dtype=np.float32))
+        np.array([chainer.functions.concat([w.data[0], w2.data[0], w3.data[0], w4.data[0]], axis=0).data], dtype=np.float32)
     )).data[0])
     res = id2wd[wid]
     loop = 0
@@ -67,7 +67,7 @@ def getResponseSentence(model, sentencies):
         w3 = F.relu(model.W3(h))
         w4 = F.relu(model.W4(h))
         wid = np.argmax(F.softmax(model.W5(
-            Variable(np.array([chainer.functions.concat([w.data[0], w2.data[0], w3.data[0], w4.data[0]], axis=0).data], dtype=np.float32))
+            np.array([chainer.functions.concat([w.data[0], w2.data[0], w3.data[0], w4.data[0]], axis=0).data], dtype=np.float32)
         )).data[0])
         if wid in id2wd:
             res += id2wd[wid] 
