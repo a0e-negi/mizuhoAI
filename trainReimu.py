@@ -10,7 +10,7 @@ import Model
 
 alines, blines, avocab, av, bvocab, bv, id2wd, extra = np.load("data.npy", allow_pickle=True)
 
-demb = 100
+demb = 500
 model = Model.ConversationModel(av, bv, avocab, bvocab, demb)
 optimizer = optimizers.Adam()
 optimizer.setup(model)

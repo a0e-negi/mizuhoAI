@@ -46,7 +46,7 @@ def getResponseSentence(model, sentencies):
     w3 = F.relu(model.W3(h))
     w4 = F.relu(model.W4(h))
     wid = np.argmax(F.softmax(model.W5(
-        np.array([chainer.functions.concat([w.data[0], w2.data[0], w3.data[0], w4.data[0]], axis=0).data], dtype=np.float32)
+        Variable(np.array([chainer.functions.concat([w.data[0], w2.data[0], w3.data[0], w4.data[0]], axis=0).data], dtype=np.float32))
     )).data[0])
     res = id2wd[wid]
     loop = 0
@@ -67,7 +67,7 @@ def getResponseSentence(model, sentencies):
         w3 = F.relu(model.W3(h))
         w4 = F.relu(model.W4(h))
         wid = np.argmax(F.softmax(model.W5(
-            np.array([chainer.functions.concat([w.data[0], w2.data[0], w3.data[0], w4.data[0]], axis=0).data], dtype=np.float32)
+            Variable(np.array([chainer.functions.concat([w.data[0], w2.data[0], w3.data[0], w4.data[0]], axis=0).data], dtype=np.float32))
         )).data[0])
         if wid in id2wd:
             res += id2wd[wid] 
@@ -80,7 +80,7 @@ def getResponseSentence(model, sentencies):
 
 alines, blines, avocab, av, bvocab, bv, id2wd, extra = np.load("data.npy", allow_pickle=True)
 
-demb = 100
+demb = 500
 model = Model.ConversationModel(av, bv, avocab, bvocab, demb)
 serializers.load_npz(db, model)
 optimizer = optimizers.Adam()
@@ -112,13 +112,13 @@ channel = False
 member = [mynames.split("|")[0]]
 mode = 0
 
+"""
 import atexit
 @atexit.register
 def finallSyori():
     serializers.save_npz(db, model)
-    time.sleep(5)
     print("セーブしました。")
-
+"""
 
 @client.event
 async def on_message(message):
