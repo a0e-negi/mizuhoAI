@@ -22,7 +22,7 @@ class ConversationModel(chainer.Chain):
             W2 = L.Linear(k, k),
             W3 = L.Linear(k, k),
             W4 = L.Linear(k, k),
-            W5 = L.Linear(k, bv),
+            W5 = L.Linear(k*4, bv),
         )
         self.avocab = avo
         self.bvocab = bvo
@@ -46,10 +46,12 @@ class ConversationModel(chainer.Chain):
         h = F.relu(self.H(x_k))
         att.append(h.data[0])
         w = F.relu(self.W(h))
-        w2 = F.relu(self.W2(w))
-        w3 = F.relu(self.W3(w2))
-        w4 = F.relu(self.W4(w3))
-        accum_loss = F.softmax_cross_entropy(self.W5(w4), tx)
+        w2 = F.relu(self.W2(h))
+        w3 = F.relu(self.W3(h))
+        w4 = F.relu(self.W4(h))
+        accum_loss = F.softmax_cross_entropy(self.W5(
+            Variable(np.array([chainer.functions.concat([w.data[0], w2.data[0], w3.data[0], w4.data[0]], axis=0).data], dtype=np.float32))
+        ), tx)
         for i in range(len(bline)):
             try:
                 wid = self.bvocab[bline[i]]
@@ -72,9 +74,11 @@ class ConversationModel(chainer.Chain):
             
             h = F.relu(self.H2(Variable(np.array([chainer.functions.concat([x_k.data[0], c[0]], axis=0).data], dtype=np.float32))))
             w = F.relu(self.W(h))
-            w2 = F.relu(self.W2(w))
-            w3 = F.relu(self.W3(w2))
-            w4 = F.relu(self.W4(w3))
-            loss = F.softmax_cross_entropy(self.W5(w4), tx)
+            w2 = F.relu(self.W2(h))
+            w3 = F.relu(self.W3(h))
+            w4 = F.relu(self.W4(h))
+            loss = F.softmax_cross_entropy(self.W5(
+                Variable(np.array([chainer.functions.concat([w.data[0], w2.data[0], w3.data[0], w4.data[0]], axis=0).data], dtype=np.float32))
+            ), tx)
             accum_loss += loss
         return accum_loss
