@@ -76,7 +76,7 @@ def getResponseSentence(model, sentencies):
 
 alines, blines, avocab, av, bvocab, bv, id2wd, extra = np.load("data.npy", allow_pickle=True)
 
-demb = 300
+demb = 800
 model = Model.ConversationModel(av, bv, avocab, bvocab, demb)
 serializers.load_npz(db, model)
 optimizer = optimizers.Adam()

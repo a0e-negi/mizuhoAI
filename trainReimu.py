@@ -10,7 +10,7 @@ import Model
 
 alines, blines, avocab, av, bvocab, bv, id2wd, extra = np.load("data.npy", allow_pickle=True)
 
-demb = 300
+demb = 800
 model = Model.ConversationModel(av, bv, avocab, bvocab, demb)
 optimizer = optimizers.Adam()
 optimizer.setup(model)
@@ -18,6 +18,7 @@ try:
     serializers.load_npz('reimu.model', model)
 except:
     pass
+
 
 into = []
 with open("input_style.txt", "r", encoding="utf-8") as f:
