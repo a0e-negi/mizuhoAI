@@ -61,7 +61,7 @@ def looking(x, reply=True):
         #今の気持ちから考える
         into = x
         while True:
-            if len(x)*0.1 >= len(into):
+            if 4 >= len(into):
                 break
             pattern = re.compile(r".*{}$".format(re.escape(into)))
             i = heart
@@ -90,7 +90,7 @@ def looking(x, reply=True):
         into = x
         while True:
 
-            if len(x)*0.1 >= len(into):
+            if 2 >= len(into):
                 break
             pattern = re.compile(r".*{}$".format(re.escape(into)))
             i = heart
@@ -120,7 +120,7 @@ def looking(x, reply=True):
         #より深く考える
         into = x
         while True:
-            if len(x)*0.1 >= len(into):
+            if 1 >= len(into):
                 break
             pattern = re.compile(r".*{}$".format(re.escape(into)))
             i = 0
