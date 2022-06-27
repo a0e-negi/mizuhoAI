@@ -63,7 +63,7 @@ def looking(x, reply=True):
         while True:
             if 4 >= len(into):
                 break
-            pattern = re.compile(r".*{}$".format(re.escape(into)))
+            #pattern = re.compile(r".*{}$".format(re.escape(into)))
             i = heart
             ii = 0
             for sen in data["sentence"][heart:heart+25]:
@@ -73,7 +73,8 @@ def looking(x, reply=True):
                     replaceWords = False
                 else:
                     replaceWords = True
-                if bool(pattern.search(sen[0])):
+                #if bool(pattern.search(sen[0])):
+                if into in sen[0]:
                     if reply:
                         if data["sentence"][i+1][1] != settings["myname"] and i != len(data["sentence"]) and not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
                             heart = i+1
@@ -92,7 +93,7 @@ def looking(x, reply=True):
 
             if 2 >= len(into):
                 break
-            pattern = re.compile(r".*{}$".format(re.escape(into)))
+            #pattern = re.compile(r".*{}$".format(re.escape(into)))
             i = heart
             ii = 0
             for sen in data["sentence"][heart-50:heart+50]:
@@ -102,7 +103,8 @@ def looking(x, reply=True):
                     replaceWords = False
                 else:
                     replaceWords = True
-                if bool(pattern.search(sen[0])):
+                #if bool(pattern.search(sen[0])):
+                if into in sen[0]:
                     if reply:
                         if data["sentence"][i+1][1] != settings["myname"] and i != len(data["sentence"]) and not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
                             heart = i+1
@@ -122,13 +124,14 @@ def looking(x, reply=True):
         while True:
             if 1 >= len(into):
                 break
-            pattern = re.compile(r".*{}$".format(re.escape(into)))
+            #pattern = re.compile(r".*{}$".format(re.escape(into)))
             i = 0
             ii = 0
             for sen in data["sentence"][heart-35000:heart+15000]:
                 if i >= len(data["sentence"]) - 1:
                     break
-                if bool(pattern.search(sen[0])):
+                #if bool(pattern.search(sen[0])):
+                if into in sen[0]:
                     if reply:
                         if data["sentence"][i+1][1] != settings["myname"] and i != len(data["sentence"]) and not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
                             heart = i+1
@@ -354,6 +357,8 @@ if __name__ == '__main__':
         into = input("> ")
         if into == "続き":
             print(tsuzuki())
+        elif into == "":
+            exit()
         else:
             receive(into, "ゆいな")
             print("{}: {}".format(settings["myname"], speakFreely(into, "ゆいな")))
