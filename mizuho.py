@@ -97,7 +97,7 @@ def looking(x, reply=True):
             i = heart
             ii = 0
             for sen in data["sentence"][heart-50:heart+50]:
-                if i > len(data["sentence"]) - 1:
+                if i >= len(data["sentence"]) - 1:
                     break
                 if 2 > len(into):
                     replaceWords = False
@@ -128,7 +128,7 @@ def looking(x, reply=True):
             i = 0
             ii = 0
             for sen in data["sentence"][heart-35000:heart+15000]:
-                if i > len(data["sentence"]) - 1:
+                if i >= len(data["sentence"]) - 1:
                     break
                 #if bool(pattern.search(sen[0])):
                 if into in sen[0]:
@@ -184,7 +184,7 @@ def looking(x, reply=True):
             i = heart
             ii = 0
             for sen in data["sentence"][heart-50:heart+50]:
-                if i > len(data["sentence"]) - 1:
+                if i >= len(data["sentence"]) - 1:
                     break
                 if 2 > len(into):
                     replaceWords = False
@@ -215,7 +215,7 @@ def looking(x, reply=True):
             i = 0
             ii = 0
             for sen in data["sentence"][heart-35000:heart+15000]:
-                if i > len(data["sentence"]) - 1:
+                if i >= len(data["sentence"]) - 1:
                     break
                 #if bool(pattern.search(sen[0])):
                 if into in sen[0]:
