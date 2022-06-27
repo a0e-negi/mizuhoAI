@@ -61,7 +61,7 @@ def looking(x, reply=True):
         #今の気持ちから考える
         into = x
         while True:
-            if 4 <= len(into):
+            if 4 > len(into):
                 break
             #pattern = re.compile(r".*{}$".format(re.escape(into)))
             i = heart
@@ -76,7 +76,7 @@ def looking(x, reply=True):
                 #if bool(pattern.search(sen[0])):
                 if into in sen[0]:
                     if reply:
-                        if i != len(data["sentence"]) and not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
+                        if data["sentence"][i+1][1] != settings["myname"] and i != len(data["sentence"]) and not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
                             heart = i+1
                             heartLastSpeaker = data["sentence"][i+1][1]
                             return data["sentence"][i+1][0]
@@ -91,7 +91,7 @@ def looking(x, reply=True):
         into = x
         while True:
 
-            if 2 <= len(into):
+            if 2 > len(into):
                 break
             #pattern = re.compile(r".*{}$".format(re.escape(into)))
             i = heart
@@ -106,7 +106,7 @@ def looking(x, reply=True):
                 #if bool(pattern.search(sen[0])):
                 if into in sen[0]:
                     if reply:
-                        if i != len(data["sentence"]) and not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
+                        if data["sentence"][i+1][1] != settings["myname"] and i != len(data["sentence"]) and not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
                             heart = i+1
                             heartLastSpeaker = data["sentence"][i+1][1]
                             return data["sentence"][i+1][0]
@@ -122,7 +122,7 @@ def looking(x, reply=True):
         #より深く考える
         into = x
         while True:
-            if 1 <= len(into):
+            if 1 > len(into):
                 break
             #pattern = re.compile(r".*{}$".format(re.escape(into)))
             i = 0
@@ -133,7 +133,7 @@ def looking(x, reply=True):
                 #if bool(pattern.search(sen[0])):
                 if into in sen[0]:
                     if reply:
-                        if i != len(data["sentence"]) and not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
+                        if data["sentence"][i+1][1] != settings["myname"] and i != len(data["sentence"]) and not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
                             heart = i+1
                             heartLastSpeaker = data["sentence"][i+1][1]
                             return data["sentence"][i+1][0]
