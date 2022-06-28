@@ -85,9 +85,9 @@ def looking(x, reply=True):
             while True:
                 if into in sen[0]:
                     if len(cc) >= 3:
-                        if (cc[ii-1] - cc[ii-2]) >= ((cc[ii-2] - cc[ii-3])*3) or c >= len(x)*0.8:
+                        if (cc[ii-1] - cc[ii-2]) >= ((cc[ii-2] - cc[ii-3] + 1)*3)or c >= len(x)*0.8:
                             if reply:
-                                if i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
+                                if data["sentence"][i+1][1] != settings["myname"] and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
                                     heart = i+1
                                     heartLastSpeaker = data["sentence"][i+1][1]
                                     return data["sentence"][i+1][0]
@@ -99,6 +99,8 @@ def looking(x, reply=True):
                     else:
                         c += 1
                 try:
+                    if len(x) == 1:
+                        break
                     a += 1
                     b += 1
                     into = x[a:b]
@@ -142,9 +144,9 @@ def looking(x, reply=True):
             while True:
                 if into in sen[0]:
                     if len(cc) >= 3:
-                        if (cc[ii-1] - cc[ii-2]) >= ((cc[ii-2] - cc[ii-3])*3) or c >= len(x)*0.8:
+                        if (cc[ii-1] - cc[ii-2]) >= ((cc[ii-2] - cc[ii-3] + 1)*3)or c >= len(x)*0.8:
                             if reply:
-                                if i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
+                                if data["sentence"][i+1][1] != settings["myname"] and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
                                     heart = i+1
                                     heartLastSpeaker = data["sentence"][i+1][1]
                                     return data["sentence"][i+1][0]
@@ -156,6 +158,8 @@ def looking(x, reply=True):
                     else:
                         c += 1
                 try:
+                    if len(x) == 1:
+                        break
                     a += 1
                     b += 1
                     into = x[a:b]
@@ -200,9 +204,9 @@ def looking(x, reply=True):
             while True:
                 if into in sen[0]:
                     if len(cc) >= 3:
-                        if (cc[ii-1] - cc[ii-2]) >= ((cc[ii-2] - cc[ii-3])*3) or c >= len(x)*0.8:
+                        if (cc[ii-1] - cc[ii-2]) >= ((cc[ii-2] - cc[ii-3] + 1)*3)or c >= len(x)*0.8:
                             if reply:
-                                if i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
+                                if data["sentence"][i+1][1] != settings["myname"] and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
                                     heart = i+1
                                     heartLastSpeaker = data["sentence"][i+1][1]
                                     return data["sentence"][i+1][0]
@@ -214,6 +218,8 @@ def looking(x, reply=True):
                     else:
                         c += 1
                 try:
+                    if len(x) == 1:
+                        break
                     a += 1
                     b += 1
                     into = x[a:b]
@@ -259,7 +265,7 @@ def looking(x, reply=True):
             while True:
                 if into in sen[0]:
                     if len(cc) >= 3:
-                        if (cc[ii-1] - cc[ii-2]) >= ((cc[ii-2] - cc[ii-3])*3) or c >= len(x)*0.8:
+                        if (cc[ii-1] - cc[ii-2]) >= ((cc[ii-2] - cc[ii-3] + 1)*3)or c >= len(x)*0.8:
                             if reply:
                                 if i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
                                     heart = i+1
@@ -273,6 +279,8 @@ def looking(x, reply=True):
                     else:
                         c += 1
                 try:
+                    if len(x) == 1:
+                        break
                     a += 1
                     b += 1
                     into = x[a:b]
@@ -316,7 +324,7 @@ def looking(x, reply=True):
             while True:
                 if into in sen[0]:
                     if len(cc) >= 3:
-                        if (cc[ii-1] - cc[ii-2]) >= ((cc[ii-2] - cc[ii-3])*3) or c >= len(x)*0.8:
+                        if (cc[ii-1] - cc[ii-2]) >= ((cc[ii-2] - cc[ii-3] + 1)*3)or c >= len(x)*0.8:
                             if reply:
                                 if i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
                                     heart = i+1
@@ -330,6 +338,8 @@ def looking(x, reply=True):
                     else:
                         c += 1
                 try:
+                    if len(x) == 1:
+                        break
                     a += 1
                     b += 1
                     into = x[a:b]
@@ -374,7 +384,7 @@ def looking(x, reply=True):
             while True:
                 if into in sen[0]:
                     if len(cc) >= 3:
-                        if (cc[ii-1] - cc[ii-2]) >= ((cc[ii-2] - cc[ii-3])*3) or c >= len(x)*0.8:
+                        if (cc[ii-1] - cc[ii-2]) >= ((cc[ii-2] - cc[ii-3] + 1)*3)or c >= len(x)*0.8:
                             if reply:
                                 if i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
                                     heart = i+1
@@ -388,6 +398,8 @@ def looking(x, reply=True):
                     else:
                         c += 1
                 try:
+                    if len(x) == 1:
+                        break
                     a += 1
                     b += 1
                     into = x[a:b]
@@ -461,7 +473,7 @@ def tsuzuki(add=True):
 
                 #現在のユーザーと過去に似た話をしてたユーザーを変数に記録
                 actualUser.append(settings["myname"])
-                brainUser.append(data["sentence"][heart-1][1])
+                brainUser.append(data["sentence"][heart][1])
 
                 #古いユーザーの記録を消す
                 if len(brainUser) >= 6:
@@ -552,7 +564,7 @@ def speakFreely(x, user, add=True):
 
     #現在のユーザーと過去に似た話をしてたユーザーを変数に記録
     actualUser.append(user)
-    brainUser.append(data["sentence"][heart-1][1])
+    brainUser.append(data["sentence"][heart][1])
 
 
     #古いユーザーの記録を消す
@@ -583,6 +595,11 @@ def speakFreely(x, user, add=True):
         traceback.print_exc()
 
 
+    #現在のユーザーと過去に似た話をしてたユーザーを変数に記録
+    actualUser.append(settings["myname"])
+    brainUser.append(data["sentence"][heart][1])
+
+
     i = 0
     while True:
         if len(brainUser) <= i:
@@ -595,11 +612,6 @@ def speakFreely(x, user, add=True):
     print("actualUser: {}".format(actualUser))
     print("lastUser: {}".format(lastUser))
 
-
-
-    #現在のユーザーと過去に似た話をしてたユーザーを変数に記録
-    actualUser.append(settings["myname"])
-    brainUser.append(data["sentence"][heart-1][1])
 
 
 

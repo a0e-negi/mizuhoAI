@@ -141,7 +141,7 @@ async def cron():
             if channel != None and lastMessage != None:
                 if random.randint(1, len(persons)) == len(persons) and mode == 1:
                     if len(persons) == 1:
-                        if random.randint(1, 4) == 4 and mode == 1:
+                        if random.randint(1, 9) == 9 and mode == 1:
                             result = mizuho.tsuzuki()
                             print("{}: {}".format(mizuho.settings["myname"], result))
                             if result != None:
