@@ -494,6 +494,13 @@ def speakFreely(x, user, add=True):
     actualUser.append(user)
     brainUser.append(data["sentence"][heart-1][1])
 
+
+    #古いユーザーの記録を消す
+    if len(brainUser) >= 6:
+        brainUser = [brainUser[-5], brainUser[-4], brainUser[-3], brainUser[-2], brainUser[-1]]
+        actualUser = [actualUser[-5], actualUser[-4], actualUser[-3], actualUser[-2], actualUser[-1]]
+
+
     #考える
     result = looking(x)
     lastSentence = result
@@ -516,27 +523,30 @@ def speakFreely(x, user, add=True):
         traceback.print_exc()
 
 
-
-    #現在のユーザーと過去に似た話をしてたユーザーを変数に記録
-    actualUser.append(settings["myname"])
-    brainUser.append(data["sentence"][heart-1][1])
-
-    #古いユーザーの記録を消す
-    if len(brainUser) >= 6:
-        brainUser = [brainUser[-5], brainUser[-4], brainUser[-3], brainUser[-2], brainUser[-1]]
-        actualUser = [actualUser[-5], actualUser[-4], actualUser[-3], actualUser[-2], actualUser[-1]]
-
-    print("brainUser: {}".format(brainUser))
-    print("actualUser: {}".format(actualUser))
-    print("lastUser: {}".format(lastUser))
-
-
     i = 0
     while True:
         if len(brainUser) <= i:
             break
         result = result.replace(brainUser[i], actualUser[i])
         i += 1
+
+    
+    print("brainUser: {}".format(brainUser))
+    print("actualUser: {}".format(actualUser))
+    print("lastUser: {}".format(lastUser))
+
+
+
+    #現在のユーザーと過去に似た話をしてたユーザーを変数に記録
+    actualUser.append(settings["myname"])
+    brainUser.append(data["sentence"][heart-1][1])
+
+
+
+    #古いユーザーの記録を消す
+    if len(brainUser) >= 6:
+        brainUser = [brainUser[-5], brainUser[-4], brainUser[-3], brainUser[-2], brainUser[-1]]
+        actualUser = [actualUser[-5], actualUser[-4], actualUser[-3], actualUser[-2], actualUser[-1]]
 
 
     print("現在の心: {}".format(heart))

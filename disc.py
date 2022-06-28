@@ -111,7 +111,7 @@ async def extraMessage():
     if mode == 1:
         print("追加メッセージ送信")
         result = mizuho.tsuzuki()
-        print("みずほ: {}".format(result))
+        print("{}: {}".format(mizuho.settings["myname"], result))
         if result != None:
             await speak(result)
 
