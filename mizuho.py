@@ -64,7 +64,7 @@ def looking(x, reply=True):
         if heart - 30000 < 0:
             f = 0
         else:
-            f = heart
+            f = heart - 10
 
         if heart + 30000 >= len(data["sentence"]) - 1:
             t = len(data["sentence"]) - 1
@@ -72,7 +72,9 @@ def looking(x, reply=True):
             t = heart + 50
 
         i = f
+        ii = 0
 
+        cc = []
         for sen in data["sentence"][f:t]:
             if i >= t:
                 break
@@ -82,15 +84,18 @@ def looking(x, reply=True):
             c = 0
             while True:
                 if into in sen[0]:
-                    if c >= len(x) * 0.65:
-                        if reply:
-                            if data["sentence"][i+1][1] != settings["myname"] and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
-                                heart = i+1
-                                heartLastSpeaker = data["sentence"][i+1][1]
-                                return data["sentence"][i+1][0]
+                    if len(cc) >= 3:
+                        if (cc[ii-1] - cc[ii-2]) >= ((cc[ii-2] - cc[ii-3])*3) or c >= len(x)*0.8:
+                            if reply:
+                                if i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
+                                    heart = i+1
+                                    heartLastSpeaker = data["sentence"][i+1][1]
+                                    return data["sentence"][i+1][0]
+                            else:
+                                heart = i
+                                return
                         else:
-                            heart = i
-                            return
+                            c += 1
                     else:
                         c += 1
                 try:
@@ -101,7 +106,12 @@ def looking(x, reply=True):
                         break
                 except:
                     break
+                if len(cc) < ii+1:
+                    while len(cc) < ii+1:
+                        cc.append(c)
+                cc[ii] = c
             i += 1
+            ii += 1
 
 
 
@@ -119,7 +129,9 @@ def looking(x, reply=True):
             t = heart + 150
 
         i = f
+        ii = 0
 
+        cc = []
         for sen in data["sentence"][f:t]:
             if i >= t:
                 break
@@ -129,15 +141,18 @@ def looking(x, reply=True):
             c = 0
             while True:
                 if into in sen[0]:
-                    if c >= len(x) * 0.65:
-                        if reply:
-                            if data["sentence"][i+1][1] != settings["myname"] and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
-                                heart = i+1
-                                heartLastSpeaker = data["sentence"][i+1][1]
-                                return data["sentence"][i+1][0]
+                    if len(cc) >= 3:
+                        if (cc[ii-1] - cc[ii-2]) >= ((cc[ii-2] - cc[ii-3])*3) or c >= len(x)*0.8:
+                            if reply:
+                                if i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
+                                    heart = i+1
+                                    heartLastSpeaker = data["sentence"][i+1][1]
+                                    return data["sentence"][i+1][0]
+                            else:
+                                heart = i
+                                return
                         else:
-                            heart = i
-                            return
+                            c += 1
                     else:
                         c += 1
                 try:
@@ -148,7 +163,12 @@ def looking(x, reply=True):
                         break
                 except:
                     break
+                if len(cc) < ii+1:
+                    while len(cc) < ii+1:
+                        cc.append(c)
+                cc[ii] = c
             i += 1
+            ii += 1
 
 
 
@@ -167,7 +187,9 @@ def looking(x, reply=True):
             t = heart + 30000
 
         i = f
+        ii = 0
 
+        cc = []
         for sen in data["sentence"][f:t]:
             if i >= t:
                 break
@@ -177,15 +199,18 @@ def looking(x, reply=True):
             c = 0
             while True:
                 if into in sen[0]:
-                    if c >= len(x) * 0.65:
-                        if reply:
-                            if data["sentence"][i+1][1] != settings["myname"] and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
-                                heart = i+1
-                                heartLastSpeaker = data["sentence"][i+1][1]
-                                return data["sentence"][i+1][0]
+                    if len(cc) >= 3:
+                        if (cc[ii-1] - cc[ii-2]) >= ((cc[ii-2] - cc[ii-3])*3) or c >= len(x)*0.8:
+                            if reply:
+                                if i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
+                                    heart = i+1
+                                    heartLastSpeaker = data["sentence"][i+1][1]
+                                    return data["sentence"][i+1][0]
+                            else:
+                                heart = i
+                                return
                         else:
-                            heart = i
-                            return
+                            c += 1
                     else:
                         c += 1
                 try:
@@ -196,7 +221,12 @@ def looking(x, reply=True):
                         break
                 except:
                     break
+                if len(cc) < ii+1:
+                    while len(cc) < ii+1:
+                        cc.append(c)
+                cc[ii] = c
             i += 1
+            ii += 1
 
 
 
@@ -208,7 +238,7 @@ def looking(x, reply=True):
         if heart - 30000 < 0:
             f = 0
         else:
-            f = heart
+            f = heart - 10
 
         if heart + 30000 >= len(data["sentence"]) - 1:
             t = len(data["sentence"]) - 1
@@ -216,7 +246,9 @@ def looking(x, reply=True):
             t = heart + 50
 
         i = f
+        ii = 0
 
+        cc = []
         for sen in data["sentence"][f:t]:
             if i >= t:
                 break
@@ -226,15 +258,18 @@ def looking(x, reply=True):
             c = 0
             while True:
                 if into in sen[0]:
-                    if c >= len(x) * 0.65:
-                        if reply:
-                            if i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
-                                heart = i+1
-                                heartLastSpeaker = data["sentence"][i+1][1]
-                                return data["sentence"][i+1][0]
+                    if len(cc) >= 3:
+                        if (cc[ii-1] - cc[ii-2]) >= ((cc[ii-2] - cc[ii-3])*3) or c >= len(x)*0.8:
+                            if reply:
+                                if i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
+                                    heart = i+1
+                                    heartLastSpeaker = data["sentence"][i+1][1]
+                                    return data["sentence"][i+1][0]
+                            else:
+                                heart = i
+                                return
                         else:
-                            heart = i
-                            return
+                            c += 1
                     else:
                         c += 1
                 try:
@@ -245,7 +280,12 @@ def looking(x, reply=True):
                         break
                 except:
                     break
+                if len(cc) < ii+1:
+                    while len(cc) < ii+1:
+                        cc.append(c)
+                cc[ii] = c
             i += 1
+            ii += 1
 
 
 
@@ -263,7 +303,9 @@ def looking(x, reply=True):
             t = heart + 150
 
         i = f
+        ii = 0
 
+        cc = []
         for sen in data["sentence"][f:t]:
             if i >= t:
                 break
@@ -273,15 +315,18 @@ def looking(x, reply=True):
             c = 0
             while True:
                 if into in sen[0]:
-                    if c >= len(x) * 0.65:
-                        if reply:
-                            if i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
-                                heart = i+1
-                                heartLastSpeaker = data["sentence"][i+1][1]
-                                return data["sentence"][i+1][0]
+                    if len(cc) >= 3:
+                        if (cc[ii-1] - cc[ii-2]) >= ((cc[ii-2] - cc[ii-3])*3) or c >= len(x)*0.8:
+                            if reply:
+                                if i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
+                                    heart = i+1
+                                    heartLastSpeaker = data["sentence"][i+1][1]
+                                    return data["sentence"][i+1][0]
+                            else:
+                                heart = i
+                                return
                         else:
-                            heart = i
-                            return
+                            c += 1
                     else:
                         c += 1
                 try:
@@ -292,7 +337,12 @@ def looking(x, reply=True):
                         break
                 except:
                     break
+                if len(cc) < ii+1:
+                    while len(cc) < ii+1:
+                        cc.append(c)
+                cc[ii] = c
             i += 1
+            ii += 1
 
 
 
@@ -311,7 +361,9 @@ def looking(x, reply=True):
             t = heart + 30000
 
         i = f
+        ii = 0
 
+        cc = []
         for sen in data["sentence"][f:t]:
             if i >= t:
                 break
@@ -321,15 +373,18 @@ def looking(x, reply=True):
             c = 0
             while True:
                 if into in sen[0]:
-                    if c >= len(x) * 0.65:
-                        if reply:
-                            if i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
-                                heart = i+1
-                                heartLastSpeaker = data["sentence"][i+1][1]
-                                return data["sentence"][i+1][0]
+                    if len(cc) >= 3:
+                        if (cc[ii-1] - cc[ii-2]) >= ((cc[ii-2] - cc[ii-3])*3) or c >= len(x)*0.8:
+                            if reply:
+                                if i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
+                                    heart = i+1
+                                    heartLastSpeaker = data["sentence"][i+1][1]
+                                    return data["sentence"][i+1][0]
+                            else:
+                                heart = i
+                                return
                         else:
-                            heart = i
-                            return
+                            c += 1
                     else:
                         c += 1
                 try:
@@ -340,7 +395,12 @@ def looking(x, reply=True):
                         break
                 except:
                     break
+                if len(cc) < ii+1:
+                    while len(cc) < ii+1:
+                        cc.append(c)
+                cc[ii] = c
             i += 1
+            ii += 1
 
 
 
