@@ -131,7 +131,7 @@ def looking(x, reply=True):
             c = 0
             while True:
                 if into in sen[0]:
-                    if c >= len(x)*0.8:
+                    if c >= len(x)*0.6:
                         if reply:
                             if i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
                                 heart = i+1
@@ -180,7 +180,7 @@ def looking(x, reply=True):
             c = 0
             while True:
                 if into in sen[0]:
-                    if c >= len(x)*0.8:
+                    if c >= len(x)*0.5:
                         if reply:
                             if i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
                                 heart = i+1
@@ -278,7 +278,7 @@ def looking(x, reply=True):
             c = 0
             while True:
                 if into in sen[0]:
-                    if c >= len(x)*0.8:
+                    if c >= len(x)*0.6:
                         if reply:
                             if i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
                                 heart = i+1
@@ -328,7 +328,7 @@ def looking(x, reply=True):
             c = 0
             while True:
                 if into in sen[0]:
-                    if c >= len(x)*0.8:
+                    if c >= len(x)*0.4:
                         if reply:
                             if i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
                                 heart = i+1
