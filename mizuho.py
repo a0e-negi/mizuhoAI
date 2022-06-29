@@ -61,18 +61,20 @@ def looking(x, reply=True):
 
 
         #今の気持ちから考える
-        if heart - 30000 < 0:
+        if heart - 10 < 0:
             f = 0
         else:
             f = heart - 10
 
-        if heart + 30000 >= len(data["sentence"]) - 1:
+        if heart + 10 >= len(data["sentence"]) - 1:
             t = len(data["sentence"]) - 1
         else:
             t = heart + 50
 
-
         i = f
+        ii = 0
+
+        cc = []
         for sen in data["sentence"][f:t]:
             if i >= t:
                 break
@@ -82,15 +84,18 @@ def looking(x, reply=True):
             c = 0
             while True:
                 if into in sen[0]:
-                    if c >= len(x)*0.8:
-                        if reply:
-                            if i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
-                                heart = i+1
-                                heartLastSpeaker = data["sentence"][i+1][1]
-                                return data["sentence"][i+1][0]
+                    if len(cc) >= 3:
+                        if (cc[ii-1] - cc[ii-2]) >= ((cc[ii-2] - cc[ii-3] + 1)*7) or c >= len(x)*0.8:
+                            if reply:
+                                if settings["myname"] not in data["sentence"][i+1][0] and data["sentence"][i+1][1] != settings["myname"] and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
+                                    heart = i+1
+                                    heartLastSpeaker = data["sentence"][i+1][1]
+                                    return data["sentence"][i+1][0]
+                            else:
+                                heart = i
+                                return
                         else:
-                            heart = i
-                            return
+                            c += 1
                     else:
                         c += 1
                 try:
@@ -103,25 +108,32 @@ def looking(x, reply=True):
                         break
                 except:
                     break
+                if len(cc) < ii+1:
+                    while len(cc) < ii+1:
+                        cc.append(c)
+                cc[ii] = c
             i += 1
+            ii += 1
 
 
 
 
 
         #今の気持ちから少し離れる
-        if heart - 30000 < 0:
+        if heart - 150 < 0:
             f = 0
         else:
             f = heart - 150
 
-        if heart + 30000 >= len(data["sentence"]) - 1:
+        if heart + 150 >= len(data["sentence"]) - 1:
             t = len(data["sentence"]) - 1
         else:
             t = heart + 150
 
-
         i = f
+        ii = 0
+
+        cc = []
         for sen in data["sentence"][f:t]:
             if i >= t:
                 break
@@ -131,15 +143,18 @@ def looking(x, reply=True):
             c = 0
             while True:
                 if into in sen[0]:
-                    if c >= len(x)*0.6:
-                        if reply:
-                            if i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
-                                heart = i+1
-                                heartLastSpeaker = data["sentence"][i+1][1]
-                                return data["sentence"][i+1][0]
+                    if len(cc) >= 3:
+                        if (cc[ii-1] - cc[ii-2]) >= ((cc[ii-2] - cc[ii-3] + 1)*7) or c >= len(x)*0.8:
+                            if reply:
+                                if settings["myname"] not in data["sentence"][i+1][0] and data["sentence"][i+1][1] != settings["myname"] and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
+                                    heart = i+1
+                                    heartLastSpeaker = data["sentence"][i+1][1]
+                                    return data["sentence"][i+1][0]
+                            else:
+                                heart = i
+                                return
                         else:
-                            heart = i
-                            return
+                            c += 1
                     else:
                         c += 1
                 try:
@@ -152,25 +167,33 @@ def looking(x, reply=True):
                         break
                 except:
                     break
+                if len(cc) < ii+1:
+                    while len(cc) < ii+1:
+                        cc.append(c)
+                cc[ii] = c
             i += 1
+            ii += 1
+
 
 
 
 
 
         #より深く考える
-        if heart - 30000 < 0:
+        if heart - 50000 < 0:
             f = 0
         else:
-            f = heart - 30000
+            f = heart - 50000
 
-        if heart + 30000 >= len(data["sentence"]) - 1:
+        if heart + 50000 >= len(data["sentence"]) - 1:
             t = len(data["sentence"]) - 1
         else:
-            t = heart + 30000
-
+            t = heart + 50000
 
         i = f
+        ii = 0
+
+        cc = []
         for sen in data["sentence"][f:t]:
             if i >= t:
                 break
@@ -180,15 +203,18 @@ def looking(x, reply=True):
             c = 0
             while True:
                 if into in sen[0]:
-                    if c >= len(x)*0.5:
-                        if reply:
-                            if i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
-                                heart = i+1
-                                heartLastSpeaker = data["sentence"][i+1][1]
-                                return data["sentence"][i+1][0]
+                    if len(cc) >= 3:
+                        if (cc[ii-1] - cc[ii-2]) >= ((cc[ii-2] - cc[ii-3] + 1)*7) or c >= len(x)*0.8:
+                            if reply:
+                                if settings["myname"] not in data["sentence"][i+1][0] and data["sentence"][i+1][1] != settings["myname"] and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
+                                    heart = i+1
+                                    heartLastSpeaker = data["sentence"][i+1][1]
+                                    return data["sentence"][i+1][0]
+                            else:
+                                heart = i
+                                return
                         else:
-                            heart = i
-                            return
+                            c += 1
                     else:
                         c += 1
                 try:
@@ -201,7 +227,12 @@ def looking(x, reply=True):
                         break
                 except:
                     break
+                if len(cc) < ii+1:
+                    while len(cc) < ii+1:
+                        cc.append(c)
+                cc[ii] = c
             i += 1
+            ii += 1
 
 
 
@@ -210,17 +241,20 @@ def looking(x, reply=True):
         #--------------------
 
         #今の気持ちから考える
-        if heart - 30000 < 0:
+        if heart - 10 < 0:
             f = 0
         else:
             f = heart - 10
 
-        if heart + 30000 >= len(data["sentence"]) - 1:
+        if heart + 10 >= len(data["sentence"]) - 1:
             t = len(data["sentence"]) - 1
         else:
             t = heart + 50
 
         i = f
+        ii = 0
+
+        cc = []
         for sen in data["sentence"][f:t]:
             if i >= t:
                 break
@@ -230,15 +264,18 @@ def looking(x, reply=True):
             c = 0
             while True:
                 if into in sen[0]:
-                    if c >= len(x)*0.8:
-                        if reply:
-                            if i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
-                                heart = i+1
-                                heartLastSpeaker = data["sentence"][i+1][1]
-                                return data["sentence"][i+1][0]
+                    if len(cc) >= 3:
+                        if (cc[ii-1] - cc[ii-2]) >= ((cc[ii-2] - cc[ii-3] + 1)*7) or c >= len(x)*0.8:
+                            if reply:
+                                if settings["myname"] not in data["sentence"][i+1][0] and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
+                                    heart = i+1
+                                    heartLastSpeaker = data["sentence"][i+1][1]
+                                    return data["sentence"][i+1][0]
+                            else:
+                                heart = i
+                                return
                         else:
-                            heart = i
-                            return
+                            c += 1
                     else:
                         c += 1
                 try:
@@ -251,24 +288,32 @@ def looking(x, reply=True):
                         break
                 except:
                     break
+                if len(cc) < ii+1:
+                    while len(cc) < ii+1:
+                        cc.append(c)
+                cc[ii] = c
             i += 1
+            ii += 1
 
 
 
 
 
         #今の気持ちから少し離れる
-        if heart - 30000 < 0:
+        if heart - 150 < 0:
             f = 0
         else:
             f = heart - 150
 
-        if heart + 30000 >= len(data["sentence"]) - 1:
+        if heart + 150 >= len(data["sentence"]) - 1:
             t = len(data["sentence"]) - 1
         else:
             t = heart + 150
 
         i = f
+        ii = 0
+
+        cc = []
         for sen in data["sentence"][f:t]:
             if i >= t:
                 break
@@ -278,15 +323,18 @@ def looking(x, reply=True):
             c = 0
             while True:
                 if into in sen[0]:
-                    if c >= len(x)*0.6:
-                        if reply:
-                            if i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
-                                heart = i+1
-                                heartLastSpeaker = data["sentence"][i+1][1]
-                                return data["sentence"][i+1][0]
+                    if len(cc) >= 3:
+                        if (cc[ii-1] - cc[ii-2]) >= ((cc[ii-2] - cc[ii-3] + 1)*7) or c >= len(x)*0.8:
+                            if reply:
+                                if settings["myname"] not in data["sentence"][i+1][0] and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
+                                    heart = i+1
+                                    heartLastSpeaker = data["sentence"][i+1][1]
+                                    return data["sentence"][i+1][0]
+                            else:
+                                heart = i
+                                return
                         else:
-                            heart = i
-                            return
+                            c += 1
                     else:
                         c += 1
                 try:
@@ -299,7 +347,12 @@ def looking(x, reply=True):
                         break
                 except:
                     break
+                if len(cc) < ii+1:
+                    while len(cc) < ii+1:
+                        cc.append(c)
+                cc[ii] = c
             i += 1
+            ii += 1
 
 
 
@@ -307,18 +360,20 @@ def looking(x, reply=True):
 
 
         #より深く考える
-        if heart - 30000 < 0:
+        if heart - 50000 < 0:
             f = 0
         else:
-            f = heart - 30000
+            f = heart - 50000
 
-        if heart + 30000 >= len(data["sentence"]) - 1:
+        if heart + 50000 >= len(data["sentence"]) - 1:
             t = len(data["sentence"]) - 1
         else:
-            t = heart + 30000
-
+            t = heart + 50000
 
         i = f
+        ii = 0
+
+        cc = []
         for sen in data["sentence"][f:t]:
             if i >= t:
                 break
@@ -328,15 +383,18 @@ def looking(x, reply=True):
             c = 0
             while True:
                 if into in sen[0]:
-                    if c >= len(x)*0.4:
-                        if reply:
-                            if i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
-                                heart = i+1
-                                heartLastSpeaker = data["sentence"][i+1][1]
-                                return data["sentence"][i+1][0]
+                    if len(cc) >= 3:
+                        if (cc[ii-1] - cc[ii-2]) >= ((cc[ii-2] - cc[ii-3] + 1)*7) or c >= len(x)*0.8:
+                            if reply:
+                                if settings["myname"] not in data["sentence"][i+1][0] and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
+                                    heart = i+1
+                                    heartLastSpeaker = data["sentence"][i+1][1]
+                                    return data["sentence"][i+1][0]
+                            else:
+                                heart = i
+                                return
                         else:
-                            heart = i
-                            return
+                            c += 1
                     else:
                         c += 1
                 try:
@@ -349,7 +407,13 @@ def looking(x, reply=True):
                         break
                 except:
                     break
+                if len(cc) < ii+1:
+                    while len(cc) < ii+1:
+                        cc.append(c)
+                cc[ii] = c
             i += 1
+            ii += 1
+
 
 
 
@@ -358,6 +422,7 @@ def looking(x, reply=True):
         traceback.print_exc()
 
     return None
+
 
 
 
@@ -407,19 +472,9 @@ def tsuzuki(add=True):
                     result = result.replace(brainUser[i], actualUser[i])
                     i += 1
 
-                #現在のユーザーと過去に似た話をしてたユーザーを変数に記録
-                actualUser.append(settings["myname"])
-                brainUser.append(data["sentence"][heart][1])
 
-                #古いユーザーの記録を消す
-                if len(brainUser) >= 6:
-                    brainUser = [brainUser[-5], brainUser[-4], brainUser[-3], brainUser[-2], brainUser[-1]]
-                    actualUser = [actualUser[-5], actualUser[-4], actualUser[-3], actualUser[-2], actualUser[-1]]
 
-                print("brainUser: {}".format(brainUser))
-                print("actualUser: {}".format(actualUser))
                 print("lastUser: {}".format(lastUser))
-
 
 
                 if add: addSentence(result, settings["myname"])
@@ -498,16 +553,6 @@ def speakFreely(x, user, add=True):
         looking(data["sentence"][heart_][0])
         print("飽きた2 heart: {}".format(heart))
 
-    #現在のユーザーと過去に似た話をしてたユーザーを変数に記録
-    actualUser.append(user)
-    brainUser.append(data["sentence"][heart][1])
-
-
-    #古いユーザーの記録を消す
-    if len(brainUser) >= 6:
-        brainUser = [brainUser[-5], brainUser[-4], brainUser[-3], brainUser[-2], brainUser[-1]]
-        actualUser = [actualUser[-5], actualUser[-4], actualUser[-3], actualUser[-2], actualUser[-1]]
-
 
     #考える
     result = looking(x)
@@ -515,6 +560,8 @@ def speakFreely(x, user, add=True):
     if result == None:
         return None
     result = result.replace(data["sentence"][heart][1], settings["myname"])
+
+
 
 
     #重要な単語を最大5個置き換える
@@ -531,11 +578,6 @@ def speakFreely(x, user, add=True):
         traceback.print_exc()
 
 
-    #現在のユーザーと過去に似た話をしてたユーザーを変数に記録
-    actualUser.append(settings["myname"])
-    brainUser.append(data["sentence"][heart][1])
-
-
     i = 0
     while True:
         if len(brainUser) <= i:
@@ -543,18 +585,8 @@ def speakFreely(x, user, add=True):
         result = result.replace(brainUser[i], actualUser[i])
         i += 1
 
-    
-    print("brainUser: {}".format(brainUser))
-    print("actualUser: {}".format(actualUser))
+
     print("lastUser: {}".format(lastUser))
-
-
-
-
-    #古いユーザーの記録を消す
-    if len(brainUser) >= 6:
-        brainUser = [brainUser[-5], brainUser[-4], brainUser[-3], brainUser[-2], brainUser[-1]]
-        actualUser = [actualUser[-5], actualUser[-4], actualUser[-3], actualUser[-2], actualUser[-1]]
 
 
     print("現在の心: {}".format(heart))
