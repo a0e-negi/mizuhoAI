@@ -85,7 +85,7 @@ def looking(x, reply=True):
             while True:
                 if into in sen[0]:
                     if len(cc) >= 3:
-                        if (cc[ii-1] - cc[ii-2]) >= ((cc[ii-2] - cc[ii-3] + 1)*7) or c >= len(x)*0.8:
+                        if c >= len(x)*0.75:
                             if reply:
                                 if settings["myname"] not in data["sentence"][i+1][0] and data["sentence"][i+1][1] != settings["myname"] and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
                                     heart = i+1
@@ -144,7 +144,7 @@ def looking(x, reply=True):
             while True:
                 if into in sen[0]:
                     if len(cc) >= 3:
-                        if (cc[ii-1] - cc[ii-2]) >= ((cc[ii-2] - cc[ii-3] + 1)*7) or c >= len(x)*0.8:
+                        if c >= len(x)*0.75:
                             if reply:
                                 if settings["myname"] not in data["sentence"][i+1][0] and data["sentence"][i+1][1] != settings["myname"] and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
                                     heart = i+1
@@ -204,7 +204,7 @@ def looking(x, reply=True):
             while True:
                 if into in sen[0]:
                     if len(cc) >= 3:
-                        if (cc[ii-1] - cc[ii-2]) >= ((cc[ii-2] - cc[ii-3] + 1)*7) or c >= len(x)*0.8:
+                        if c >= len(x)*0.75:
                             if reply:
                                 if settings["myname"] not in data["sentence"][i+1][0] and data["sentence"][i+1][1] != settings["myname"] and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
                                     heart = i+1
@@ -237,7 +237,7 @@ def looking(x, reply=True):
 
 
 
-
+        print("Looking後半")
         #--------------------
 
         #今の気持ちから考える
