@@ -78,7 +78,7 @@ def looking(x, reply=True):
                 break
             into = x
             a = -1
-            b = 0
+            b = 1
             c = 0
             while True:
                 if into in sen[0]:
@@ -138,7 +138,7 @@ def looking(x, reply=True):
                 break
             into = x
             a = -1
-            b = 0
+            b = 1
             c = 0
             while True:
                 if into in sen[0]:
@@ -199,7 +199,7 @@ def looking(x, reply=True):
                 break
             into = x
             a = -1
-            b = 0
+            b = 1
             c = 0
             while True:
                 if into in sen[0]:
@@ -258,7 +258,7 @@ def looking(x, reply=True):
                 break
             into = x
             a = -1
-            b = 0
+            b = 1
             c = 0
             while True:
                 if into in sen[0]:
@@ -317,7 +317,7 @@ def looking(x, reply=True):
                 break
             into = x
             a = -1
-            b = 0
+            b = 1
             c = 0
             while True:
                 if into in sen[0]:
