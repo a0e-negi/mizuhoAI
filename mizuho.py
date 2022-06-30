@@ -17,8 +17,6 @@ replaceWords = True #単語を置き換えるか
 lastSentence = None #最後のbotの言葉
 lastSentenceInput = None #最後に聞いた言葉
 heartLastSpeaker = None #過去に似た話をしてたユーザー
-getBored = 0 #忘れるための値、特定の値以上になると忘れる
-getBored2 = 0 #忘れるための値2、特定の値以上になると忘れる
 maeheart = 0 #一つ前の気持ち
 interface = 0 #クライアントの種類
 lastUser = None #最後に話しかけたユーザー
@@ -515,44 +513,7 @@ def save():
 
 def speakFreely(x, user, add=True):
     #自由に話す
-    global heart, actualUser, brainUser, wordMemory, tokenizer, lastSentence, lastSentenceInput, getBored, getBored2, maeheart
-
-    #既存の文化に飽きさせる
-    if -10 <= heart - maeheart and heart - maeheart <= 10:
-        getBored += 1
-    else:
-        getBored -= 0.5
-    if getBored < 0:
-        getBored = 0
-    print("飽き度: {}".format(getBored))
-
-    if getBored >= 8:
-        getBored = 0
-        heart = random.randint(0, len(data["sentence"]) - 50)
-        print("飽きた heart: {}".format(heart))
-
-
-
-    #既存の文化に飽きさせる2
-    if -16 <= heart - maeheart and heart - maeheart <= 16:
-        getBored2 += 1
-    else:
-        getBored2 -= 0.5
-    if getBored2 < 0:
-        getBored2 = 0
-    print("飽き度2: {}".format(getBored2))
-
-    if getBored2 >= 2:
-        getBored2 = 0
-        heart_ = heart
-        heart = random.randint(0, len(data["sentence"]) - 50)
-        if 0 > heart_-4: looking(data["sentence"][heart_-4][0])
-        if 0 > heart_-3: looking(data["sentence"][heart_-3][0])
-        if 0 > heart_-2: looking(data["sentence"][heart_-2][0])
-        if 0 > heart_-1: looking(data["sentence"][heart_-1][0])
-        looking(data["sentence"][heart_][0])
-        print("飽きた2 heart: {}".format(heart))
-
+    global heart, actualUser, brainUser, wordMemory, tokenizer, lastSentence, lastSentenceInput, maeheart
 
     #考える
     result = looking(x)
