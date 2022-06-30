@@ -87,7 +87,7 @@ def looking(x, reply=True):
                     if len(cc) >= 3:
                         if c >= len(x)*0.75:
                             if reply:
-                                if not bool(re.search(settings["mynames"], data["sentence"][heart][0])) and data["sentence"][i+1][1] != settings["myname"] and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
+                                if not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and data["sentence"][i+1][1] != settings["myname"] and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
                                     heart = i+1
                                     heartLastSpeaker = data["sentence"][i+1][1]
                                     return data["sentence"][i+1][0]
@@ -146,7 +146,7 @@ def looking(x, reply=True):
                     if len(cc) >= 3:
                         if c >= len(x)*0.75:
                             if reply:
-                                if not bool(re.search(settings["mynames"], data["sentence"][heart][0])) and data["sentence"][i+1][1] != settings["myname"] and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
+                                if not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and data["sentence"][i+1][1] != settings["myname"] and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
                                     heart = i+1
                                     heartLastSpeaker = data["sentence"][i+1][1]
                                     return data["sentence"][i+1][0]
@@ -206,7 +206,7 @@ def looking(x, reply=True):
                     if len(cc) >= 3:
                         if c >= len(x)*0.75:
                             if reply:
-                                if not bool(re.search(settings["mynames"], data["sentence"][heart][0])) and data["sentence"][i+1][1] != settings["myname"] and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
+                                if not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and data["sentence"][i+1][1] != settings["myname"] and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
                                     heart = i+1
                                     heartLastSpeaker = data["sentence"][i+1][1]
                                     return data["sentence"][i+1][0]
@@ -267,7 +267,7 @@ def looking(x, reply=True):
                     if len(cc) >= 3:
                         if (cc[ii-1] - cc[ii-2]) >= ((cc[ii-2] - cc[ii-3] + 1)*7) or c >= len(x)*0.8:
                             if reply:
-                                if not bool(re.search(settings["mynames"], data["sentence"][heart][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
+                                if not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
                                     heart = i+1
                                     heartLastSpeaker = data["sentence"][i+1][1]
                                     return data["sentence"][i+1][0]
@@ -326,7 +326,7 @@ def looking(x, reply=True):
                     if len(cc) >= 3:
                         if (cc[ii-1] - cc[ii-2]) >= ((cc[ii-2] - cc[ii-3] + 1)*7) or c >= len(x)*0.8:
                             if reply:
-                                if not bool(re.search(settings["mynames"], data["sentence"][heart][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
+                                if not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
                                     heart = i+1
                                     heartLastSpeaker = data["sentence"][i+1][1]
                                     return data["sentence"][i+1][0]
@@ -386,7 +386,7 @@ def looking(x, reply=True):
                     if len(cc) >= 3:
                         if (cc[ii-1] - cc[ii-2]) >= ((cc[ii-2] - cc[ii-3] + 1)*7) or c >= len(x)*0.8:
                             if reply:
-                                if not bool(re.search(settings["mynames"], data["sentence"][heart][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
+                                if not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
                                     heart = i+1
                                     heartLastSpeaker = data["sentence"][i+1][1]
                                     return data["sentence"][i+1][0]
