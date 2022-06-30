@@ -274,7 +274,7 @@ def looking(x, reply=True):
                                 print("D前との差: {}".format(cc[ii] - cc[ii-1]))
                                 print("D類似発言: {}".format(data["sentence"][i][0]))
                                 if reply:
-                                    if not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
+                                    if settings["myname"] != data["sentence"][i+1][1] and not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
                                         heart = i+1
                                         heartLastSpeaker = data["sentence"][i+1][1]
                                         return data["sentence"][i+1][0]
@@ -333,7 +333,7 @@ def looking(x, reply=True):
                                 print("E前との差: {}".format(cc[ii] - cc[ii-1]))
                                 print("E類似発言: {}".format(data["sentence"][i][0]))
                                 if reply:
-                                    if not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
+                                    if settings["myname"] != data["sentence"][i+1][1] and not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
                                         heart = i+1
                                         heartLastSpeaker = data["sentence"][i+1][1]
                                         return data["sentence"][i+1][0]
