@@ -296,6 +296,65 @@ def looking(x, reply=True):
 
 
 
+        #より深く考える
+        if heart - 300000 < 0:
+            f = 0
+        else:
+            f = heart - 300000
+
+        if heart + 300000 >= len(data["sentence"]) - 1:
+            t = len(data["sentence"]) - 1
+        else:
+            t = heart + 300000
+
+        i = f
+        ii = 0
+
+        cc = []
+        for sen in data["sentence"][f:t]:
+            if i >= t:
+                break
+            into = x
+            a = -1
+            b = 1
+            c = 0
+            while True:
+                if into in sen[0]:
+                    c += 1
+                try:
+                    if len(x) == b:
+                        cc[ii] = cc[ii] / ((len(x) + len(sen[0])) / 2)
+                        c = c / ((len(x) + len(sen[0])) / 2)
+                        
+                        if len(cc) >= 2:
+                            if cc[ii] - cc[ii-1] >= 0.25 or c >= 0.25:
+                                print("D自信: {}".format(c))
+                                print("D前との差: {}".format(cc[ii] - cc[ii-1]))
+                                print("D類似発言: {}".format(data["sentence"][i][0]))
+                                if reply:
+                                    if settings["myname"] != data["sentence"][i+1][1] and not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
+                                        heart = i+1
+                                        heartLastSpeaker = data["sentence"][i+1][1]
+                                        return data["sentence"][i+1][0]
+                                else:
+                                    heart = i
+                                    return
+                        break
+                except:
+                    break
+                a += 1
+                b += 1
+                into = x[a:b]
+                if len(cc) < ii+1:
+                    while len(cc) < ii+1:
+                        cc.append(c)
+                cc[ii] = c
+            i += 1
+            ii += 1
+
+
+
+
 
     except:
         import traceback
