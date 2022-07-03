@@ -43,55 +43,55 @@ def initialize(direcectory, interface_):
     with open(direc+"/data_backup.json", "w", encoding="utf8") as f:
         json.dump(data, f, ensure_ascii=False, indent=4, sort_keys=True, separators=(',', ': '))
 
-def load():
-    #データを読み込む
-    global data, direc
-    with open(direc+"/data.json", "r", encoding="utf8") as f:
-        data = json.load(f)
-    with open(direc+"/data_backup.json", "w", encoding="utf8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=4, sort_keys=True, separators=(',', ': '))
-
 
 def looking(x, reply=True):
     #過去の発言をもとに考える
     global heart, heartLastSpeaker, replaceWords, lastSentence, lastSentenceInput
     try:
 
+        for i in range(3):
+            if i == 0:
+                rate = 0.75
+            elif i == 1:
+                rate = 0.5
+            else:
+                rate = 0.25
 
-        #今の気持ちから考える
-        if heart - 10 < 0:
-            f = 0
-        else:
-            f = heart - 10
+            #今の気持ちから考える
+            if heart - 10 < 0:
+                f = 0
+            else:
+                f = heart - 10
 
-        if heart + 10 >= len(data["sentence"]) - 1:
-            t = len(data["sentence"]) - 1
-        else:
-            t = heart + 50
+            if heart + 10 >= len(data["sentence"]) - 1:
+                t = len(data["sentence"]) - 1
+            else:
+                t = heart + 10
 
-        i = f
-        ii = 0
+            i = f
+            ii = 0
+            kon = -1
+            zen = -2
 
-        cc = []
-        for sen in data["sentence"][f:t]:
-            if i >= t:
-                break
-            into = x
-            a = -1
-            b = 1
-            c = 0
-            while True:
-                if into in sen[0]:
-                    c += 1
-                try:
+            cc = []
+            for sen in data["sentence"][f:t]:
+                into = x
+                a = -1
+                b = 1
+                c = 0
+                while True:
+                    zen = kon
+                    kon = i
+                    if into in sen[0]:
+                        c += 1
                     if len(x) == b:
-                        cc[ii] = cc[ii] / ((len(x) + len(sen[0])) / 2)
+                        cc[-1] = cc[-1] / ((len(x) + len(sen[0])) / 2)
                         c = c / ((len(x) + len(sen[0])) / 2)
                         
                         if len(cc) >= 2:
-                            if cc[ii] - cc[ii-1] >= 0.75 or c >= 0.75:
+                            if cc[-1] - cc[-2] >= rate or c >= rate:
                                 print("A自信: {}".format(c))
-                                print("A前との差: {}".format(cc[ii] - cc[ii-1]))
+                                print("A前との差: {}".format(cc[-1] - cc[-2]))
                                 print("A類似発言: {}".format(data["sentence"][i][0]))
                                 if reply:
                                     if settings["myname"] != data["sentence"][i+1][1] and not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
@@ -102,56 +102,59 @@ def looking(x, reply=True):
                                     heart = i
                                     return
                         break
-                except:
-                    break
-                a += 1
-                b += 1
-                into = x[a:b]
-                if len(cc) < ii+1:
-                    while len(cc) < ii+1:
+                    a += 1
+                    b += 1
+                    into = x[a:b]
+                    if kon != zen:
                         cc.append(c)
-                cc[ii] = c
-            i += 1
-            ii += 1
+                    cc[-1] = c
+                    if len(cc) >= 2:
+                        cc = cc[-2:]
+                        cc[1] = c
+                    else:
+                        cc[-1] = c
+                i += 1
+                ii += 1
 
 
 
 
 
-        #今の気持ちから少し離れる
-        if heart - 150 < 0:
-            f = 0
-        else:
-            f = heart - 150
+            #今の気持ちから少し離れる
+            if heart - 150 < 0:
+                f = 0
+            else:
+                f = heart - 150
 
-        if heart + 150 >= len(data["sentence"]) - 1:
-            t = len(data["sentence"]) - 1
-        else:
-            t = heart + 150
+            if heart + 150 >= len(data["sentence"]) - 1:
+                t = len(data["sentence"]) - 1
+            else:
+                t = heart + 150
 
-        i = f
-        ii = 0
+            i = f
+            ii = 0
+            kon = -1
+            zen = -2
 
-        cc = []
-        for sen in data["sentence"][f:t]:
-            if i >= t:
-                break
-            into = x
-            a = -1
-            b = 1
-            c = 0
-            while True:
-                if into in sen[0]:
-                    c += 1
-                try:
+            cc = []
+            for sen in data["sentence"][f:t]:
+                into = x
+                a = -1
+                b = 1
+                c = 0
+                while True:
+                    zen = kon
+                    kon = i
+                    if into in sen[0]:
+                        c += 1
                     if len(x) == b:
-                        cc[ii] = cc[ii] / ((len(x) + len(sen[0])) / 2)
+                        cc[-1] = cc[-1] / ((len(x) + len(sen[0])) / 2)
                         c = c / ((len(x) + len(sen[0])) / 2)
                         
                         if len(cc) >= 2:
-                            if cc[ii] - cc[ii-1] >= 0.75 or c >= 0.75:
+                            if cc[-1] - cc[-2] >= rate or c >= rate:
                                 print("B自信: {}".format(c))
-                                print("B前との差: {}".format(cc[ii] - cc[ii-1]))
+                                print("B前との差: {}".format(cc[-1] - cc[-2]))
                                 print("B類似発言: {}".format(data["sentence"][i][0]))
                                 if reply:
                                     if settings["myname"] != data["sentence"][i+1][1] and not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
@@ -162,57 +165,60 @@ def looking(x, reply=True):
                                     heart = i
                                     return
                         break
-                except:
-                    break
-                a += 1
-                b += 1
-                into = x[a:b]
-                if len(cc) < ii+1:
-                    while len(cc) < ii+1:
+                    a += 1
+                    b += 1
+                    into = x[a:b]
+                    if kon != zen:
                         cc.append(c)
-                cc[ii] = c
-            i += 1
-            ii += 1
+                    cc[-1] = c
+                    if len(cc) >= 2:
+                        cc = cc[-2:]
+                        cc[1] = c
+                    else:
+                        cc[-1] = c
+                i += 1
+                ii += 1
 
 
 
 
 
 
-        #より深く考える
-        if heart - 300000 < 0:
-            f = 0
-        else:
-            f = heart - 300000
+            #より深く考える
+            if heart - 300000 < 0:
+                f = 0
+            else:
+                f = heart - 300000
 
-        if heart + 300000 >= len(data["sentence"]) - 1:
-            t = len(data["sentence"]) - 1
-        else:
-            t = heart + 300000
+            if heart + 300000 >= len(data["sentence"]) - 1:
+                t = len(data["sentence"]) - 1
+            else:
+                t = heart + 300000
 
-        i = f
-        ii = 0
+            i = f
+            ii = 0
+            kon = -1
+            zen = -2
 
-        cc = []
-        for sen in data["sentence"][f:t]:
-            if i >= t:
-                break
-            into = x
-            a = -1
-            b = 1
-            c = 0
-            while True:
-                if into in sen[0]:
-                    c += 1
-                try:
+            cc = []
+            for sen in data["sentence"][f:t]:
+                into = x
+                a = -1
+                b = 1
+                c = 0
+                while True:
+                    zen = kon
+                    kon = i
+                    if into in sen[0]:
+                        c += 1
                     if len(x) == b:
-                        cc[ii] = cc[ii] / ((len(x) + len(sen[0])) / 2)
+                        cc[-1] = cc[-1] / ((len(x) + len(sen[0])) / 2)
                         c = c / ((len(x) + len(sen[0])) / 2)
                         
                         if len(cc) >= 2:
-                            if cc[ii] - cc[ii-1] >= 0.75 or c >= 0.75:
+                            if cc[-1] - cc[-2] >= rate or c >= rate:
                                 print("C自信: {}".format(c))
-                                print("C前との差: {}".format(cc[ii] - cc[ii-1]))
+                                print("C前との差: {}".format(cc[-1] - cc[-2]))
                                 print("C類似発言: {}".format(data["sentence"][i][0]))
                                 if reply:
                                     if settings["myname"] != data["sentence"][i+1][1] and not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
@@ -223,134 +229,21 @@ def looking(x, reply=True):
                                     heart = i
                                     return
                         break
-                except:
-                    break
-                a += 1
-                b += 1
-                into = x[a:b]
-                if len(cc) < ii+1:
-                    while len(cc) < ii+1:
+                    a += 1
+                    b += 1
+                    into = x[a:b]
+                    if kon != zen:
                         cc.append(c)
-                cc[ii] = c
-            i += 1
-            ii += 1
+                    cc[-1] = c
+                    if len(cc) >= 2:
+                        cc = cc[-2:]
+                        cc[1] = c
+                    else:
+                        cc[-1] = c
+                i += 1
+                ii += 1
 
 
-
-        #より深く考える
-        if heart - 300000 < 0:
-            f = 0
-        else:
-            f = heart - 300000
-
-        if heart + 300000 >= len(data["sentence"]) - 1:
-            t = len(data["sentence"]) - 1
-        else:
-            t = heart + 300000
-
-        i = f
-        ii = 0
-
-        cc = []
-        for sen in data["sentence"][f:t]:
-            if i >= t:
-                break
-            into = x
-            a = -1
-            b = 1
-            c = 0
-            while True:
-                if into in sen[0]:
-                    c += 1
-                try:
-                    if len(x) == b:
-                        cc[ii] = cc[ii] / ((len(x) + len(sen[0])) / 2)
-                        c = c / ((len(x) + len(sen[0])) / 2)
-                        
-                        if len(cc) >= 2:
-                            if cc[ii] - cc[ii-1] >= 0.5 or c >= 0.5:
-                                print("D自信: {}".format(c))
-                                print("D前との差: {}".format(cc[ii] - cc[ii-1]))
-                                print("D類似発言: {}".format(data["sentence"][i][0]))
-                                if reply:
-                                    if settings["myname"] != data["sentence"][i+1][1] and not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
-                                        heart = i+1
-                                        heartLastSpeaker = data["sentence"][i+1][1]
-                                        return data["sentence"][i+1][0]
-                                else:
-                                    heart = i
-                                    return
-                        break
-                except:
-                    break
-                a += 1
-                b += 1
-                into = x[a:b]
-                if len(cc) < ii+1:
-                    while len(cc) < ii+1:
-                        cc.append(c)
-                cc[ii] = c
-            i += 1
-            ii += 1
-
-
-
-
-        #より深く考える
-        if heart - 300000 < 0:
-            f = 0
-        else:
-            f = heart - 300000
-
-        if heart + 300000 >= len(data["sentence"]) - 1:
-            t = len(data["sentence"]) - 1
-        else:
-            t = heart + 300000
-
-        i = f
-        ii = 0
-
-        cc = []
-        for sen in data["sentence"][f:t]:
-            if i >= t:
-                break
-            into = x
-            a = -1
-            b = 1
-            c = 0
-            while True:
-                if into in sen[0]:
-                    c += 1
-                try:
-                    if len(x) == b:
-                        cc[ii] = cc[ii] / ((len(x) + len(sen[0])) / 2)
-                        c = c / ((len(x) + len(sen[0])) / 2)
-                        
-                        if len(cc) >= 2:
-                            if cc[ii] - cc[ii-1] >= 0.25 or c >= 0.25:
-                                print("E自信: {}".format(c))
-                                print("E前との差: {}".format(cc[ii] - cc[ii-1]))
-                                print("E類似発言: {}".format(data["sentence"][i][0]))
-                                if reply:
-                                    if settings["myname"] != data["sentence"][i+1][1] and not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
-                                        heart = i+1
-                                        heartLastSpeaker = data["sentence"][i+1][1]
-                                        return data["sentence"][i+1][0]
-                                else:
-                                    heart = i
-                                    return
-                        break
-                except:
-                    break
-                a += 1
-                b += 1
-                into = x[a:b]
-                if len(cc) < ii+1:
-                    while len(cc) < ii+1:
-                        cc.append(c)
-                cc[ii] = c
-            i += 1
-            ii += 1
 
 
 
@@ -361,6 +254,7 @@ def looking(x, reply=True):
         traceback.print_exc()
 
     return None
+
 
 
 
@@ -447,7 +341,6 @@ def save():
             data["sentence"].pop()
     with open(direc+"/data.json", "w", encoding="utf8") as f:
         json.dump(data, f, ensure_ascii=False, indent=4, sort_keys=True, separators=(',', ': '))
-    load()
 
 
 
