@@ -5,7 +5,6 @@ import random
 import time
 
 
-
 data = None #別途読み込むデータ
 settings = None #設定
 direc = None #辞書のディレクトリ
@@ -39,7 +38,7 @@ def initialize(direcectory, interface_):
             settings = json.load(f)
         with open(direc+"/data.json", "w", encoding="utf8") as f:
             json.dump(data, f, ensure_ascii=False, indent=4, sort_keys=True, separators=(',', ': '))
-    heart = len(data["sentence"]) - 50
+    heart = len(data["sentence"]) - 2
     with open(direc+"/data_backup.json", "w", encoding="utf8") as f:
         json.dump(data, f, ensure_ascii=False, indent=4, sort_keys=True, separators=(',', ': '))
 
@@ -63,8 +62,8 @@ def looking(x, reply=True):
             else:
                 f = heart - 10
 
-            if heart + 10 >= len(data["sentence"]) - 1:
-                t = len(data["sentence"]) - 1
+            if heart + 10 >= len(data["sentence"]) - 2:
+                t = len(data["sentence"]) - 2
             else:
                 t = heart + 10
 
@@ -94,7 +93,8 @@ def looking(x, reply=True):
                                 print("A前との差: {}".format(cc[-1] - cc[-2]))
                                 print("A類似発言: {}".format(data["sentence"][i][0]))
                                 if reply:
-                                    if settings["myname"] != data["sentence"][i+1][1] and not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
+                                    #if settings["myname"] != data["sentence"][i+1][1] and not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
+                                    if not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
                                         heart = i+1
                                         heartLastSpeaker = data["sentence"][i+1][1]
                                         return data["sentence"][i+1][0]
@@ -126,8 +126,8 @@ def looking(x, reply=True):
             else:
                 f = heart - 150
 
-            if heart + 150 >= len(data["sentence"]) - 1:
-                t = len(data["sentence"]) - 1
+            if heart + 150 >= len(data["sentence"]) - 2:
+                t = len(data["sentence"]) - 2
             else:
                 t = heart + 150
 
@@ -157,7 +157,7 @@ def looking(x, reply=True):
                                 print("B前との差: {}".format(cc[-1] - cc[-2]))
                                 print("B類似発言: {}".format(data["sentence"][i][0]))
                                 if reply:
-                                    if settings["myname"] != data["sentence"][i+1][1] and not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
+                                    if not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
                                         heart = i+1
                                         heartLastSpeaker = data["sentence"][i+1][1]
                                         return data["sentence"][i+1][0]
@@ -185,15 +185,15 @@ def looking(x, reply=True):
 
 
             #より深く考える
-            if heart - 300000 < 0:
+            if heart - 30000 < 0:
                 f = 0
             else:
-                f = heart - 300000
+                f = heart - 30000
 
-            if heart + 300000 >= len(data["sentence"]) - 1:
-                t = len(data["sentence"]) - 1
+            if heart + 30000 >= len(data["sentence"]) - 2:
+                t = len(data["sentence"]) - 2
             else:
-                t = heart + 300000
+                t = heart + 30000
 
             i = f
             ii = 0
@@ -221,7 +221,7 @@ def looking(x, reply=True):
                                 print("C前との差: {}".format(cc[-1] - cc[-2]))
                                 print("C類似発言: {}".format(data["sentence"][i][0]))
                                 if reply:
-                                    if settings["myname"] != data["sentence"][i+1][1] and not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
+                                    if not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
                                         heart = i+1
                                         heartLastSpeaker = data["sentence"][i+1][1]
                                         return data["sentence"][i+1][0]
@@ -336,15 +336,15 @@ def addSentence(x, u, noword=False):
 
 def save():
     global direc, data
-    if len(data["sentence"]) >= 1000000:
-        while len(data["sentence"]) >= 1000000:
-            data["sentence"].pop()
+    if len(data["sentence"]) >= 100000:
+        while len(data["sentence"]) >= 100000:
+            del data["sentence"][0]
     with open(direc+"/data.json", "w", encoding="utf8") as f:
         json.dump(data, f, ensure_ascii=False, indent=4, sort_keys=True, separators=(',', ': '))
 
 
 
-def speakFreely(x, user, add=True):
+def speakFreely(add=True):
     #自由に話す
     global heart, actualUser, brainUser, wordMemory, tokenizer, lastSentence, lastSentenceInput, maeheart, myVoice
 
@@ -354,7 +354,7 @@ def speakFreely(x, user, add=True):
     return result
 
 def receive(x, u, add=True):
-    global lastSentenceInput, myVoice
+    global lastSentenceInput, lastSentence, myVoice
     if x == None or u == None: return
     lastSentenceInput = x
     lastUser = u
@@ -434,4 +434,4 @@ if __name__ == '__main__':
             exit()
         else:
             receive(into, "ゆいな")
-            print("{}: {}".format(settings["myname"], speakFreely(into, "ゆいな")))
+            print("{}: {}".format(settings["myname"], speakFreely()))

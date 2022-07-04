@@ -124,7 +124,7 @@ async def cron():
         
         if len(messages) != 0:
             ii = 0
-            result = mizuho.speakFreely(messages[-1].content, messages[-1].author.name)
+            result = mizuho.speakFreely()
             if result == None:
                 messages = []
                 return
