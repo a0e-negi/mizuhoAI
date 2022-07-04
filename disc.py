@@ -29,7 +29,7 @@ TOKEN = mizuho.settings["discToken"]
 intents = discord.Intents.all()
 client = discord.Client(intents=intents)
 
-mode = 1
+mode = 2
 
 def setMode(x):
     global mode
@@ -91,8 +91,12 @@ async def on_message(message):
             setMode(0)
             return
         if message.content == "mizuho!mode 1":
-            await message.channel.send("通常モードに切り替える")
+            await message.channel.send("寡黙モードに切り替える")
             setMode(1)
+            return
+        if message.content == "mizuho!mode 2":
+            await message.channel.send("通常モードに切り替える")
+            setMode(2)
             return
 
         print("受信: {}".format(message.content))
@@ -101,14 +105,14 @@ async def on_message(message):
         lastMessage = message
         if random.randint(1, len(persons) - 1) == (len(persons) - 1) or bool(re.search(mizuho.settings["mynames"], message.content)):
             mizuho.receive(message.content, message.author.name)
-            if mode == 1:
+            if mode == 2 or mode == 1:
                 messages.append(message)
         else:
             mizuho.receive(message.content, message.author.name)
 
 
 async def extraMessage():
-    if mode == 1:
+    if mode == 2:
         print("追加メッセージ送信")
         result = mizuho.tsuzuki()
         print("{}: {}".format(mizuho.settings["myname"], result))
@@ -120,17 +124,27 @@ i = 0
 @tasks.loop(seconds=6)
 async def cron():
     try:
-        global persons, prevTime, lastMessage, i, ii, messages
+        global persons, prevTime, lastMessage, i, messages
         
-        if len(messages) != 0:
-            ii = 0
-            result = mizuho.speakFreely()
-            if result == None:
+        if mode == 2:
+            if len(messages) != 0:
+                result = mizuho.speakFreely()
+                if result == None:
+                    messages = []
+                    return
+                print("{}: {}".format(mizuho.settings["myname"], result))
+                await speak(result)
                 messages = []
-                return
-            print("{}: {}".format(mizuho.settings["myname"], result))
-            await speak(result)
-            messages = []
+        elif mode == 1:
+            if len(messages) != 0:
+                if bool(re.search(mizuho.settings["mynames"], messages[-1].content)):
+                    result = mizuho.speakFreely()
+                    if result == None:
+                        messages = []
+                        return
+                    print("{}: {}".format(mizuho.settings["myname"], result))
+                    await speak(result)
+                    messages = []
 
         nowTime = time.time()
         if nowTime >= prevTime + 20:
@@ -139,18 +153,20 @@ async def cron():
                 persons = [mizuho.settings["myname"]]
                 i = 0
             if channel != None and lastMessage != None:
-                if random.randint(1, len(persons)) == len(persons) and mode == 1:
-                    if len(persons) == 1:
-                        if random.randint(1, 9) == 9 and mode == 1:
+                if mode == 2:
+                    if random.randint(1, len(persons)) == len(persons):
+                        if len(persons) == 1:
+                            if random.randint(1, 9) == 9:
+                                result = mizuho.tsuzuki()
+                                print("{}: {}".format(mizuho.settings["myname"], result))
+                                if result != None:
+                                    await speak(result)
+                        else:
                             result = mizuho.tsuzuki()
                             print("{}: {}".format(mizuho.settings["myname"], result))
                             if result != None:
                                 await speak(result)
-                    else:
-                        result = mizuho.tsuzuki()
-                        print("{}: {}".format(mizuho.settings["myname"], result))
-                        if result != None:
-                            await speak(result)
+                
             i += 1
             prevTime = time.time()
     except:
