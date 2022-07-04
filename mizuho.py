@@ -185,15 +185,15 @@ def looking(x, reply=True):
 
 
             #より深く考える
-            if heart - 30000 < 0:
+            if heart - 60000 < 0:
                 f = 0
             else:
-                f = heart - 30000
+                f = heart - 60000
 
-            if heart + 30000 >= len(data["sentence"]) - 2:
+            if heart + 60000 >= len(data["sentence"]) - 2:
                 t = len(data["sentence"]) - 2
             else:
-                t = heart + 30000
+                t = heart + 60000
 
             i = f
             ii = 0
