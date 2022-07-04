@@ -67,13 +67,13 @@ def looking(x, reply=True):
             else:
                 t = heart + 10
 
-            i = f
-            ii = 0
+            i = t - 1
+            ii = t - f
             kon = -1
             zen = -2
 
-            cc = []
-            for sen in data["sentence"][f:t]:
+            cc = [0]
+            for sen in list(reversed(data["sentence"][f:t])):
                 into = x
                 a = -1
                 b = 1
@@ -113,31 +113,31 @@ def looking(x, reply=True):
                         cc[1] = c
                     else:
                         cc[-1] = c
-                i += 1
-                ii += 1
+                i -= 1
+                ii -= 1
 
 
 
 
 
             #今の気持ちから少し離れる
-            if heart - 150 < 0:
+            if heart - 1500 < 0:
                 f = 0
             else:
-                f = heart - 150
+                f = heart - 1500
 
-            if heart + 150 >= len(data["sentence"]) - 2:
+            if heart + 1500 >= len(data["sentence"]) - 2:
                 t = len(data["sentence"]) - 2
             else:
-                t = heart + 150
+                t = heart + 1500
 
-            i = f
-            ii = 0
+            i = t - 1
+            ii = t - f
             kon = -1
             zen = -2
 
-            cc = []
-            for sen in data["sentence"][f:t]:
+            cc = [0]
+            for sen in list(reversed(data["sentence"][f:t])):
                 into = x
                 a = -1
                 b = 1
@@ -176,8 +176,8 @@ def looking(x, reply=True):
                         cc[1] = c
                     else:
                         cc[-1] = c
-                i += 1
-                ii += 1
+                i -= 1
+                ii -= 1
 
 
 
@@ -195,13 +195,13 @@ def looking(x, reply=True):
             else:
                 t = heart + 60000
 
-            i = f
-            ii = 0
+            i = t - 1
+            ii = t - f
             kon = -1
             zen = -2
 
-            cc = []
-            for sen in data["sentence"][f:t]:
+            cc = [0]
+            for sen in list(reversed(data["sentence"][f:t])):
                 into = x
                 a = -1
                 b = 1
@@ -240,8 +240,8 @@ def looking(x, reply=True):
                         cc[1] = c
                     else:
                         cc[-1] = c
-                i += 1
-                ii += 1
+                i -= 1
+                ii -= 1
 
 
 
