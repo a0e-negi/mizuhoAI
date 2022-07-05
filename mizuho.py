@@ -17,6 +17,7 @@ lastSentence = None #最後のbotの言葉
 lastSentenceInput = None #最後に聞いた言葉
 heartLastSpeaker = None #過去に似た話をしてたユーザー
 maeheart = 0 #一つ前の気持ち
+getBored = 0
 interface = 0 #クライアントの種類
 lastUser = None #最後に話しかけたユーザー
 myVoice = None #心の中の声
@@ -423,7 +424,7 @@ def speakFreely(add=True):
     return result
 
 def receive(x, u, add=True):
-    global lastSentenceInput, lastSentence, myVoice
+    global lastSentenceInput, lastSentence, myVoice, getBored, maeheart, heart
     if x == None or u == None: return
     lastSentenceInput = x
     lastUser = u
@@ -432,6 +433,7 @@ def receive(x, u, add=True):
 
     lastSentence = result
     if result == None:
+        getBored += 1
         print("頭がパンクしそう...")
         myVoice = None
         return
@@ -476,6 +478,27 @@ def receive(x, u, add=True):
         data["users"].append([u])
     if [u] not in data["users"]:
         data["users"].append([settings["myname"]])
+
+
+    #既存の文化に飽きさせる2
+    if -16 <= heart - maeheart and heart - maeheart <= 16:
+        getBored += 1
+    else:
+        getBored -= 0.5
+    if getBored < 0:
+        getBored = 0
+    print("飽き度: {}".format(getBored))
+
+    if getBored >= 30:
+        getBored = 0
+        heart_ = heart
+        heart = random.randint(0, len(data["sentence"]) - 50)
+        if 0 > heart_-1: looking(data["sentence"][heart_-1][0])
+        looking(data["sentence"][heart_][0])
+        print("飽きた heart: {}".format(heart))
+
+
+
 
 def addFact(x, y, z):
     data["fact"].append([x, y, [z]])
