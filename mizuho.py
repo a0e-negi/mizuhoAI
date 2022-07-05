@@ -48,13 +48,11 @@ def looking(x, reply=True):
     global heart, heartLastSpeaker, replaceWords, lastSentence, lastSentenceInput
     try:
 
-        for i in range(3):
+        for i in range(2):
             if i == 0:
                 rate = 0.75
-            elif i == 1:
-                rate = 0.5
             else:
-                rate = 0.25
+                rate = 0.5
 
             #今の気持ちから考える
             if heart - 10 < 0:
