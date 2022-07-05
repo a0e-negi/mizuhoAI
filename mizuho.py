@@ -120,6 +120,72 @@ def looking(x, reply=True):
 
 
 
+
+            #今の気持ちから少し離れる
+            if heart - 150 < 0:
+                f = 0
+            else:
+                f = heart - 150
+
+            if heart + 150 >= len(data["sentence"]) - 2:
+                t = len(data["sentence"]) - 2
+            else:
+                t = heart + 150
+
+            i = t - 1
+            ii = t - f
+            kon = -1
+            zen = -2
+
+            cc = [0]
+            for sen in list(reversed(data["sentence"][f:t])):
+                into = x
+                a = -1
+                b = 1
+                c = 0
+                while True:
+                    zen = kon
+                    kon = i
+                    if into in sen[0]:
+                        c += 1
+                    if len(x) == b:
+                        cc[-1] = cc[-1] / ((len(x) + len(sen[0])) / 2)
+                        c = c / ((len(x) + len(sen[0])) / 2)
+                        
+                        if len(cc) >= 2:
+                            if cc[-1] - cc[-2] >= rate or c >= rate:
+                                print("B自信: {}".format(c))
+                                print("B前との差: {}".format(cc[-1] - cc[-2]))
+                                print("B類似発言: {}".format(data["sentence"][i][0]))
+                                if reply:
+                                    if not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
+                                        heart = i+1
+                                        heartLastSpeaker = data["sentence"][i+1][1]
+                                        return data["sentence"][i+1][0]
+                                else:
+                                    heart = i
+                                    return
+                        break
+                    a += 1
+                    b += 1
+                    into = x[a:b]
+                    if kon != zen:
+                        cc.append(c)
+                    cc[-1] = c
+                    if len(cc) >= 2:
+                        cc = cc[-2:]
+                        cc[1] = c
+                    else:
+                        cc[-1] = c
+                i -= 1
+                ii -= 1
+
+
+
+
+
+
+
             #今の気持ちから少し離れる
             if heart - 1500 < 0:
                 f = 0
