@@ -103,7 +103,7 @@ async def on_message(message):
         lastMessage = message
         prevTime = time.time()
         lastMessage = message
-        if random.randint(1, len(persons) + 2 - 1) == (len(persons) + 2 - 1) or bool(re.search(mizuho.settings["mynames"], message.content)):
+        if random.randint(1, len(persons)) == (len(persons)) or bool(re.search(mizuho.settings["mynames"], message.content)):
             mizuho.receive(message.content, message.author.name)
             if mode == 2 or mode == 1:
                 messages.append(message)
