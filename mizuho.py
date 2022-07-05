@@ -91,6 +91,8 @@ def looking(x, reply=True):
                         if len(cc) >= 2:
                             if cc[-1] - cc[-2] >= rate or c >= rate:
                                 for iii in range(5):
+                                    if i+1+iii >= len(data["sentence"]) - 2:
+                                        break
                                     print("A自信: {}".format(c))
                                     print("A前との差: {}".format(cc[-1] - cc[-2]))
                                     print("A類似発言: {}".format(data["sentence"][i][0]))
@@ -156,6 +158,8 @@ def looking(x, reply=True):
                         if len(cc) >= 2:
                             if cc[-1] - cc[-2] >= rate or c >= rate:
                                 for iii in range(5):
+                                    if i+1+iii >= len(data["sentence"]) - 2:
+                                        break
                                     print("B自信: {}".format(c))
                                     print("B前との差: {}".format(cc[-1] - cc[-2]))
                                     print("B類似発言: {}".format(data["sentence"][i][0]))
@@ -222,6 +226,8 @@ def looking(x, reply=True):
                         if len(cc) >= 2:
                             if cc[-1] - cc[-2] >= rate or c >= rate:
                                 for iii in range(5):
+                                    if i+1+iii >= len(data["sentence"]) - 2:
+                                        break
                                     print("C自信: {}".format(c))
                                     print("C前との差: {}".format(cc[-1] - cc[-2]))
                                     print("C類似発言: {}".format(data["sentence"][i][0]))
@@ -287,6 +293,8 @@ def looking(x, reply=True):
                         if len(cc) >= 2:
                             if cc[-1] - cc[-2] >= rate or c >= rate:
                                 for iii in range(5):
+                                    if i+1+iii >= len(data["sentence"]) - 2:
+                                        break
                                     print("D自信: {}".format(c))
                                     print("D前との差: {}".format(cc[-1] - cc[-2]))
                                     print("D類似発言: {}".format(data["sentence"][i][0]))
