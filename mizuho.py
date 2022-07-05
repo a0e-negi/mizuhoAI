@@ -89,18 +89,18 @@ def looking(x, reply=True):
                         
                         if len(cc) >= 2:
                             if cc[-1] - cc[-2] >= rate or c >= rate:
-                                print("A自信: {}".format(c))
-                                print("A前との差: {}".format(cc[-1] - cc[-2]))
-                                print("A類似発言: {}".format(data["sentence"][i][0]))
-                                if reply:
-                                    #if settings["myname"] != data["sentence"][i+1][1] and not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
-                                    if settings["myname"] != data["sentence"][i+1][1] and not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
-                                        heart = i+1
-                                        heartLastSpeaker = data["sentence"][i+1][1]
-                                        return data["sentence"][i+1][0]
-                                else:
-                                    heart = i
-                                    return
+                                for iii in range(5):
+                                    print("A自信: {}".format(c))
+                                    print("A前との差: {}".format(cc[-1] - cc[-2]))
+                                    print("A類似発言: {}".format(data["sentence"][i][0]))
+                                    if reply:
+                                        if settings["myname"] != data["sentence"][i+1+iii][1] and not bool(re.search(settings["mynames"], data["sentence"][i+1+iii][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1+iii][0] and lastSentenceInput != data["sentence"][i+1+iii][0]:
+                                            heart = i+1+iii
+                                            heartLastSpeaker = data["sentence"][i+1+iii][1]
+                                            return data["sentence"][i+1+iii][0]
+                                    else:
+                                        heart = i
+                                        return
                         break
                     a += 1
                     b += 1
@@ -154,17 +154,18 @@ def looking(x, reply=True):
                         
                         if len(cc) >= 2:
                             if cc[-1] - cc[-2] >= rate or c >= rate:
-                                print("B自信: {}".format(c))
-                                print("B前との差: {}".format(cc[-1] - cc[-2]))
-                                print("B類似発言: {}".format(data["sentence"][i][0]))
-                                if reply:
-                                    if settings["myname"] != data["sentence"][i+1][1] and not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
-                                        heart = i+1
-                                        heartLastSpeaker = data["sentence"][i+1][1]
-                                        return data["sentence"][i+1][0]
-                                else:
-                                    heart = i
-                                    return
+                                for iii in range(5):
+                                    print("B自信: {}".format(c))
+                                    print("B前との差: {}".format(cc[-1] - cc[-2]))
+                                    print("B類似発言: {}".format(data["sentence"][i][0]))
+                                    if reply:
+                                        if settings["myname"] != data["sentence"][i+1+iii][1] and not bool(re.search(settings["mynames"], data["sentence"][i+1+iii][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1+iii][0] and lastSentenceInput != data["sentence"][i+1+iii][0]:
+                                            heart = i+1+iii
+                                            heartLastSpeaker = data["sentence"][i+1+iii][1]
+                                            return data["sentence"][i+1+iii][0]
+                                    else:
+                                        heart = i
+                                        return
                         break
                     a += 1
                     b += 1
@@ -219,17 +220,18 @@ def looking(x, reply=True):
                         
                         if len(cc) >= 2:
                             if cc[-1] - cc[-2] >= rate or c >= rate:
-                                print("B自信: {}".format(c))
-                                print("B前との差: {}".format(cc[-1] - cc[-2]))
-                                print("B類似発言: {}".format(data["sentence"][i][0]))
-                                if reply:
-                                    if settings["myname"] != data["sentence"][i+1][1] and not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
-                                        heart = i+1
-                                        heartLastSpeaker = data["sentence"][i+1][1]
-                                        return data["sentence"][i+1][0]
-                                else:
-                                    heart = i
-                                    return
+                                for iii in range(5):
+                                    print("C自信: {}".format(c))
+                                    print("C前との差: {}".format(cc[-1] - cc[-2]))
+                                    print("C類似発言: {}".format(data["sentence"][i][0]))
+                                    if reply:
+                                        if settings["myname"] != data["sentence"][i+1+iii][1] and not bool(re.search(settings["mynames"], data["sentence"][i+1+iii][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1+iii][0] and lastSentenceInput != data["sentence"][i+1+iii][0]:
+                                            heart = i+1+iii
+                                            heartLastSpeaker = data["sentence"][i+1+iii][1]
+                                            return data["sentence"][i+1+iii][0]
+                                    else:
+                                        heart = i
+                                        return
                         break
                     a += 1
                     b += 1
@@ -283,17 +285,18 @@ def looking(x, reply=True):
                         
                         if len(cc) >= 2:
                             if cc[-1] - cc[-2] >= rate or c >= rate:
-                                print("C自信: {}".format(c))
-                                print("C前との差: {}".format(cc[-1] - cc[-2]))
-                                print("C類似発言: {}".format(data["sentence"][i][0]))
-                                if reply:
-                                    if settings["myname"] != data["sentence"][i+1][1] and not bool(re.search(settings["mynames"], data["sentence"][i+1][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1][0] and lastSentenceInput != data["sentence"][i+1][0]:
-                                        heart = i+1
-                                        heartLastSpeaker = data["sentence"][i+1][1]
-                                        return data["sentence"][i+1][0]
-                                else:
-                                    heart = i
-                                    return
+                                for iii in range(5):
+                                    print("D自信: {}".format(c))
+                                    print("D前との差: {}".format(cc[-1] - cc[-2]))
+                                    print("D類似発言: {}".format(data["sentence"][i][0]))
+                                    if reply:
+                                        if settings["myname"] != data["sentence"][i+1+iii][1] and not bool(re.search(settings["mynames"], data["sentence"][i+1+iii][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1+iii][0] and lastSentenceInput != data["sentence"][i+1+iii][0]:
+                                            heart = i+1+iii
+                                            heartLastSpeaker = data["sentence"][i+1+iii][1]
+                                            return data["sentence"][i+1+iii][0]
+                                    else:
+                                        heart = i
+                                        return
                         break
                     a += 1
                     b += 1
