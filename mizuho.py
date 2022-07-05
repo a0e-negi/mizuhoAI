@@ -468,7 +468,6 @@ def receive(x, u, add=True):
 
 
     print("現在の心: {}".format(heart))
-    maeheart = heart
     
     myVoice = result
     print("心の声: {}".format(myVoice))
@@ -497,6 +496,7 @@ def receive(x, u, add=True):
         looking(data["sentence"][heart_][0])
         print("飽きた heart: {}".format(heart))
 
+    maeheart = heart
 
 
 
