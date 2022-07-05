@@ -128,16 +128,11 @@ async def cron():
         
         if mode == 2:
             if len(messages) != 0:
-                result = mizuho.speakFreely()
-                if result == None:
-                    messages = []
-                    return
-                print("{}: {}".format(mizuho.settings["myname"], result))
-                await speak(result)
-                messages = []
-        elif mode == 1:
-            if len(messages) != 0:
-                if bool(re.search(mizuho.settings["mynames"], messages[-1].content)):
+                flag = True
+                for p in persons:
+                    if p in messages[-1].content and p != mizuho.settings["myname"]:
+                        flag = False
+                if flag:
                     result = mizuho.speakFreely()
                     if result == None:
                         messages = []
@@ -145,7 +140,22 @@ async def cron():
                     print("{}: {}".format(mizuho.settings["myname"], result))
                     await speak(result)
                     messages = []
-
+        elif mode == 1:
+            if len(messages) != 0:
+                if bool(re.search(mizuho.settings["mynames"], messages[-1].content)):
+                    flag = True
+                    for p in persons:
+                        if p in messages[-1].content and p != mizuho.settings["myname"]:
+                            flag = False
+                    if flag:
+                        result = mizuho.speakFreely()
+                        if result == None:
+                            messages = []
+                            return
+                        print("{}: {}".format(mizuho.settings["myname"], result))
+                        await speak(result)
+                        messages = []
+                        
         nowTime = time.time()
         if nowTime >= prevTime + 20:
             print("沈黙を検知")
