@@ -489,7 +489,7 @@ def receive(x, u, add=True):
         getBored = 0
     print("飽き度: {}".format(getBored))
 
-    if getBored >= 30:
+    if getBored >= 10:
         getBored = 0
         heart_ = heart
         heart = random.randint(0, len(data["sentence"]) - 50)
