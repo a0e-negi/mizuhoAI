@@ -90,7 +90,7 @@ def looking(x, reply=True):
                         
                         if len(cc) >= 2:
                             if cc[-1] - cc[-2] >= rate or c >= rate:
-                                for iii in range(15):
+                                for iii in range(5):
                                     if i+1+iii >= len(data["sentence"]) - 2:
                                         break
                                     print("A自信: {}".format(c))
@@ -163,7 +163,7 @@ def looking(x, reply=True):
                         
                         if len(cc) >= 2:
                             if cc[-1] - cc[-2] >= rate or c >= rate:
-                                for iii in range(15):
+                                for iii in range(5):
                                     if i+1+iii >= len(data["sentence"]) - 2:
                                         break
                                     print("B自信: {}".format(c))
@@ -237,7 +237,7 @@ def looking(x, reply=True):
                         
                         if len(cc) >= 2:
                             if cc[-1] - cc[-2] >= rate or c >= rate:
-                                for iii in range(15):
+                                for iii in range(5):
                                     if i+1+iii >= len(data["sentence"]) - 2:
                                         break
                                     print("C自信: {}".format(c))
@@ -310,7 +310,7 @@ def looking(x, reply=True):
                         
                         if len(cc) >= 2:
                             if cc[-1] - cc[-2] >= rate or c >= rate:
-                                for iii in range(15):
+                                for iii in range(5):
                                     if i+1+iii >= len(data["sentence"]) - 2:
                                         break
                                     print("D自信: {}".format(c))
