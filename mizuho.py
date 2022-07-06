@@ -99,7 +99,7 @@ def looking(x, reply=True):
                                     if reply:
                                         if settings["myname"] != data["sentence"][i+1+iii][1] and not bool(re.search(settings["mynames"], data["sentence"][i+1+iii][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1+iii][0] and lastSentenceInput != data["sentence"][i+1+iii][0]:
                                             flag = True
-                                            for iiiii in range(4):
+                                            for iiiii in range(10):
                                                 if i+1+iii+iiiii < len(data["sentence"]) - 2:
                                                     if data["sentence"][i+1+iii+iiiii][0] == "×":
                                                         flag = False
@@ -172,7 +172,7 @@ def looking(x, reply=True):
                                     if reply:
                                         if settings["myname"] != data["sentence"][i+1+iii][1] and not bool(re.search(settings["mynames"], data["sentence"][i+1+iii][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1+iii][0] and lastSentenceInput != data["sentence"][i+1+iii][0]:
                                             flag = True
-                                            for iiiii in range(4):
+                                            for iiiii in range(10):
                                                 if i+1+iii+iiiii < len(data["sentence"]) - 2:
                                                     if data["sentence"][i+1+iii+iiiii][0] == "×":
                                                         flag = False
@@ -246,7 +246,7 @@ def looking(x, reply=True):
                                     if reply:
                                         if settings["myname"] != data["sentence"][i+1+iii][1] and not bool(re.search(settings["mynames"], data["sentence"][i+1+iii][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1+iii][0] and lastSentenceInput != data["sentence"][i+1+iii][0]:
                                             flag = True
-                                            for iiiii in range(4):
+                                            for iiiii in range(10):
                                                 if i+1+iii+iiiii < len(data["sentence"]) - 2:
                                                     if data["sentence"][i+1+iii+iiiii][0] == "×":
                                                         flag = False
@@ -319,7 +319,7 @@ def looking(x, reply=True):
                                     if reply:
                                         if settings["myname"] != data["sentence"][i+1+iii][1] and not bool(re.search(settings["mynames"], data["sentence"][i+1+iii][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1+iii][0] and lastSentenceInput != data["sentence"][i+1+iii][0]:
                                             flag = True
-                                            for iiiii in range(4):
+                                            for iiiii in range(10):
                                                 if i+1+iii+iiiii < len(data["sentence"]) - 2:
                                                     if data["sentence"][i+1+iii+iiiii][0] == "×":
                                                         flag = False
