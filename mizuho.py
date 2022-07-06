@@ -463,6 +463,9 @@ def receive(x, u, add=True):
     if add: addSentence(x, u)
     result = looking(x)
 
+    if x == "×" and (heart < len(data["sentence"]) - 10 or heart > len(data["sentence"]) + 10):
+        data["sentence"].insert(heart+1, ["×", settings["myname"], wordMemory])
+
     lastSentence = result
     if result == None:
         getBored += 1
