@@ -90,7 +90,7 @@ def looking(x, reply=True):
                         
                         if len(cc) >= 2:
                             if cc[-1] - cc[-2] >= rate or c >= rate:
-                                for iii in range(5):
+                                for iii in range(15):
                                     if i+1+iii >= len(data["sentence"]) - 2:
                                         break
                                     print("A自信: {}".format(c))
@@ -99,7 +99,7 @@ def looking(x, reply=True):
                                     if reply:
                                         if settings["myname"] != data["sentence"][i+1+iii][1] and not bool(re.search(settings["mynames"], data["sentence"][i+1+iii][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1+iii][0] and lastSentenceInput != data["sentence"][i+1+iii][0]:
                                             flag = True
-                                            for iiiii in range(10):
+                                            for iiiii in range(6):
                                                 if i+1+iii+iiiii < len(data["sentence"]) - 2:
                                                     if data["sentence"][i+1+iii+iiiii][0] == "×":
                                                         flag = False
@@ -163,7 +163,7 @@ def looking(x, reply=True):
                         
                         if len(cc) >= 2:
                             if cc[-1] - cc[-2] >= rate or c >= rate:
-                                for iii in range(5):
+                                for iii in range(15):
                                     if i+1+iii >= len(data["sentence"]) - 2:
                                         break
                                     print("B自信: {}".format(c))
@@ -172,7 +172,7 @@ def looking(x, reply=True):
                                     if reply:
                                         if settings["myname"] != data["sentence"][i+1+iii][1] and not bool(re.search(settings["mynames"], data["sentence"][i+1+iii][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1+iii][0] and lastSentenceInput != data["sentence"][i+1+iii][0]:
                                             flag = True
-                                            for iiiii in range(10):
+                                            for iiiii in range(6):
                                                 if i+1+iii+iiiii < len(data["sentence"]) - 2:
                                                     if data["sentence"][i+1+iii+iiiii][0] == "×":
                                                         flag = False
@@ -237,7 +237,7 @@ def looking(x, reply=True):
                         
                         if len(cc) >= 2:
                             if cc[-1] - cc[-2] >= rate or c >= rate:
-                                for iii in range(5):
+                                for iii in range(15):
                                     if i+1+iii >= len(data["sentence"]) - 2:
                                         break
                                     print("C自信: {}".format(c))
@@ -246,7 +246,7 @@ def looking(x, reply=True):
                                     if reply:
                                         if settings["myname"] != data["sentence"][i+1+iii][1] and not bool(re.search(settings["mynames"], data["sentence"][i+1+iii][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1+iii][0] and lastSentenceInput != data["sentence"][i+1+iii][0]:
                                             flag = True
-                                            for iiiii in range(10):
+                                            for iiiii in range(6):
                                                 if i+1+iii+iiiii < len(data["sentence"]) - 2:
                                                     if data["sentence"][i+1+iii+iiiii][0] == "×":
                                                         flag = False
@@ -310,7 +310,7 @@ def looking(x, reply=True):
                         
                         if len(cc) >= 2:
                             if cc[-1] - cc[-2] >= rate or c >= rate:
-                                for iii in range(5):
+                                for iii in range(15):
                                     if i+1+iii >= len(data["sentence"]) - 2:
                                         break
                                     print("D自信: {}".format(c))
@@ -319,7 +319,7 @@ def looking(x, reply=True):
                                     if reply:
                                         if settings["myname"] != data["sentence"][i+1+iii][1] and not bool(re.search(settings["mynames"], data["sentence"][i+1+iii][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1+iii][0] and lastSentenceInput != data["sentence"][i+1+iii][0]:
                                             flag = True
-                                            for iiiii in range(10):
+                                            for iiiii in range(6):
                                                 if i+1+iii+iiiii < len(data["sentence"]) - 2:
                                                     if data["sentence"][i+1+iii+iiiii][0] == "×":
                                                         flag = False
