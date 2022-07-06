@@ -526,7 +526,7 @@ def receive(x, u, add=True):
     if getBored >= 10:
         getBored = 0
         heart_ = heart
-        heart = random.randint(0, len(data["sentence"]) - 50)
+        heart = random.randint(len(data["sentence"]) - 50000, len(data["sentence"]) - 50)
         if 0 > heart_-1: looking(data["sentence"][heart_-1][0])
         looking(data["sentence"][heart_][0])
         print("飽きた heart: {}".format(heart))
