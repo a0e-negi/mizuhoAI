@@ -68,13 +68,13 @@ def looking(x, reply=True):
             else:
                 t = heart + 10
 
-            i = t - 1
-            ii = t - f
+            i = f
+            ii = 0
             kon = -1
             zen = -2
 
             cc = [0]
-            for sen in list(reversed(data["sentence"][f:t])):
+            for sen in data["sentence"][f:t]:
                 into = x
                 a = -1
                 b = 1
@@ -122,8 +122,8 @@ def looking(x, reply=True):
                         cc[1] = c
                     else:
                         cc[-1] = c
-                i -= 1
-                ii -= 1
+                i += 1
+                ii += 1
 
 
 
@@ -141,13 +141,13 @@ def looking(x, reply=True):
             else:
                 t = heart + 150
 
-            i = t - 1
-            ii = t - f
+            i = f
+            ii = 0
             kon = -1
             zen = -2
 
             cc = [0]
-            for sen in list(reversed(data["sentence"][f:t])):
+            for sen in data["sentence"][f:t]:
                 into = x
                 a = -1
                 b = 1
@@ -195,8 +195,8 @@ def looking(x, reply=True):
                         cc[1] = c
                     else:
                         cc[-1] = c
-                i -= 1
-                ii -= 1
+                i += 1
+                ii += 1
 
 
 
@@ -215,13 +215,13 @@ def looking(x, reply=True):
             else:
                 t = heart + 1500
 
-            i = t - 1
-            ii = t - f
+            i = f
+            ii = 0
             kon = -1
             zen = -2
 
             cc = [0]
-            for sen in list(reversed(data["sentence"][f:t])):
+            for sen in data["sentence"][f:t]:
                 into = x
                 a = -1
                 b = 1
@@ -269,8 +269,8 @@ def looking(x, reply=True):
                         cc[1] = c
                     else:
                         cc[-1] = c
-                i -= 1
-                ii -= 1
+                i += 1
+                ii += 1
 
 
 
@@ -288,13 +288,13 @@ def looking(x, reply=True):
             else:
                 t = heart + 60000
 
-            i = t - 1
-            ii = t - f
+            i = f
+            ii = 0
             kon = -1
             zen = -2
 
             cc = [0]
-            for sen in list(reversed(data["sentence"][f:t])):
+            for sen in data["sentence"][f:t]:
                 into = x
                 a = -1
                 b = 1
@@ -342,8 +342,8 @@ def looking(x, reply=True):
                         cc[1] = c
                     else:
                         cc[-1] = c
-                i -= 1
-                ii -= 1
+                i += 1
+                ii += 1
 
 
 
