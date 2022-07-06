@@ -49,13 +49,15 @@ def looking(x, reply=True):
     global heart, heartLastSpeaker, replaceWords, lastSentence, lastSentenceInput
     try:
 
-        for i in range(3):
+        for i in range(4):
             if i == 0:
-                rate = 0.75
-            elif i == 1:
-                rate = 0.5
+                rate = 0.8
+            if i == 1:
+                rate = 0.7
+            if i == 1:
+                rate = 0.6
             else:
-                rate = 0.25
+                rate = 0.5
 
             #今の気持ちから考える
             if heart - 10 < 0:
@@ -355,7 +357,7 @@ def looking(x, reply=True):
         import traceback
         traceback.print_exc()
 
-    return None
+    return tsuzuki()
 
 
 
@@ -377,46 +379,53 @@ def tsuzuki(add=True):
     try:
         a = 0
         while True:
-            if a >= 100:
+            if a >= 60000:
                 return None
-            #if data["sentence"][heart][1] == heartLastSpeaker and heart != len(data["sentence"]) and not bool(re.search(settings["mynames"], data["sentence"][heart][0])) and lastSentence != data["sentence"][heart][0] and lastSentenceInput != data["sentence"][heart][0]:
-            if data["sentence"][heart][1] == heartLastSpeaker and heart != len(data["sentence"]) and not bool(re.search(settings["mynames"], data["sentence"][heart][0])) and lastSentence != data["sentence"][heart][0] and lastSentenceInput != data["sentence"][heart][0]:
-                result = data["sentence"][heart][0]
-                lastSentence = result
-                result = result.replace(data["sentence"][heart][1], settings["myname"])
+            if data["sentence"][heart][1] == heartLastSpeaker and heart != len(data["sentence"]) - 1 and not bool(re.search(settings["mynames"], data["sentence"][heart][0])) and lastSentence != data["sentence"][heart][0] and lastSentenceInput != data["sentence"][heart][0]:
 
-                #重要な単語を最大5個置き換える
-                try:
-                    if replaceWords:
-                        i = 0
-                        while True:
-                            if i == len(data["sentence"][heart][2]):
-                                break
-                            result = result.replace(data["sentence"][heart][2][i], wordMemory[i])
-                            i += 1
-                except:
-                    import traceback
-                    traceback.print_exc()
+                flag = True
+                for iiiii in range(8):
+                    if heart+iiiii < len(data["sentence"]) - 2:
+                        if data["sentence"][heart+iiiii][0] == "×":
+                            flag = False
+                if flag:
 
+                    result = data["sentence"][heart][0]
+                    lastSentence = result
+                    result = result.replace(data["sentence"][heart][1], settings["myname"])
 
-                i = 0
-                while True:
-                    if len(brainUser) >= i:
-                        break
-                    result = result.replace(brainUser[i], actualUser[i])
-                    i += 1
-
+                    #重要な単語を最大5個置き換える
+                    try:
+                        if replaceWords:
+                            i = 0
+                            while True:
+                                if i == len(data["sentence"][heart][2]):
+                                    break
+                                result = result.replace(data["sentence"][heart][2][i], wordMemory[i])
+                                i += 1
+                    except:
+                        import traceback
+                        traceback.print_exc()
 
 
-                print("lastUser: {}".format(lastUser))
+                    i = 0
+                    while True:
+                        if len(brainUser) >= i:
+                            break
+                        result = result.replace(brainUser[i], actualUser[i])
+                        i += 1
 
 
-                if add: addSentence(result, settings["myname"])
 
-                return result
+                    print("lastUser: {}".format(lastUser))
+
+
+                    if add: addSentence(result, settings["myname"])
+
+                    return result
             heart += 1
             if heart >= len(data["sentence"]):
-                heart = 0
+                heart = len(data["sentence"]) - 100
             a += 1
     except:
         import traceback
@@ -450,10 +459,11 @@ def speakFreely(add=True):
     #自由に話す
     global heart, actualUser, brainUser, wordMemory, tokenizer, lastSentence, lastSentenceInput, maeheart, myVoice
 
-    result = myVoice    
-    if add and result != None: addSentence(result, settings["myname"])
+    if lastSentenceInput != "×":
+        result = myVoice    
+        if add and result != None: addSentence(result, settings["myname"])
 
-    return result
+        return result
 
 def receive(x, u, add=True):
     global lastSentenceInput, lastSentence, myVoice, getBored, maeheart, heart
