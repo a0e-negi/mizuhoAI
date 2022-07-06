@@ -21,9 +21,6 @@ getBored = 0
 interface = 0 #クライアントの種類
 lastUser = None #最後に話しかけたユーザー
 myVoice = None #心の中の声
-lastSentenceAll = None
-sentenceLog = []
-sentenceLogFlag = False
 
 def initialize(direcectory, interface_):
     #初期化
@@ -43,12 +40,6 @@ def initialize(direcectory, interface_):
         with open(direc+"/data.json", "w", encoding="utf8") as f:
             json.dump(data, f, ensure_ascii=False, indent=4, sort_keys=True, separators=(',', ': '))
     heart = len(data["sentence"]) - 2
-
-    try:
-        data["badEvaluation"]
-    except:
-        data["badEvaluation"] = []
-
     with open(direc+"/data_backup.json", "w", encoding="utf8") as f:
         json.dump(data, f, ensure_ascii=False, indent=4, sort_keys=True, separators=(',', ': '))
 
@@ -108,9 +99,10 @@ def looking(x, reply=True):
                                     if reply:
                                         if settings["myname"] != data["sentence"][i+1+iii][1] and not bool(re.search(settings["mynames"], data["sentence"][i+1+iii][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1+iii][0] and lastSentenceInput != data["sentence"][i+1+iii][0]:
                                             flag = True
-                                            for bad in data["badEvaluation"]:
-                                                if bad[0] == lastSentenceInput and bad[1] == data["sentence"][i+1+iii][0]:
-                                                    flag = False
+                                            for iiiii in range(4):
+                                                if i+1+iii+iiiii < len(data["sentence"]) - 2:
+                                                    if data["sentence"][i+1+iii+iiiii][0] == "×":
+                                                        flag = False
                                             if flag:
                                                 heart = i+1+iii
                                                 heartLastSpeaker = data["sentence"][i+1+iii][1]
@@ -180,9 +172,10 @@ def looking(x, reply=True):
                                     if reply:
                                         if settings["myname"] != data["sentence"][i+1+iii][1] and not bool(re.search(settings["mynames"], data["sentence"][i+1+iii][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1+iii][0] and lastSentenceInput != data["sentence"][i+1+iii][0]:
                                             flag = True
-                                            for bad in data["badEvaluation"]:
-                                                if bad[0] == lastSentenceInput and bad[1] == data["sentence"][i+1+iii][0]:
-                                                    flag = False
+                                            for iiiii in range(4):
+                                                if i+1+iii+iiiii < len(data["sentence"]) - 2:
+                                                    if data["sentence"][i+1+iii+iiiii][0] == "×":
+                                                        flag = False
                                             if flag:
                                                 heart = i+1+iii
                                                 heartLastSpeaker = data["sentence"][i+1+iii][1]
@@ -253,9 +246,10 @@ def looking(x, reply=True):
                                     if reply:
                                         if settings["myname"] != data["sentence"][i+1+iii][1] and not bool(re.search(settings["mynames"], data["sentence"][i+1+iii][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1+iii][0] and lastSentenceInput != data["sentence"][i+1+iii][0]:
                                             flag = True
-                                            for bad in data["badEvaluation"]:
-                                                if bad[0] == lastSentenceInput and bad[1] == data["sentence"][i+1+iii][0]:
-                                                    flag = False
+                                            for iiiii in range(4):
+                                                if i+1+iii+iiiii < len(data["sentence"]) - 2:
+                                                    if data["sentence"][i+1+iii+iiiii][0] == "×":
+                                                        flag = False
                                             if flag:
                                                 heart = i+1+iii
                                                 heartLastSpeaker = data["sentence"][i+1+iii][1]
@@ -325,9 +319,10 @@ def looking(x, reply=True):
                                     if reply:
                                         if settings["myname"] != data["sentence"][i+1+iii][1] and not bool(re.search(settings["mynames"], data["sentence"][i+1+iii][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1+iii][0] and lastSentenceInput != data["sentence"][i+1+iii][0]:
                                             flag = True
-                                            for bad in data["badEvaluation"]:
-                                                if bad[0] == lastSentenceInput and bad[1] == data["sentence"][i+1+iii][0]:
-                                                    flag = False
+                                            for iiiii in range(4):
+                                                if i+1+iii+iiiii < len(data["sentence"]) - 2:
+                                                    if data["sentence"][i+1+iii+iiiii][0] == "×":
+                                                        flag = False
                                             if flag:
                                                 heart = i+1+iii
                                                 heartLastSpeaker = data["sentence"][i+1+iii][1]
@@ -374,7 +369,7 @@ def isNextAble():
         return False
 
 def tsuzuki(add=True):
-    global heart, actualUser, brainUser, wordMemory, tokenizer, lastSentence, sentenceLog, sentenceLogFlag, lastSentenceAll
+    global heart, actualUser, brainUser, wordMemory, tokenizer, lastSentence
     
     heart += 1
     if heart >= len(data["sentence"]):
@@ -418,15 +413,6 @@ def tsuzuki(add=True):
 
                 if add: addSentence(result, settings["myname"])
 
-
-                if sentenceLogFlag:
-                    sentenceLog.append([lastSentenceAll, result])
-                    if len(sentenceLog) >= 2:
-                        sentenceLog = [sentenceLog[-2], sentenceLog[-1]]
-                else:
-                    sentenceLogFlag = True
-                lastSentenceAll = result
-
                 return result
             heart += 1
             if heart >= len(data["sentence"]):
@@ -462,34 +448,17 @@ def save():
 
 def speakFreely(add=True):
     #自由に話す
-    global heart, actualUser, brainUser, wordMemory, tokenizer, lastSentence, lastSentenceInput, maeheart, myVoice, sentenceLog, sentenceLogFlag, lastSentenceAll
+    global heart, actualUser, brainUser, wordMemory, tokenizer, lastSentence, lastSentenceInput, maeheart, myVoice
 
     result = myVoice    
     if add and result != None: addSentence(result, settings["myname"])
 
-    if sentenceLogFlag:
-        sentenceLog.append([lastSentenceAll, result])
-        if len(sentenceLog) >= 2:
-            sentenceLog = [sentenceLog[-2], sentenceLog[-1]]
-    else:
-        sentenceLogFlag = True
-    lastSentenceAll = result
-
     return result
 
 def receive(x, u, add=True):
-    global lastSentenceInput, lastSentence, myVoice, getBored, maeheart, heart, sentenceLog, sentenceLogFlag, lastSentenceAll
+    global lastSentenceInput, lastSentence, myVoice, getBored, maeheart, heart
     if x == None or u == None: return
     lastSentenceInput = x
-
-    if sentenceLogFlag:
-        sentenceLog.append([lastSentenceAll, x])
-        if len(sentenceLog) >= 2:
-            sentenceLog = [sentenceLog[-2], sentenceLog[-1]]
-    else:
-        sentenceLogFlag = True
-    lastSentenceAll = x
-
     lastUser = u
     if add: addSentence(x, u)
     result = looking(x)
@@ -560,10 +529,6 @@ def receive(x, u, add=True):
         print("飽きた heart: {}".format(heart))
 
     maeheart = heart
-
-    if x == "意味不明だった" or x == "意味不明だった。":
-        data["badEvaluation"].append(sentenceLog[-1])
-
 
 
 
