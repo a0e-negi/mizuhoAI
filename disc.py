@@ -103,13 +103,8 @@ async def on_message(message):
         lastMessage = message
         prevTime = time.time()
         lastMessage = message
-        if random.randint(1, len(persons) - 1) == (len(persons) - 1) or bool(re.search(mizuho.settings["mynames"], message.content)):
-            mizuho.receive(message.content, message.author.name)
-            if mode == 2 or mode == 1:
-                messages.append(message)
-        else:
-            mizuho.receive(message.content, message.author.name)
-
+        messages.append(message)
+        
 
 async def extraMessage():
     if mode == 2:
@@ -121,30 +116,41 @@ async def extraMessage():
 
 
 i = 0
-@tasks.loop(seconds=6)
+@tasks.loop(seconds=3)
 async def cron():
     try:
         global persons, prevTime, lastMessage, i, messages
         
-        if mode == 2:
+        if len(persons) != 1:
             if len(messages) != 0:
-                result = mizuho.speakFreely()
-                if result == None:
-                    messages = []
-                    return
-                print("{}: {}".format(mizuho.settings["myname"], result))
-                await speak(result)
-                messages = []
-        elif mode == 1:
-            if len(messages) != 0:
-                if bool(re.search(mizuho.settings["mynames"], messages[-1].content)):
-                    result = mizuho.speakFreely()
-                    if result == None:
-                        messages = []
-                        return
-                    print("{}: {}".format(mizuho.settings["myname"], result))
-                    await speak(result)
-                    messages = []
+                if random.randint(1, len(persons) - 1) == (len(persons) - 1) or bool(re.search(mizuho.settings["mynames"], messages[-1].content)):
+                    mizuho.receive(messages[-1].content, messages[-1].author.name)
+
+                    if len(messages) == 0:
+
+                        if mode == 2 or mode == 1:
+                            if mode == 2:
+                            
+                                result = mizuho.speakFreely()
+                                if result == None:
+                                    messages = []
+                                    return
+                                print("{}: {}".format(mizuho.settings["myname"], result))
+                                await speak(result)
+                                messages = []
+                            elif mode == 1:
+                                if bool(re.search(mizuho.settings["mynames"], messages[-1].content)):
+                                    result = mizuho.speakFreely()
+                                    if result == None:
+                                        messages = []
+                                        return
+                                    print("{}: {}".format(mizuho.settings["myname"], result))
+                                    await speak(result)
+                                    messages = []
+
+                else:
+                    mizuho.receive(messages[-1].content, messages[-1].author.name)
+
 
         nowTime = time.time()
         if nowTime >= prevTime + 20:
