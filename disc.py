@@ -124,8 +124,9 @@ async def cron():
         if len(persons) != 1:
             if len(messages) != 0:
                 if random.randint(1, len(persons) - 1) == (len(persons) - 1) or bool(re.search(mizuho.settings["mynames"], messages[-1].content)):
-                    mizuho.receive(messages[-1].content, messages[-1].author.name)
-
+                    message = messages[-1]
+                    messages = []
+                    mizuho.receive(message.content, message.author.name)
                     if len(messages) == 0:
 
                         if mode == 2 or mode == 1:
@@ -133,20 +134,16 @@ async def cron():
                             
                                 result = mizuho.speakFreely()
                                 if result == None:
-                                    messages = []
                                     return
                                 print("{}: {}".format(mizuho.settings["myname"], result))
                                 await speak(result)
-                                messages = []
                             elif mode == 1:
                                 if bool(re.search(mizuho.settings["mynames"], messages[-1].content)):
                                     result = mizuho.speakFreely()
                                     if result == None:
-                                        messages = []
                                         return
                                     print("{}: {}".format(mizuho.settings["myname"], result))
                                     await speak(result)
-                                    messages = []
 
                 else:
                     mizuho.receive(messages[-1].content, messages[-1].author.name)
