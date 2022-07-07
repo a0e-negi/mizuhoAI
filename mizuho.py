@@ -49,7 +49,7 @@ def looking(x, reply=True):
     global heart, heartLastSpeaker, replaceWords, lastSentence, lastSentenceInput
     try:
 
-        for i in range(8):
+        for i in range(9):
             if i == 0:
                 rate = 1
             if i == 1:
@@ -60,8 +60,12 @@ def looking(x, reply=True):
                 rate = 0.7
             if i == 4:
                 rate = 0.6
-            else:
+            if i == 5:
                 rate = 0.5
+            if i == 6:
+                rate = 0.4
+            if i == 7:
+                rate = 0.3
 
             #今の気持ちから考える
             if heart - 10 < 0:
