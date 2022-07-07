@@ -52,7 +52,7 @@ async def speak(result):
         await channel.send(result)
         if mizuho.isNextAble():
             time.sleep(2)
-            await extraMessage()
+            extraMessage()
 
 
 # 起動時に動作する処理
@@ -60,9 +60,20 @@ async def speak(result):
 async def on_ready():
     # 起動したらターミナルにログイン通知が表示される
     print('ログインしました')
-    cron.start()
+    cron.run()
+
+
+async def extraMessage():
+    if mode == 2:
+        print("追加メッセージ送信")
+        result = mizuho.tsuzuki()
+        print("{}: {}".format(mizuho.settings["myname"], result))
+        if result != None:
+            await speak(result)
+
 
 # メッセージ受信時に動作する処理
+i = 0
 @client.event
 async def on_message(message):
     global channel, persons, prevTime, lastMessage, messages
@@ -103,79 +114,78 @@ async def on_message(message):
         lastMessage = message
         prevTime = time.time()
         lastMessage = message
-        messages.append(message)
+
+
+        if len(messages) == 0:
+            print("処理開始")
+            mizuho.receive(message.content, message.author.name)
+            print("処理終了")
+            if random.randint(1, len(persons) - 1) == (len(persons) - 1) or bool(re.search(mizuho.settings["mynames"], message.content)):
+                messages.append(message)
         
 
-async def extraMessage():
-    if mode == 2:
-        print("追加メッセージ送信")
-        result = mizuho.tsuzuki()
-        print("{}: {}".format(mizuho.settings["myname"], result))
-        if result != None:
-            await speak(result)
+@client.event
+async def on_ready():
+    # 起動したらターミナルにログイン通知が表示される
+    print('ログインしました')
+    cron.start()
 
-
-i = 0
-@tasks.loop(seconds=3)
+# メッセージ受信時に動作する処理
+@tasks.loop(seconds=4)
 async def cron():
-    try:
-        global persons, prevTime, lastMessage, i, messages
-        
-        if len(persons) != 1:
-            if len(messages) != 0:
-                if random.randint(1, len(persons) - 1) == (len(persons) - 1) or bool(re.search(mizuho.settings["mynames"], messages[-1].content)):
-                    message = messages[-1]
-                    messages = []
-                    mizuho.receive(message.content, message.author.name)
-                    if len(messages) == 0:
+    while True:
+        try:
+            global persons, prevTime, lastMessage, i, messages
 
-                        if mode == 2 or mode == 1:
-                            if mode == 2:
-                            
-                                result = mizuho.speakFreely()
-                                if result == None:
-                                    return
-                                print("{}: {}".format(mizuho.settings["myname"], result))
-                                await speak(result)
-                            elif mode == 1:
-                                if bool(re.search(mizuho.settings["mynames"], messages[-1].content)):
-                                    result = mizuho.speakFreely()
-                                    if result == None:
-                                        return
+            if messages != []:
+                if mode == 2 or mode == 1:
+                    if mode == 2:
+                    
+                        result = mizuho.speakFreely()
+                        if result == None:
+                            return
+                        print("{}: {}".format(mizuho.settings["myname"], result))
+                        await speak(result)
+                        messages = []
+                    elif mode == 1:
+                        if bool(re.search(mizuho.settings["mynames"], mess.content)):
+                            result = mizuho.speakFreely()
+                            if result == None:
+                                return
+                            print("{}: {}".format(mizuho.settings["myname"], result))
+                            await speak(result)
+                        messages = []
+
+                
+
+            nowTime = time.time()
+            if nowTime >= prevTime + 20:
+                print("沈黙を検知")
+                if i >= 3:
+                    persons = [mizuho.settings["myname"]]
+                    i = 0
+                if channel != None and lastMessage != None:
+                    if mode == 2:
+                        if random.randint(1, len(persons)) == len(persons):
+                            if len(persons) == 1:
+                                if random.randint(1, 9) == 9:
+                                    result = mizuho.tsuzuki()
                                     print("{}: {}".format(mizuho.settings["myname"], result))
-                                    await speak(result)
-
-                else:
-                    mizuho.receive(messages[-1].content, messages[-1].author.name)
-
-
-        nowTime = time.time()
-        if nowTime >= prevTime + 20:
-            print("沈黙を検知")
-            if i >= 3:
-                persons = [mizuho.settings["myname"]]
-                i = 0
-            if channel != None and lastMessage != None:
-                if mode == 2:
-                    if random.randint(1, len(persons)) == len(persons):
-                        if len(persons) == 1:
-                            if random.randint(1, 9) == 9:
+                                    if result != None:
+                                        await speak(result)
+                            else:
                                 result = mizuho.tsuzuki()
                                 print("{}: {}".format(mizuho.settings["myname"], result))
                                 if result != None:
                                     await speak(result)
-                        else:
-                            result = mizuho.tsuzuki()
-                            print("{}: {}".format(mizuho.settings["myname"], result))
-                            if result != None:
-                                await speak(result)
-                
-            i += 1
-            prevTime = time.time()
-    except:
-        import traceback
-        traceback.print_exc()
+                    
+                i += 1
+                prevTime = time.time()
+        except:
+            import traceback
+            traceback.print_exc()
+
+        await asyncio.sleep(4)
 
 
-# Botの起動とDiscordサーバーへの接続
 client.run(TOKEN)
