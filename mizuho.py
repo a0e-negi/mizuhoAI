@@ -105,7 +105,7 @@ def looking(x, reply=True):
                                     if reply:
                                         if not bool(re.search(settings["mynames"], data["sentence"][i+1+iii][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1+iii][0] and lastSentenceInput != data["sentence"][i+1+iii][0]:
                                             flag = True
-                                            for iiiii in range(8):
+                                            for iiiii in range(5):
                                                 if i+1+iii+iiiii < len(data["sentence"]) - 2:
                                                     if data["sentence"][i+1+iii+iiiii][0] == "×":
                                                         flag = False
@@ -178,7 +178,7 @@ def looking(x, reply=True):
                                     if reply:
                                         if not bool(re.search(settings["mynames"], data["sentence"][i+1+iii][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1+iii][0] and lastSentenceInput != data["sentence"][i+1+iii][0]:
                                             flag = True
-                                            for iiiii in range(8):
+                                            for iiiii in range(5):
                                                 if i+1+iii+iiiii < len(data["sentence"]) - 2:
                                                     if data["sentence"][i+1+iii+iiiii][0] == "×":
                                                         flag = False
@@ -252,7 +252,7 @@ def looking(x, reply=True):
                                     if reply:
                                         if not bool(re.search(settings["mynames"], data["sentence"][i+1+iii][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1+iii][0] and lastSentenceInput != data["sentence"][i+1+iii][0]:
                                             flag = True
-                                            for iiiii in range(8):
+                                            for iiiii in range(5):
                                                 if i+1+iii+iiiii < len(data["sentence"]) - 2:
                                                     if data["sentence"][i+1+iii+iiiii][0] == "×":
                                                         flag = False
@@ -325,7 +325,7 @@ def looking(x, reply=True):
                                     if reply:
                                         if not bool(re.search(settings["mynames"], data["sentence"][i+1+iii][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1+iii][0] and lastSentenceInput != data["sentence"][i+1+iii][0]:
                                             flag = True
-                                            for iiiii in range(8):
+                                            for iiiii in range(5):
                                                 if i+1+iii+iiiii < len(data["sentence"]) - 2:
                                                     if data["sentence"][i+1+iii+iiiii][0] == "×":
                                                         flag = False
@@ -388,7 +388,7 @@ def tsuzuki(add=True):
             if data["sentence"][heart][1] == heartLastSpeaker and heart != len(data["sentence"]) - 1 and not bool(re.search(settings["mynames"], data["sentence"][heart][0])) and lastSentence != data["sentence"][heart][0] and lastSentenceInput != data["sentence"][heart][0]:
 
                 flag = True
-                for iiiii in range(8):
+                for iiiii in range(5):
                     if heart+iiiii < len(data["sentence"]) - 2:
                         if data["sentence"][heart+iiiii][0] == "×":
                             flag = False
