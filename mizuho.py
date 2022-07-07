@@ -479,10 +479,11 @@ def receive(x, u, add=True):
     lastSentenceInput = x
     lastUser = u
     if add: addSentence(x, u)
-    result = looking(x)
 
-    if x == "×" and (heart < len(data["sentence"]) - 10 or heart > len(data["sentence"]) + 10):
+    if x == "×":
         data["sentence"].insert(heart+1, ["×", settings["myname"], wordMemory])
+
+    result = looking(x)
 
     lastSentence = result
     if result == None:
