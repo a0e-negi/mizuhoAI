@@ -124,11 +124,11 @@ async def extraMessage():
 
 
 i = 0
-@tasks.loop(seconds=3)
+@tasks.loop(seconds=2)
 async def cron():
     try:
         global persons, prevTime, lastMessage, i, messages, receive
-        
+
         if mode == 2:
             if len(messages) != 0:
                 result = mizuho.speakFreely()
