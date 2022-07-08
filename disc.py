@@ -150,7 +150,7 @@ async def cron():
                     await speak(result)
                     messages = []
                     receive = 0
-        if receive <= 1:
+        if receive != 0:
             receive = 0
 
         nowTime = time.time()
