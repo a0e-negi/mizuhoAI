@@ -124,7 +124,7 @@ async def extraMessage():
 
 
 i = 0
-@tasks.loop(seconds=6)
+@tasks.loop(seconds=3)
 async def cron():
     try:
         global persons, prevTime, lastMessage, i, messages, receive
