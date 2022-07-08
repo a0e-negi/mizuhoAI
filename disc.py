@@ -117,10 +117,8 @@ async def on_message(message):
 
 
         if len(messages) == 0:
-            print("処理開始")
             mizuho.receive(message.content, message.author.name)
-            print("処理終了")
-            if random.randint(1, len(persons) - 1) == (len(persons) - 1) or bool(re.search(mizuho.settings["mynames"], message.content)):
+            if mizuho.myVoice == "×" or random.randint(1, len(persons) - 1) == (len(persons) - 1) or bool(re.search(mizuho.settings["mynames"], message.content)):
                 messages.append(message)
         
 
@@ -131,7 +129,7 @@ async def on_ready():
     cron.start()
 
 # メッセージ受信時に動作する処理
-@tasks.loop(seconds=4)
+@tasks.loop(seconds=2)
 async def cron():
     while True:
         try:
@@ -185,7 +183,6 @@ async def cron():
             import traceback
             traceback.print_exc()
 
-        await asyncio.sleep(4)
 
 
 client.run(TOKEN)

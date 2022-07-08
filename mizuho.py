@@ -113,6 +113,10 @@ def looking(x, reply=True):
                                                 if i+1+iii+iiiii < len(data["sentence"]) - 2:
                                                     if data["sentence"][i+1+iii+iiiii][0] == "×":
                                                         flag = False
+                                            if data["sentence"][i+1][0] == "×":
+                                                heart = i+1
+                                                heartLastSpeaker = data["sentence"][i+1][1]
+                                                return "×"
                                             if flag:
                                                 heart = i+1+iii
                                                 heartLastSpeaker = data["sentence"][i+1+iii][1]
@@ -485,6 +489,10 @@ def receive(x, u, add=True):
 
     result = looking(x)
 
+    if data["sentence"][heart+1][0] == "×":
+        myVoice = "×"
+        return
+
     lastSentence = result
     if result == None:
         getBored += 1
@@ -542,7 +550,7 @@ def receive(x, u, add=True):
         getBored = 0
     print("飽き度: {}".format(getBored))
 
-    if getBored >= 10:
+    if getBored >= 4:
         getBored = 0
         heart_ = heart
         heart = random.randint(0, len(data["sentence"]) - 50)
