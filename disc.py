@@ -37,8 +37,9 @@ def setMode(x):
     mode = x
 
 async def speak(result):
-    global channel
+    global channel, persons
     pattern = re.compile(r"^!command")
+    print("users: {}".format(persons))
     if bool(pattern.search(result)):
         com = result.split(" ")
         if com[1] == "discMove":
@@ -153,7 +154,7 @@ async def cron():
         nowTime = time.time()
         if nowTime >= prevTime + 20:
             print("沈黙を検知")
-            if i >= 3:
+            if i >= 20:
                 persons = [mizuho.settings["myname"]]
                 i = 0
             if channel != None and lastMessage != None:
