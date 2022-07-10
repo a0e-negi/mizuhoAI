@@ -51,9 +51,6 @@ async def speak(result):
                 print("チャンネルを移動しました: DM")
     else:
         await channel.send(result)
-        if mizuho.isNextAble():
-            time.sleep(2)
-            await extraMessage()
 
 
 # 起動時に動作する処理

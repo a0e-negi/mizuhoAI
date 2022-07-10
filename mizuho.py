@@ -363,14 +363,6 @@ def looking(x, reply=True):
 
 
 
-
-def isNextAble():
-    global heart
-    if data["sentence"][heart+1][1] == heartLastSpeaker and heart+1 != len(data["sentence"]) and not bool(re.search(settings["mynames"], data["sentence"][heart+1][0])) and lastSentence != data["sentence"][heart+1][0] and lastSentenceInput != data["sentence"][heart+1][0]:
-        return True
-    else:
-        return False
-
 def tsuzuki(add=True):
     global heart, actualUser, brainUser, wordMemory, tokenizer, lastSentence
     
