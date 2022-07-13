@@ -97,11 +97,8 @@ def looking(x, reply=True):
                                 for iii in range(5):
                                     if i+1+iii >= len(data["sentence"]) - 2:
                                         break
-                                    print("A自信: {}".format(c))
-                                    print("A前との差: {}".format(cc[-1] - cc[-2]))
-                                    print("A類似発言: {}".format(data["sentence"][i][0]))
                                     if reply:
-                                        if data["sentence"][i+1+iii][1] == settings["mynames"] and not bool(re.search(settings["mynames"], data["sentence"][i+1+iii][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1+iii][0] and lastSentenceInput != data["sentence"][i+1+iii][0]:
+                                        if data["sentence"][i+1+iii][1] != settings["mynames"] and not bool(re.search(settings["mynames"], data["sentence"][i+1+iii][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1+iii][0] and lastSentenceInput != data["sentence"][i+1+iii][0]:
                                             flag = True
                                             for iiiii in range(5):
                                                 if i+1+iii+iiiii < len(data["sentence"]) - 2:
@@ -174,11 +171,8 @@ def looking(x, reply=True):
                                 for iii in range(5):
                                     if i+1+iii >= len(data["sentence"]) - 2:
                                         break
-                                    print("B自信: {}".format(c))
-                                    print("B前との差: {}".format(cc[-1] - cc[-2]))
-                                    print("B類似発言: {}".format(data["sentence"][i][0]))
                                     if reply:
-                                        if data["sentence"][i+1+iii][1] == settings["mynames"] and not bool(re.search(settings["mynames"], data["sentence"][i+1+iii][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1+iii][0] and lastSentenceInput != data["sentence"][i+1+iii][0]:
+                                        if data["sentence"][i+1+iii][1] != settings["mynames"] and not bool(re.search(settings["mynames"], data["sentence"][i+1+iii][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1+iii][0] and lastSentenceInput != data["sentence"][i+1+iii][0]:
                                             flag = True
                                             for iiiii in range(5):
                                                 if i+1+iii+iiiii < len(data["sentence"]) - 2:
@@ -244,11 +238,8 @@ def looking(x, reply=True):
                                 for iii in range(5):
                                     if i+1+iii >= len(data["sentence"]) - 2:
                                         break
-                                    print("C自信: {}".format(c))
-                                    print("C前との差: {}".format(cc[-1] - cc[-2]))
-                                    print("C類似発言: {}".format(data["sentence"][i][0]))
                                     if reply:
-                                        if data["sentence"][i+1+iii][1] == settings["mynames"] and not bool(re.search(settings["mynames"], data["sentence"][i+1+iii][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1+iii][0] and lastSentenceInput != data["sentence"][i+1+iii][0]:
+                                        if data["sentence"][i+1+iii][1] != settings["mynames"] and not bool(re.search(settings["mynames"], data["sentence"][i+1+iii][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1+iii][0] and lastSentenceInput != data["sentence"][i+1+iii][0]:
                                             flag = True
                                             for iiiii in range(5):
                                                 if i+1+iii+iiiii < len(data["sentence"]) - 2:
@@ -316,11 +307,8 @@ def looking(x, reply=True):
                                 for iii in range(5):
                                     if i+1+iii >= len(data["sentence"]) - 2:
                                         break
-                                    print("D自信: {}".format(c))
-                                    print("D前との差: {}".format(cc[-1] - cc[-2]))
-                                    print("D類似発言: {}".format(data["sentence"][i][0]))
                                     if reply:
-                                        if data["sentence"][i+1+iii][1] == settings["mynames"] and not bool(re.search(settings["mynames"], data["sentence"][i+1+iii][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1+iii][0] and lastSentenceInput != data["sentence"][i+1+iii][0]:
+                                        if data["sentence"][i+1+iii][1] != settings["mynames"] and not bool(re.search(settings["mynames"], data["sentence"][i+1+iii][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1+iii][0] and lastSentenceInput != data["sentence"][i+1+iii][0]:
                                             flag = True
                                             for iiiii in range(5):
                                                 if i+1+iii+iiiii < len(data["sentence"]) - 2:
