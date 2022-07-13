@@ -101,7 +101,7 @@ def looking(x, reply=True):
                                     print("A前との差: {}".format(cc[-1] - cc[-2]))
                                     print("A類似発言: {}".format(data["sentence"][i][0]))
                                     if reply:
-                                        if not bool(re.search(settings["mynames"], data["sentence"][i+1+iii][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1+iii][0] and lastSentenceInput != data["sentence"][i+1+iii][0]:
+                                        if data["sentence"][i+1+iii][1] == settings["mynames"] and not bool(re.search(settings["mynames"], data["sentence"][i+1+iii][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1+iii][0] and lastSentenceInput != data["sentence"][i+1+iii][0]:
                                             flag = True
                                             for iiiii in range(5):
                                                 if i+1+iii+iiiii < len(data["sentence"]) - 2:
@@ -178,7 +178,7 @@ def looking(x, reply=True):
                                     print("B前との差: {}".format(cc[-1] - cc[-2]))
                                     print("B類似発言: {}".format(data["sentence"][i][0]))
                                     if reply:
-                                        if not bool(re.search(settings["mynames"], data["sentence"][i+1+iii][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1+iii][0] and lastSentenceInput != data["sentence"][i+1+iii][0]:
+                                        if data["sentence"][i+1+iii][1] == settings["mynames"] and not bool(re.search(settings["mynames"], data["sentence"][i+1+iii][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1+iii][0] and lastSentenceInput != data["sentence"][i+1+iii][0]:
                                             flag = True
                                             for iiiii in range(5):
                                                 if i+1+iii+iiiii < len(data["sentence"]) - 2:
@@ -248,7 +248,7 @@ def looking(x, reply=True):
                                     print("C前との差: {}".format(cc[-1] - cc[-2]))
                                     print("C類似発言: {}".format(data["sentence"][i][0]))
                                     if reply:
-                                        if not bool(re.search(settings["mynames"], data["sentence"][i+1+iii][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1+iii][0] and lastSentenceInput != data["sentence"][i+1+iii][0]:
+                                        if data["sentence"][i+1+iii][1] == settings["mynames"] and not bool(re.search(settings["mynames"], data["sentence"][i+1+iii][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1+iii][0] and lastSentenceInput != data["sentence"][i+1+iii][0]:
                                             flag = True
                                             for iiiii in range(5):
                                                 if i+1+iii+iiiii < len(data["sentence"]) - 2:
@@ -320,7 +320,7 @@ def looking(x, reply=True):
                                     print("D前との差: {}".format(cc[-1] - cc[-2]))
                                     print("D類似発言: {}".format(data["sentence"][i][0]))
                                     if reply:
-                                        if not bool(re.search(settings["mynames"], data["sentence"][i+1+iii][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1+iii][0] and lastSentenceInput != data["sentence"][i+1+iii][0]:
+                                        if data["sentence"][i+1+iii][1] == settings["mynames"] and not bool(re.search(settings["mynames"], data["sentence"][i+1+iii][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1+iii][0] and lastSentenceInput != data["sentence"][i+1+iii][0]:
                                             flag = True
                                             for iiiii in range(5):
                                                 if i+1+iii+iiiii < len(data["sentence"]) - 2:
@@ -464,9 +464,6 @@ def receive(x, u, add=True):
     lastSentenceInput = x
     lastUser = u
     if add: addSentence(x, u)
-
-    if x == "×":
-        data["sentence"].insert(heart+1, ["×", settings["myname"], wordMemory])
 
     result = looking(x)
 
