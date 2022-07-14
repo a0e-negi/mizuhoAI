@@ -428,8 +428,8 @@ def addSentence(x, u, noword=False):
 
 def save():
     global direc, data
-    if len(data["sentence"]) >= 60000:
-        while len(data["sentence"]) >= 60000:
+    if len(data["sentence"]) >= 10000000:
+        while len(data["sentence"]) >= 10000000:
             del data["sentence"][0]
     with open(direc+"/data.json", "w", encoding="utf8") as f:
         json.dump(data, f, ensure_ascii=False, indent=4, sort_keys=True, separators=(',', ': '))
