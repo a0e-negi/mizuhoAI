@@ -98,7 +98,7 @@ def looking(x, reply=True):
                                     if i+1+iii >= len(data["sentence"]) - 2:
                                         break
                                     if reply:
-                                        if data["sentence"][i+1+iii][1] != settings["mynames"] and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1+iii][0] and lastSentenceInput != data["sentence"][i+1+iii][0]:
+                                        if not bool(re.search(settings["mynames"], data["sentence"][i+1+iii][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1+iii][0] and lastSentenceInput != data["sentence"][i+1+iii][0]:
                                             flag = True
                                             for iiiii in range(5):
                                                 if i+1+iii+iiiii < len(data["sentence"]) - 2:
@@ -172,7 +172,7 @@ def looking(x, reply=True):
                                     if i+1+iii >= len(data["sentence"]) - 2:
                                         break
                                     if reply:
-                                        if data["sentence"][i+1+iii][1] != settings["mynames"] and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1+iii][0] and lastSentenceInput != data["sentence"][i+1+iii][0]:
+                                        if not bool(re.search(settings["mynames"], data["sentence"][i+1+iii][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1+iii][0] and lastSentenceInput != data["sentence"][i+1+iii][0]:
                                             flag = True
                                             for iiiii in range(5):
                                                 if i+1+iii+iiiii < len(data["sentence"]) - 2:
@@ -239,7 +239,7 @@ def looking(x, reply=True):
                                     if i+1+iii >= len(data["sentence"]) - 2:
                                         break
                                     if reply:
-                                        if data["sentence"][i+1+iii][1] != settings["mynames"] and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1+iii][0] and lastSentenceInput != data["sentence"][i+1+iii][0]:
+                                        if not bool(re.search(settings["mynames"], data["sentence"][i+1+iii][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1+iii][0] and lastSentenceInput != data["sentence"][i+1+iii][0]:
                                             flag = True
                                             for iiiii in range(5):
                                                 if i+1+iii+iiiii < len(data["sentence"]) - 2:
@@ -308,7 +308,7 @@ def looking(x, reply=True):
                                     if i+1+iii >= len(data["sentence"]) - 2:
                                         break
                                     if reply:
-                                        if data["sentence"][i+1+iii][1] != settings["mynames"] and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1+iii][0] and lastSentenceInput != data["sentence"][i+1+iii][0]:
+                                        if not bool(re.search(settings["mynames"], data["sentence"][i+1+iii][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1+iii][0] and lastSentenceInput != data["sentence"][i+1+iii][0]:
                                             flag = True
                                             for iiiii in range(5):
                                                 if i+1+iii+iiiii < len(data["sentence"]) - 2:
@@ -389,13 +389,6 @@ def tsuzuki(add=True):
                         traceback.print_exc()
 
 
-                    i = 0
-                    while True:
-                        if len(brainUser) >= i:
-                            break
-                        result = result.replace(brainUser[i], actualUser[i])
-                        i += 1
-
 
 
                     print("lastUser: {}".format(lastUser))
@@ -455,6 +448,9 @@ def receive(x, u, add=True):
 
     result = looking(x)
 
+    if x == "×" and (heart < len(data["sentence"]) - 10 or heart > len(data["sentence"]) + 10):
+        data["sentence"].insert(heart+1, ["×", settings["myname"], wordMemory])
+
     if data["sentence"][heart+1][0] == "×":
         myVoice = "×"
         return
@@ -482,14 +478,6 @@ def receive(x, u, add=True):
     except:
         import traceback
         traceback.print_exc()
-
-
-    i = 0
-    while True:
-        if len(brainUser) <= i:
-            break
-        result = result.replace(brainUser[i], actualUser[i])
-        i += 1
 
 
     print("lastUser: {}".format(lastUser))

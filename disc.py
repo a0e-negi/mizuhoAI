@@ -21,6 +21,7 @@ from discord.ext import tasks
 import discord
 import threading
 import asyncio
+import random
 
 
 # 自分のBotのアクセストークンに置き換えてください
@@ -50,8 +51,16 @@ async def speak(result):
                 print("チャンネルを移動しました: {}".format(channel.name))
             except:
                 print("チャンネルを移動しました: DM")
+        elif com[1] == "speak":            
+            result = mizuho.tsuzuki()
+            print("{}: {}".format(mizuho.settings["myname"], result))
+            if result != None:
+                await speak(result)
+        elif com[1] == "ignore":
+            pass
     else:
         await channel.send(result)
+
 
 
 # 起動時に動作する処理
@@ -103,22 +112,12 @@ async def on_message(message):
         prevTime = time.time()
         lastMessage = message
         if receive == 0:
-            if random.randint(1, len(persons) - 1) == (len(persons) - 1) or bool(re.search(mizuho.settings["mynames"], message.content)):
-                mizuho.receive(message.content, message.author.name)
-                if mode == 2 or mode == 1:
-                    messages.append(message)
-            else:
-                mizuho.receive(message.content, message.author.name)
+            mizuho.receive("!command speak", message.author.name)
+            mizuho.receive(message.content, message.author.name)
+            if mode == 2 or mode == 1:
+                messages.append(message)
             receive += 1
 
-
-async def extraMessage():
-    if mode == 2:
-        print("追加メッセージ送信")
-        result = mizuho.tsuzuki()
-        print("{}: {}".format(mizuho.settings["myname"], result))
-        if result != None:
-            await speak(result)
 
 
 i = 0
@@ -154,16 +153,16 @@ async def cron():
         nowTime = time.time()
         if nowTime >= prevTime + 20:
             print("沈黙を検知")
+            mizuho.receive("!command ignore", "_BRAIN_")
             if i >= 20:
                 persons = [mizuho.settings["myname"]]
                 i = 0
             if channel != None and lastMessage != None:
                 if mode == 2:
-                    if random.randint(1, 3) == 2:
-                        result = mizuho.tsuzuki()
-                        print("{}: {}".format(mizuho.settings["myname"], result))
-                        if result != None:
-                            await speak(result)
+                    result = mizuho.speakFreely()
+                    print("{}: {}".format(mizuho.settings["myname"], result))
+                    if result != None:
+                        await speak(result)
 
                 
             i += 1
