@@ -39,7 +39,7 @@ def initialize(direcectory, interface_):
             settings = json.load(f)
         with open(direc+"/data.json", "w", encoding="utf8") as f:
             json.dump(data, f, ensure_ascii=False, indent=4, sort_keys=True, separators=(',', ': '))
-    heart = len(data["sentence"]) - 2
+    heart = len(data["sentence"]) - 1
     with open(direc+"/data_backup.json", "w", encoding="utf8") as f:
         json.dump(data, f, ensure_ascii=False, indent=4, sort_keys=True, separators=(',', ': '))
 
@@ -67,8 +67,8 @@ def looking(x, reply=True):
             else:
                 f = heart - 10
 
-            if heart + 10 >= len(data["sentence"]) - 2:
-                t = len(data["sentence"]) - 2
+            if heart + 10 >= len(data["sentence"]) - 1:
+                t = len(data["sentence"]) - 1
             else:
                 t = heart + 10
 
@@ -95,15 +95,16 @@ def looking(x, reply=True):
                         if len(cc) >= 2:
                             if cc[-1] - cc[-2] >= rate or c >= rate:
                                 for iii in range(5):
-                                    if i+1+iii >= len(data["sentence"]) - 2:
+                                    if i+1+iii >= len(data["sentence"]) - 1:
                                         break
                                     if reply:
                                         if not bool(re.search(settings["mynames"], data["sentence"][i+1+iii][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1+iii][0] and lastSentenceInput != data["sentence"][i+1+iii][0]:
                                             flag = True
-                                            for iiiii in range(400):
-                                                if i+1+iii+iiiii < len(data["sentence"]) - 2:
+                                            for iiiii in range(15):
+                                                if i+1+iii+iiiii < len(data["sentence"]) - 1:
                                                     if data["sentence"][i+1+iii+iiiii][0] == "×":
                                                         flag = False
+                                                        break
                                             if data["sentence"][i+1][0] == "×":
                                                 heart = i+1
                                                 heartLastSpeaker = data["sentence"][i+1][1]
@@ -141,8 +142,8 @@ def looking(x, reply=True):
             else:
                 f = heart - 150
 
-            if heart + 150 >= len(data["sentence"]) - 2:
-                t = len(data["sentence"]) - 2
+            if heart + 150 >= len(data["sentence"]) - 1:
+                t = len(data["sentence"]) - 1
             else:
                 t = heart + 150
 
@@ -169,15 +170,16 @@ def looking(x, reply=True):
                         if len(cc) >= 2:
                             if cc[-1] - cc[-2] >= rate or c >= rate:
                                 for iii in range(5):
-                                    if i+1+iii >= len(data["sentence"]) - 2:
+                                    if i+1+iii >= len(data["sentence"]) - 1:
                                         break
                                     if reply:
                                         if not bool(re.search(settings["mynames"], data["sentence"][i+1+iii][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1+iii][0] and lastSentenceInput != data["sentence"][i+1+iii][0]:
                                             flag = True
-                                            for iiiii in range(400):
-                                                if i+1+iii+iiiii < len(data["sentence"]) - 2:
+                                            for iiiii in range(15):
+                                                if i+1+iii+iiiii < len(data["sentence"]) - 1:
                                                     if data["sentence"][i+1+iii+iiiii][0] == "×":
                                                         flag = False
+                                                        break
                                             if flag:
                                                 heart = i+1+iii
                                                 heartLastSpeaker = data["sentence"][i+1+iii][1]
@@ -208,8 +210,8 @@ def looking(x, reply=True):
             else:
                 f = heart - 1500
 
-            if heart + 1500 >= len(data["sentence"]) - 2:
-                t = len(data["sentence"]) - 2
+            if heart + 1500 >= len(data["sentence"]) - 1:
+                t = len(data["sentence"]) - 1
             else:
                 t = heart + 1500
 
@@ -236,15 +238,16 @@ def looking(x, reply=True):
                         if len(cc) >= 2:
                             if cc[-1] - cc[-2] >= rate or c >= rate:
                                 for iii in range(5):
-                                    if i+1+iii >= len(data["sentence"]) - 2:
+                                    if i+1+iii >= len(data["sentence"]) - 1:
                                         break
                                     if reply:
                                         if not bool(re.search(settings["mynames"], data["sentence"][i+1+iii][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1+iii][0] and lastSentenceInput != data["sentence"][i+1+iii][0]:
                                             flag = True
-                                            for iiiii in range(400):
-                                                if i+1+iii+iiiii < len(data["sentence"]) - 2:
+                                            for iiiii in range(15):
+                                                if i+1+iii+iiiii < len(data["sentence"]) - 1:
                                                     if data["sentence"][i+1+iii+iiiii][0] == "×":
                                                         flag = False
+                                                        break
                                             if flag:
                                                 heart = i+1+iii
                                                 heartLastSpeaker = data["sentence"][i+1+iii][1]
@@ -277,8 +280,8 @@ def looking(x, reply=True):
             else:
                 f = heart - 60000
 
-            if heart + 60000 >= len(data["sentence"]) - 2:
-                t = len(data["sentence"]) - 2
+            if heart + 60000 >= len(data["sentence"]) - 1:
+                t = len(data["sentence"]) - 1
             else:
                 t = heart + 60000
 
@@ -305,15 +308,16 @@ def looking(x, reply=True):
                         if len(cc) >= 2:
                             if cc[-1] - cc[-2] >= rate or c >= rate:
                                 for iii in range(5):
-                                    if i+1+iii >= len(data["sentence"]) - 2:
+                                    if i+1+iii >= len(data["sentence"]) - 1:
                                         break
                                     if reply:
                                         if not bool(re.search(settings["mynames"], data["sentence"][i+1+iii][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1+iii][0] and lastSentenceInput != data["sentence"][i+1+iii][0]:
                                             flag = True
-                                            for iiiii in range(400):
-                                                if i+1+iii+iiiii < len(data["sentence"]) - 2:
+                                            for iiiii in range(15):
+                                                if i+1+iii+iiiii < len(data["sentence"]) - 1:
                                                     if data["sentence"][i+1+iii+iiiii][0] == "×":
                                                         flag = False
+                                                        break
                                             if flag:
                                                 heart = i+1+iii
                                                 heartLastSpeaker = data["sentence"][i+1+iii][1]
@@ -365,8 +369,8 @@ def tsuzuki(add=True):
             if data["sentence"][heart][1] == heartLastSpeaker and heart != len(data["sentence"]) - 1 and not bool(re.search(settings["mynames"], data["sentence"][heart][0])) and lastSentence != data["sentence"][heart][0] and lastSentenceInput != data["sentence"][heart][0]:
 
                 flag = True
-                for iiiii in range(400):
-                    if heart+iiiii < len(data["sentence"]) - 2:
+                for iiiii in range(15):
+                    if heart+iiiii < len(data["sentence"]) - 1:
                         if data["sentence"][heart+iiiii][0] == "×":
                             flag = False
                 if flag:
