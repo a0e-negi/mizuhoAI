@@ -437,11 +437,14 @@ def speakFreely(add=True):
     #自由に話す
     global heart, actualUser, brainUser, wordMemory, tokenizer, lastSentence, lastSentenceInput, maeheart, myVoice
 
-    if lastSentenceInput != "×":
-        result = myVoice    
-        if add and result != None: addSentence(result, settings["myname"])
+    if len(data["sentence"]) >= 1000:    
+        if lastSentenceInput != "×":
+            result = myVoice    
+            if add and result != None: addSentence(result, settings["myname"])
 
-        return result
+            return result
+    else:
+        return None
 
 def receive(x, u, add=True):
     global lastSentenceInput, lastSentence, myVoice, getBored, maeheart, heart
