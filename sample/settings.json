@@ -9,5 +9,7 @@
     ],
     "myname": "翻訳機",
     "mynames": "翻訳機",
-    "discToken": "TOKEN"
+    "discToken": "TOKEN",
+    "voice": 2,
+    "language": "ja"
 }
