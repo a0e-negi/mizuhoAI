@@ -11,5 +11,6 @@
     "mynames": "翻訳機",
     "discToken": "TOKEN",
     "voice": 2,
-    "language": "ja"
+    "language": "ja",
+    "languageHear": "ja-JP"
 }
