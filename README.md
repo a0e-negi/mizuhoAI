@@ -1,5 +1,6 @@
 # mizuhoAI
 ※readmeは準備中です。
+
 Debian系linuxで実行できます。
 
 ## 実行手順
