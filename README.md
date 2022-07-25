@@ -1,8 +1,9 @@
 # mizuhoAI
-Discordで実行できます。
+※readmeは準備中です。
+Debian系linuxで実行できます。
 
-## 実行方法
-1. sampleをコピーし、bot名に変える（ここでは```/mizuho```とする。）
-2. ```/mizuho/settings.json```を設定する
-3. ```pip install py-cord```
-4. コマンドラインで```python disc.py mizuho```を起動
+## 実行手順
+1. insall.shを実行
+2. sampleディレクトリをコピー
+3. コピーしたディレクトリの名前/settings.jsonを設定
+4. python3 assi.py コピーしたディレクトリの名前
