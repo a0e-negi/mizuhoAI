@@ -94,7 +94,8 @@ def looking(x, reply=True):
                         
                         if len(cc) >= 2:
                             if cc[-1] - cc[-2] >= rate or c >= rate:
-                                for iii in range(5):
+                                print("類似: {}".format(data["sentence"][i][0]))
+                                for iii in range(1):
                                     if i+1+iii >= len(data["sentence"]) - 1:
                                         break
                                     if reply:
@@ -167,7 +168,8 @@ def looking(x, reply=True):
                         
                         if len(cc) >= 2:
                             if cc[-1] - cc[-2] >= rate or c >= rate:
-                                for iii in range(5):
+                                print("類似: {}".format(data["sentence"][i][0]))
+                                for iii in range(1):
                                     if i+1+iii >= len(data["sentence"]) - 1:
                                         break
                                     if reply:
@@ -237,7 +239,8 @@ def looking(x, reply=True):
                         
                         if len(cc) >= 2:
                             if cc[-1] - cc[-2] >= rate or c >= rate:
-                                for iii in range(5):
+                                print("類似: {}".format(data["sentence"][i][0]))
+                                for iii in range(1):
                                     if i+1+iii >= len(data["sentence"]) - 1:
                                         break
                                     if reply:
@@ -325,7 +328,6 @@ def tsuzuki(add=True):
 
 
 
-                    print("lastUser: {}".format(lastUser))
 
 
                     if add: addSentence(result, settings["myname"])
@@ -396,7 +398,6 @@ def receive(x, u, add=True):
         lastSentence = result
         if result == None:
             getBored += 1
-            print("頭がパンクしそう...")
             myVoice = None
             return
         result = result.replace(data["sentence"][heart][1], settings["myname"])
@@ -419,14 +420,8 @@ def receive(x, u, add=True):
             return None
 
 
-        print("lastUser: {}".format(lastUser))
-
-
-        print("現在の心: {}".format(heart))
         
         myVoice = result
-        print("入力: {}".format(x))
-        print("心の声: {}".format(myVoice))
 
 
         if [u] not in data["users"]:
@@ -442,7 +437,6 @@ def receive(x, u, add=True):
             getBored -= 0.5
         if getBored < 0:
             getBored = 0
-        print("飽き度: {}".format(getBored))
 
         if getBored >= 4:
             getBored = 0
@@ -450,7 +444,6 @@ def receive(x, u, add=True):
             heart = random.randint(0, len(data["sentence"]) - 50)
             if 0 > heart_-1: looking(data["sentence"][heart_-1][0])
             looking(data["sentence"][heart_][0])
-            print("飽きた heart: {}".format(heart))
 
         maeheart = heart
     except:
