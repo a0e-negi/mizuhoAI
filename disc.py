@@ -147,7 +147,6 @@ async def cron():
                     messages = []
                 receive = 0
         if receive != 0:
-            waitTime = 20
             receive = 0
 
         nowTime = time.time()
