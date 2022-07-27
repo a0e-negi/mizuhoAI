@@ -31,11 +31,13 @@ TOKEN = mizuho.settings["discToken"]
 intents = discord.Intents.all()
 client = discord.Client(intents=intents)
 
-mode = 2
+mode = 1
+waitTime = 20
 
 def setMode(x):
-    global mode
+    global mode, channel
     mode = x
+    print("mode: {}".format(mode))
 
 async def speak(result):
     global channel, persons
@@ -51,13 +53,10 @@ async def speak(result):
                 print("チャンネルを移動しました: {}".format(channel.name))
             except:
                 print("チャンネルを移動しました: DM")
-        elif com[1] == "speak":            
-            result = mizuho.tsuzuki()
-            print("{}: {}".format(mizuho.settings["myname"], result))
-            if result != None:
-                await speak(result)
         elif com[1] == "ignore":
             pass
+        elif com[1] == "modeChange":
+            setMode(int(com[2]))
     else:
         await channel.send(result)
 
@@ -92,27 +91,26 @@ async def on_message(message):
             return
         if message.content == None:
             return
+        if message.author.name == "kazu":
+            return
 
-
-        if message.content == "mizuho!mode 0":
-            await message.channel.send("沈黙モードに切り替える")
+        """
+        if bool(re.search("沈黙モード|黙|だま", message.content)) and bool(re.search(mizuho.settings["mynames"], message.content)):
+            mizuho.receive(message.content, message.author.name)
             setMode(0)
-            return
-        if message.content == "mizuho!mode 1":
-            await message.channel.send("寡黙モードに切り替える")
+        """
+        if bool(re.search("寡黙モード|静かに|しずかに", message.content)) and bool(re.search(mizuho.settings["mynames"], message.content)):
+            mizuho.receive("!command modeChange 1", "_BRAIN_")
             setMode(1)
-            return
-        if message.content == "mizuho!mode 2":
-            await message.channel.send("通常モードに切り替える")
+        if bool(re.search("通常モード|喋って|話して|しゃべって|はなして", message.content)) and bool(re.search(mizuho.settings["mynames"], message.content)):
+            mizuho.receive("!command modeChange 2", "_BRAIN_")
             setMode(2)
-            return
 
-        print("受信: {}".format(message.content))
+        print("受信: {}, from {}".format(message.content, message.author.name))
         lastMessage = message
         prevTime = time.time()
         lastMessage = message
         if receive == 0:
-            mizuho.receive("!command speak", message.author.name)
             mizuho.receive(message.content, message.author.name)
             if mode == 2 or mode == 1:
                 messages.append(message)
@@ -124,37 +122,40 @@ i = 0
 @tasks.loop(seconds=2)
 async def cron():
     try:
-        global persons, prevTime, lastMessage, i, messages, receive
+        global persons, prevTime, lastMessage, i, messages, receive, waitTime
 
         if mode == 2:
             if len(messages) != 0:
+                waitTime = 20
                 result = mizuho.speakFreely()
                 if result == None:
                     messages = []
-                    return
+                    receive = 0
                 print("{}: {}".format(mizuho.settings["myname"], result))
                 await speak(result)
                 messages = []
                 receive = 0
         elif mode == 1:
             if len(messages) != 0:
+                waitTime = 20
                 if bool(re.search(mizuho.settings["mynames"], messages[-1].content)):
                     result = mizuho.speakFreely()
                     if result == None:
                         messages = []
-                        return
                     print("{}: {}".format(mizuho.settings["myname"], result))
                     await speak(result)
                     messages = []
-                    receive = 0
+                receive = 0
         if receive != 0:
+            waitTime = 20
             receive = 0
 
         nowTime = time.time()
-        if nowTime >= prevTime + 20:
+        if nowTime >= prevTime + waitTime:
             print("沈黙を検知")
+            print("waitTime: {}".format(waitTime))
             mizuho.receive("!command ignore", "_BRAIN_")
-            if i >= 20:
+            if i >= 3:
                 persons = [mizuho.settings["myname"]]
                 i = 0
             if channel != None and lastMessage != None:
@@ -167,6 +168,7 @@ async def cron():
                 
             i += 1
             prevTime = time.time()
+            waitTime = waitTime*3
     except:
         import traceback
         traceback.print_exc()

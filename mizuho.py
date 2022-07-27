@@ -255,6 +255,8 @@ def looking(x, reply=True):
                                                 heart = i+1+iii
                                                 heartLastSpeaker = data["sentence"][i+1+iii][1]
                                                 return data["sentence"][i+1+iii][0]
+                                        else:
+                                            continue
                                     else:
                                         heart = i
                                         return
