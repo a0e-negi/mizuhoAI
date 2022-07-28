@@ -110,7 +110,6 @@ async def on_message(message):
         prevTime = time.time()
         lastMessage = message
         if receive == 0:
-            time.sleep(5)
             mizuho.receive(message.content, message.author.name)
             if mode == 2 or mode == 1:
                 messages.append(message)
@@ -119,7 +118,7 @@ async def on_message(message):
 
 
 i = 0
-@tasks.loop(seconds=2)
+@tasks.loop(seconds=5)
 async def cron():
     try:
         global persons, prevTime, lastMessage, i, messages, receive
