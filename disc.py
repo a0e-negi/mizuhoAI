@@ -32,7 +32,6 @@ intents = discord.Intents.all()
 client = discord.Client(intents=intents)
 
 mode = 1
-waitTime = 20
 
 def setMode(x):
     global mode, channel
@@ -122,11 +121,10 @@ i = 0
 @tasks.loop(seconds=2)
 async def cron():
     try:
-        global persons, prevTime, lastMessage, i, messages, receive, waitTime
+        global persons, prevTime, lastMessage, i, messages, receive
 
         if mode == 2:
             if len(messages) != 0:
-                waitTime = 20
                 result = mizuho.speakFreely()
                 if result == None:
                     messages = []
@@ -137,7 +135,6 @@ async def cron():
                 receive = 0
         elif mode == 1:
             if len(messages) != 0:
-                waitTime = 20
                 if bool(re.search(mizuho.settings["mynames"], messages[-1].content)):
                     result = mizuho.speakFreely()
                     if result == None:
@@ -150,9 +147,8 @@ async def cron():
             receive = 0
 
         nowTime = time.time()
-        if nowTime >= prevTime + waitTime:
+        if nowTime >= prevTime + 20:
             print("沈黙を検知")
-            print("waitTime: {}".format(waitTime))
             mizuho.receive("!command ignore", "_BRAIN_")
             if i >= 3:
                 persons = [mizuho.settings["myname"]]
@@ -167,7 +163,6 @@ async def cron():
                 
             i += 1
             prevTime = time.time()
-            waitTime = waitTime*3
     except:
         import traceback
         traceback.print_exc()
