@@ -91,7 +91,7 @@ async def on_message(message):
             return
         if message.content == None:
             return
-        if message.author.name == "kazu":
+        if message.author.name == "kazu" or message.author.name == "マン小次郎":
             return
 
         """
