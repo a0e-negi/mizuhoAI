@@ -40,6 +40,7 @@ def setMode(x):
 
 async def speak(result):
     global channel, persons
+    time.sleep(5)
     pattern = re.compile(r"^!command")
     print("users: {}".format(persons))
     if bool(pattern.search(result)):
