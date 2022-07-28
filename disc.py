@@ -40,7 +40,6 @@ def setMode(x):
 
 async def speak(result):
     global channel, persons
-    time.sleep(5)
     pattern = re.compile(r"^!command")
     print("users: {}".format(persons))
     if bool(pattern.search(result)):
@@ -111,6 +110,7 @@ async def on_message(message):
         prevTime = time.time()
         lastMessage = message
         if receive == 0:
+            time.sleep(5)
             mizuho.receive(message.content, message.author.name)
             if mode == 2 or mode == 1:
                 messages.append(message)
