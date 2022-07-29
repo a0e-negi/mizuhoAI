@@ -31,7 +31,7 @@ TOKEN = mizuho.settings["discToken"]
 intents = discord.Intents.all()
 client = discord.Client(intents=intents)
 
-mode = 1
+mode = 2
 
 def setMode(x):
     global mode, channel
@@ -52,8 +52,6 @@ async def speak(result):
                 print("チャンネルを移動しました: {}".format(channel.name))
             except:
                 print("チャンネルを移動しました: DM")
-        elif com[1] == "ignore":
-            pass
         elif com[1] == "modeChange":
             setMode(int(com[2]))
     else:
@@ -118,20 +116,21 @@ async def on_message(message):
 
 
 i = 0
-@tasks.loop(seconds=8)
+@tasks.loop(seconds=4)
 async def cron():
     try:
         global persons, prevTime, lastMessage, i, messages, receive
 
         if mode == 2:
             if len(messages) != 0:
-                result = mizuho.speakFreely()
-                if result == None:
+                if random.randint(0, len(persons)) == 0 or bool(re.search(mizuho.settings["mynames"], messages[-1].content)):
+                    result = mizuho.speakFreely()
+                    if result == None:
+                        messages = []
+                        receive = 0
+                    print("{}: {}".format(mizuho.settings["myname"], result))
+                    await speak(result)
                     messages = []
-                    receive = 0
-                print("{}: {}".format(mizuho.settings["myname"], result))
-                await speak(result)
-                messages = []
                 receive = 0
         elif mode == 1:
             if len(messages) != 0:
@@ -149,16 +148,16 @@ async def cron():
         nowTime = time.time()
         if nowTime >= prevTime + 20:
             print("沈黙を検知")
-            mizuho.receive("!command ignore", "_BRAIN_")
             if i >= 3:
                 persons = [mizuho.settings["myname"]]
                 i = 0
             if channel != None and lastMessage != None:
                 if mode == 2:
-                    result = mizuho.speakFreely()
-                    print("{}: {}".format(mizuho.settings["myname"], result))
-                    if result != None:
-                        await speak(result)
+                    if random.randint(0, len(persons)) == 0:
+                        result = mizuho.speakFreely()
+                        print("{}: {}".format(mizuho.settings["myname"], result))
+                        if result != None:
+                            await speak(result)
 
                 
             i += 1
