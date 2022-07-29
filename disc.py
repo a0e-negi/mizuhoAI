@@ -118,7 +118,7 @@ async def on_message(message):
 
 
 i = 0
-@tasks.loop(seconds=5)
+@tasks.loop(seconds=8)
 async def cron():
     try:
         global persons, prevTime, lastMessage, i, messages, receive
