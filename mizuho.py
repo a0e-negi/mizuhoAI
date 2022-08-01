@@ -301,7 +301,7 @@ def tsuzuki(add=True):
         while True:
             if a >= 60000:
                 return None
-            if data["sentence"][heart][1] == heartLastSpeaker and heart != len(data["sentence"]) - 1 and not bool(re.search(settings["mynames"], data["sentence"][heart][0])) and lastSentence != data["sentence"][heart][0] and lastSentenceInput != data["sentence"][heart][0]:
+            if heart != len(data["sentence"]) - 1 and not bool(re.search(settings["mynames"], data["sentence"][heart][0])) and lastSentence != data["sentence"][heart][0] and lastSentenceInput != data["sentence"][heart][0]:
 
                 flag = True
                 for iiiii in range(15):
