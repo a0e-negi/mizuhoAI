@@ -338,7 +338,7 @@ def tsuzuki(add=True):
                     
                     actualUser.append(lastUser)
                     if len(actualUser) > 5:
-                        actualUser = [actualUser[-5], actualUser[-4], actualUser[-3], actualUser[-2], brainUser[-1]]
+                        actualUser = [actualUser[-5], actualUser[-4], actualUser[-3], actualUser[-2], actualUser[-1]]
 
                     for i in range(len(actualUser)):
                         result = result.replace(brainUser[i], actualUser[i])
@@ -385,14 +385,14 @@ def speakFreely(add=True):
     #自由に話す
     global heart, actualUser, brainUser, wordMemory, tokenizer, lastSentence, lastSentenceInput, maeheart, myVoice
 
-    if len(data["sentence"]) >= 1000 or True:    
-        if lastSentenceInput != "×":
-            result = myVoice    
-            if add and result != None: addSentence(result, settings["myname"])
+    if lastSentenceInput != "×":
+        result = myVoice    
+        if add and result != None: addSentence(result, settings["myname"])
 
-            return result
-    else:
-        return None
+        print("brainUser: {}".format(brainUser))
+        print("actualUser: {}".format(actualUser))
+
+        return result
 
 def receive(x, u, add=True):
     global lastSentenceInput, lastSentence, myVoice, getBored, maeheart, heart, actualUser, brainUser
@@ -418,7 +418,7 @@ def receive(x, u, add=True):
         
         actualUser.append(u)
         if len(actualUser) > 5:
-            actualUser = [actualUser[-5], actualUser[-4], actualUser[-3], actualUser[-2], brainUser[-1]]
+            actualUser = [actualUser[-5], actualUser[-4], actualUser[-3], actualUser[-2], actualUser[-1]]
 
         for i in range(len(actualUser)):
             result = result.replace(brainUser[i], actualUser[i])
