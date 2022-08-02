@@ -19,7 +19,7 @@ heartLastSpeaker = None #過去に似た話をしてたユーザー
 maeheart = 0 #一つ前の気持ち
 getBored = 0
 interface = 0 #クライアントの種類
-lastUser = None #最後に話しかけたユーザー
+lastUser = "あなた" #最後に話しかけたユーザー
 myVoice = None #心の中の声
 
 def initialize(direcectory, interface_):
@@ -49,16 +49,18 @@ def looking(x, reply=True):
     global heart, heartLastSpeaker, replaceWords, lastSentence, lastSentenceInput
     try:
 
-        for i in range(5):
+        for i in range(6):
             if i == 0:
                 rate = 1
             if i == 1:
-                rate = 0.8
+                rate = 0.9
             if i == 2:
-                rate = 0.7
+                rate = 0.8
             if i == 3:
-                rate = 0.6
+                rate = 0.7
             if i == 4:
+                rate = 0.6
+            if i == 5:
                 rate = 0.5
 
             #今の気持ちから考える
@@ -95,11 +97,11 @@ def looking(x, reply=True):
                         if len(cc) >= 2:
                             if cc[-1] - cc[-2] >= rate or c >= rate:
                                 print("類似: {}".format(data["sentence"][i][0]))
-                                for iii in range(1):
+                                for iii in range(3):
                                     if i+1+iii >= len(data["sentence"]) - 1:
                                         break
                                     if reply:
-                                        if settings["myname"] != data["sentence"][i+1+iii][1] and not bool(re.search(settings["mynames"], data["sentence"][i+1+iii][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1+iii][0] and lastSentenceInput != data["sentence"][i+1+iii][0]:
+                                        if settings["myname"] != data["sentence"][i+1+iii][1] and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1+iii][0] and lastSentenceInput != data["sentence"][i+1+iii][0]:
                                             flag = True
                                             for iiiii in range(15):
                                                 if i+1+iii+iiiii < len(data["sentence"]) - 1:
@@ -169,11 +171,11 @@ def looking(x, reply=True):
                         if len(cc) >= 2:
                             if cc[-1] - cc[-2] >= rate or c >= rate:
                                 print("類似: {}".format(data["sentence"][i][0]))
-                                for iii in range(1):
+                                for iii in range(3):
                                     if i+1+iii >= len(data["sentence"]) - 1:
                                         break
                                     if reply:
-                                        if settings["myname"] != data["sentence"][i+1+iii][1] and not bool(re.search(settings["mynames"], data["sentence"][i+1+iii][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1+iii][0] and lastSentenceInput != data["sentence"][i+1+iii][0]:
+                                        if settings["myname"] != data["sentence"][i+1+iii][1] and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1+iii][0] and lastSentenceInput != data["sentence"][i+1+iii][0]:
                                             flag = True
                                             for iiiii in range(15):
                                                 if i+1+iii+iiiii < len(data["sentence"]) - 1:
@@ -240,11 +242,11 @@ def looking(x, reply=True):
                         if len(cc) >= 2:
                             if cc[-1] - cc[-2] >= rate or c >= rate:
                                 print("類似: {}".format(data["sentence"][i][0]))
-                                for iii in range(1):
+                                for iii in range(3):
                                     if i+1+iii >= len(data["sentence"]) - 1:
                                         break
                                     if reply:
-                                        if settings["myname"] != data["sentence"][i+1+iii][1] and not bool(re.search(settings["mynames"], data["sentence"][i+1+iii][0])) and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1+iii][0] and lastSentenceInput != data["sentence"][i+1+iii][0]:
+                                        if settings["myname"] != data["sentence"][i+1+iii][1] and i != len(data["sentence"]) and lastSentence != data["sentence"][i+1+iii][0] and lastSentenceInput != data["sentence"][i+1+iii][0]:
                                             flag = True
                                             for iiiii in range(15):
                                                 if i+1+iii+iiiii < len(data["sentence"]) - 1:
@@ -301,7 +303,7 @@ def tsuzuki(add=True):
         while True:
             if a >= 60000:
                 return None
-            if heart != len(data["sentence"]) - 1 and not bool(re.search(settings["mynames"], data["sentence"][heart][0])) and lastSentence != data["sentence"][heart][0] and lastSentenceInput != data["sentence"][heart][0]:
+            if heart != len(data["sentence"]) - 1 and lastSentence != data["sentence"][heart][0] and lastSentenceInput != data["sentence"][heart][0]:
 
                 flag = True
                 for iiiii in range(15):
@@ -312,7 +314,6 @@ def tsuzuki(add=True):
 
                     result = data["sentence"][heart][0]
                     lastSentence = result
-                    result = result.replace(data["sentence"][heart][1], settings["myname"])
 
                     #重要な単語を最大5個置き換える
                     try:
@@ -328,6 +329,19 @@ def tsuzuki(add=True):
                         traceback.print_exc()
 
 
+
+
+                    #名前置き換え用
+                    brainUser.append(data["sentence"][heart-1][1])
+                    if len(brainUser) > 5:
+                        brainUser = [brainUser[-5], brainUser[-4], brainUser[-3], brainUser[-2], brainUser[-1]]
+                    
+                    actualUser.append(lastUser)
+                    if len(actualUser) > 5:
+                        actualUser = [actualUser[-5], actualUser[-4], actualUser[-3], actualUser[-2], brainUser[-1]]
+
+                    for i in range(len(actualUser)):
+                        result = result.replace(brainUser[i], actualUser[i])
 
 
 
@@ -381,7 +395,7 @@ def speakFreely(add=True):
         return None
 
 def receive(x, u, add=True):
-    global lastSentenceInput, lastSentence, myVoice, getBored, maeheart, heart
+    global lastSentenceInput, lastSentence, myVoice, getBored, maeheart, heart, actualUser, brainUser
     try:
         if x == None or u == None: return
         lastSentenceInput = x
@@ -389,6 +403,27 @@ def receive(x, u, add=True):
         if add: addSentence(x, u)
 
         result = looking(x)
+
+        if result == None:
+            getBored += 1
+            myVoice = None
+            return
+
+
+
+        #名前置き換え用
+        brainUser.append(data["sentence"][heart-1][1])
+        if len(brainUser) > 5:
+            brainUser = [brainUser[-5], brainUser[-4], brainUser[-3], brainUser[-2], brainUser[-1]]
+        
+        actualUser.append(u)
+        if len(actualUser) > 5:
+            actualUser = [actualUser[-5], actualUser[-4], actualUser[-3], actualUser[-2], brainUser[-1]]
+
+        for i in range(len(actualUser)):
+            result = result.replace(brainUser[i], actualUser[i])
+
+
 
         if x == "×" and (heart < len(data["sentence"]) - 10 or heart > len(data["sentence"]) + 10):
             data["sentence"].insert(heart+1, ["×", settings["myname"], wordMemory])
@@ -398,11 +433,6 @@ def receive(x, u, add=True):
             return
 
         lastSentence = result
-        if result == None:
-            getBored += 1
-            myVoice = None
-            return
-        result = result.replace(data["sentence"][heart][1], settings["myname"])
 
 
 
