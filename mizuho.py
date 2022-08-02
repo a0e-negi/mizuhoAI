@@ -75,7 +75,7 @@ def looking(x, reply=True):
             i = f
             ii = 0
             kon = -1
-            zen = -2
+            zen = -1
 
             cc = [0]
             for sen in data["sentence"][f:t]:
@@ -149,7 +149,7 @@ def looking(x, reply=True):
             i = f
             ii = 0
             kon = -1
-            zen = -2
+            zen = -1
 
             cc = [0]
             for sen in data["sentence"][f:t]:
@@ -220,7 +220,7 @@ def looking(x, reply=True):
             i = f
             ii = 0
             kon = -1
-            zen = -2
+            zen = -1
 
             cc = [0]
             for sen in data["sentence"][f:t]:
