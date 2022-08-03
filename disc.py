@@ -121,7 +121,7 @@ async def cron():
             if len(messages) != 0:
                 print("受信: {}, from {}".format(messages[-1].content, messages[-1].author.name))
                 mizuho.receive(messages[-1].content, messages[-1].author.name)
-                if random.randint(0, len(persons)) == 0 or bool(re.search(mizuho.settings["mynames"], messages[-1].content)):
+                if random.randint(0, len(persons)-1) == 0 or bool(re.search(mizuho.settings["mynames"], messages[-1].content)):
                     result = mizuho.speakFreely()
                     if result == None:
                         messages = []
@@ -155,7 +155,7 @@ async def cron():
                 i = 0
             if channel != None and lastMessage != None:
                 if mode == 2:
-                    if random.randint(0, len(persons)) == 0:
+                    if random.randint(0, len(persons)-1) == 0:
                         result = mizuho.tsuzuki()
                         print("{}: {}".format(mizuho.settings["myname"], result))
                         if result != None:
