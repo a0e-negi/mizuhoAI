@@ -87,8 +87,6 @@ async def on_message(message):
             return
         if message.content == None:
             return
-        if message.author.name == "kazu" or message.author.name == "マン小次郎":
-            return
 
         """
         if bool(re.search("沈黙モード|黙|だま", message.content)) and bool(re.search(mizuho.settings["mynames"], message.content)):
